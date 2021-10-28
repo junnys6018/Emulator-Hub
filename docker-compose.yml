@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+
+  django:
+    build:
+      context: ./backend
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - SECRET_KEY
+      - ENVIRONMENT
+      - POSTGRES_HOST
+    depends_on:
+      - postgres
+
+  nginx:
+    build:
+      context: ./nginx
+    depends_on:
+      - django

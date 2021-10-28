@@ -1,0 +1,33 @@
+services:
+  django:
+    build:
+      dockerfile: dev.Dockerfile
+    volumes:
+    - type: bind
+      source: ./backend
+      target: /code/backend
+
+  nginx:
+    build:
+      dockerfile: dev.Dockerfile
+    volumes:
+      - type: bind
+        source: ./build/dist
+        target: /code/build/dist
+    depends_on:
+      - webpack
+    ports:
+      - 8000:8000
+
+  webpack:
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /code/frontend
+
+      - type: bind
+        source: ./build/dist
+        target: /code/build/dist

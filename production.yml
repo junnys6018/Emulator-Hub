@@ -1,0 +1,27 @@
+services:
+  postgres:
+    volumes:
+      - type: volume
+        source: dbdata
+        target: /var/lib/postgresql/data
+
+  django:
+    build:
+      dockerfile: prod.Dockerfile
+
+  nginx:
+    build:
+      dockerfile: prod.Dockerfile
+    volumes:
+      - type: bind
+        source: ${SSL_CERT_PATH}
+        target: /etc/ssl/certs/webapp.crt
+      - type: bind
+        source: ${SSL_KEY_PATH}
+        target: /etc/ssl/private/webapp.key
+    ports:
+      - 80:80
+      - 443:443
+
+volumes:
+  dbdata:
