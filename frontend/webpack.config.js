@@ -46,7 +46,7 @@ module.exports = (env, options) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'Tooling Test',
+                title: 'Emulator Hub',
                 template: 'public/index.html',
             }),
         ],

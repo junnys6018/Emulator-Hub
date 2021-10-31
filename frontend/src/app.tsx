@@ -1,6 +1,6 @@
-import NotFound from './not-found/not-found';
-import Index from './index/index';
-import About from './about/about';
+import NotFound from './components/not-found/not-found';
+import Index from './components/index/index';
+import About from './components/about/about';
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

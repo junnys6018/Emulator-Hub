@@ -1,7 +1,7 @@
 {
-    "name": "react-django-project",
+    "name": "emulator-hub",
     "version": "0.1.0",
-    "description": "Base repo for react + django project",
+    "description": "",
     "private": true,
     "scripts": {
         "build": "NODE_ENV=production webpack build --mode production",
