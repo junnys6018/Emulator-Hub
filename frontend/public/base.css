@@ -1,0 +1,13 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply text-gray-50;
+        @apply font-normal;
+        @apply bg-gray-800;
+    }
+}

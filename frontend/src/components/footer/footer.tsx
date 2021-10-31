@@ -9,11 +9,11 @@ export default function Footer() {
     };
     return (
         <div className="h-32" style={footerImage}>
-            <div className="text-gray-50 container h-full flex items-center">
+            <div className="container h-full flex items-center">
                 <span className="font-bold text-xl mr-20">Emulator Hub</span>
-                <a className="font-normal text-sm mr-12">Source Code</a>
-                <a className="font-normal text-sm mr-auto">Contact</a>
-                <span className="font-normal text-sm">Designed &amp; Built by Jun Lim</span>
+                <a className="text-sm mr-12">Source Code</a>
+                <a className="text-sm mr-auto">Contact</a>
+                <span className="text-sm">Designed &amp; Built by Jun Lim</span>
             </div>
         </div>
     );
