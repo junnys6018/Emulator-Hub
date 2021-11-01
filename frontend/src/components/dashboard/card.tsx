@@ -15,7 +15,10 @@ export default function Card(props: CardProps) {
 
     return (
         <div className="flex flex-col">
-            <button className="flex-grow relative rounded-2xl bg-cover drop-shadow hover:ring-2 hover:ring-green-500" style={image}></button>
+            <button
+                className="select-none flex-grow relative rounded-2xl bg-cover bg-center filter drop-shadow hover:ring-2 hover:ring-green-500"
+                style={image}
+            ></button>
             <div className="flex items-center mx-3 pt-1">
                 <span className="text-sm mr-auto">{props.name}</span>
                 <button className="mr-2 hover:text-green-500 p-1">

@@ -9,5 +9,6 @@
         @apply text-gray-50;
         @apply font-normal;
         @apply bg-gray-800;
+        @apply text-base;
     }
 }
