@@ -12,8 +12,8 @@ services:
       dockerfile: dev.Dockerfile
     volumes:
       - type: bind
-        source: ./build/dist
-        target: /code/build/dist
+        source: ./build/development
+        target: /code/build/development
     depends_on:
       - webpack
     ports:
@@ -29,5 +29,5 @@ services:
         target: /code/frontend
 
       - type: bind
-        source: ./build/dist
-        target: /code/build/dist
+        source: ./build/development
+        target: /code/build/development

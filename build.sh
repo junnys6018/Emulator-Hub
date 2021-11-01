@@ -2,7 +2,7 @@
 pushd "$(dirname "$0")"
 
 rm -rf nginx/serve
-mkdir -p nginx/serve/dist
+mkdir -p nginx/serve/production
 
 # generate static files
 
@@ -33,7 +33,7 @@ npm install
 npm run build
 popd
 
-cp -R build/dist nginx/serve
+cp -R build/production nginx/serve
 
 # create images
 docker-compose -f docker-compose.yml -f production.yml --env-file .env.prod build

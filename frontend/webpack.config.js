@@ -15,7 +15,7 @@ module.exports = (env, options) => {
         entry: entrypoints,
         mode: 'production',
         output: {
-            path: path.resolve(__dirname, '../build/dist'),
+            path: path.resolve(__dirname, `../build/${options.mode}`),
             filename: '[name].[chunkhash].js',
             clean: true,
             publicPath: '/',
