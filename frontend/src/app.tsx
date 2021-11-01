@@ -5,24 +5,28 @@ import NotFound from './components/not-found/not-found';
 import Index from './components/index/index';
 import About from './components/about/about';
 import Dashboard from './components/dashboard/dashboard';
+import Footer from './components/footer/footer';
 
 function App() {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/">
-                    <Index />
-                </Route>
-                <Route exact path="/dashboard">
-                    <Dashboard />
-                </Route>
-                <Route exact path="/about">
-                    <About />
-                </Route>
-                <Route path="*">
-                    <NotFound />
-                </Route>
-            </Switch>
+            <div className="flex-grow">
+                <Switch>
+                    <Route exact path="/">
+                        <Index />
+                    </Route>
+                    <Route exact path="/dashboard">
+                        <Dashboard />
+                    </Route>
+                    <Route exact path="/about">
+                        <About />
+                    </Route>
+                    <Route path="*">
+                        <NotFound />
+                    </Route>
+                </Switch>
+            </div>
+            <Footer />
         </Router>
     );
 }

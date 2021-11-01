@@ -8,7 +8,7 @@ export default function Footer() {
         backgroundSize: '64px',
     };
     return (
-        <div className="h-32" style={footerImage}>
+        <div className="h-32 flex-shrink-0" style={footerImage}>
             <div className="container h-full flex items-center">
                 <span className="font-bold text-xl mr-20">Emulator Hub</span>
                 <a className="text-sm mr-12">Source Code</a>

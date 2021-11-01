@@ -2,7 +2,6 @@ import React from 'react';
 
 import Card from './card';
 import Navbar from './navbar';
-import Footer from '../footer/footer';
 import Library from './library';
 
 import SMB from '@/public/assets/SMB.png';
@@ -30,7 +29,6 @@ export default function Dashboard() {
                 <Card image={SMB} name="Super Mario Bros" />
                 <Card image={SMB} name="Super Mario Bros" />
             </Library>
-            <Footer />
         </div>
     );
 }

@@ -47,6 +47,7 @@ module.exports = {
         extend: {
             ringColor: ['hover'],
             ringWidth: ['hover'],
+            cursor: ['hover', 'focus'],
         },
     },
     plugins: [],

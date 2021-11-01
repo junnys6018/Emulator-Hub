@@ -11,6 +11,7 @@ export default function Card(props: CardProps) {
         backgroundImage: `url(${props.image})`,
         imageRendering: 'pixelated',
         opacity: 0.8,
+        aspectRatio: '1',
     };
 
     return (
