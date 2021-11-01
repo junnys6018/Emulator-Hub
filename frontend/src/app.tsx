@@ -10,7 +10,7 @@ import Footer from './components/footer/footer';
 function App() {
     return (
         <Router>
-            <div className="flex-grow">
+            <div className="container flex-grow">
                 <Switch>
                     <Route exact path="/">
                         <Index />

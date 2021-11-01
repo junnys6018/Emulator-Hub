@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import Card from './card';
 import Navbar from './navbar';
@@ -9,7 +9,7 @@ import profile from '@/public/assets/test-profile.png';
 
 export default function Dashboard() {
     return (
-        <div>
+        <Fragment>
             <Navbar userName="Jun Lim" profileImage={profile} />
             <Library console="Nintendo Entertainment System">
                 <Card image={SMB} name="Super Mario Bros" />
@@ -29,6 +29,6 @@ export default function Dashboard() {
                 <Card image={SMB} name="Super Mario Bros" />
                 <Card image={SMB} name="Super Mario Bros" />
             </Library>
-        </div>
+        </Fragment>
     );
 }

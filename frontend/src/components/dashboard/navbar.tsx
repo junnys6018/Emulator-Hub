@@ -11,7 +11,7 @@ interface NavbarProps {
 
 export default function Navbar(props: NavbarProps) {
     return (
-        <div className="container my-10 flex items-center">
+        <div className="my-10 flex items-center">
             <span className="font-bold text-3xl mr-20">Emulator Hub</span>
             <a className="text-primary-500 tracking-wider mr-14 hover:underline hover:cursor-pointer">NES</a>
             <a className="text-primary-500 tracking-wider mr-14 hover:underline hover:cursor-pointer">GB</a>
