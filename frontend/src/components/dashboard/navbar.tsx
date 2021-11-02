@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCog, FaPlus, FaSearch, FaSignOutAlt } from 'react-icons/fa';
 
@@ -12,6 +12,24 @@ interface NavbarProps {
 
 export default function Navbar(props: NavbarProps) {
     const [dropdownActive, setDropDownActive] = useState(false);
+
+    const dropdownElement: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
+
+    const onJumpToClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        // Close the dropdown menu
+        setDropDownActive(false);
+
+        // The height of the dropdown is included in the scroll offset calculation made by the brower.
+        // This is because we set the height to be transitioned, so its not instantly set to zero.
+        // As such, we have to manually calculate the height of the dropdown and subtract it from the y position
+        // of the target element.
+        const id = e.currentTarget.href.split('#').at(-1) as string;
+        const target = document.getElementById(id) as HTMLElement;
+        const { y } = target.getBoundingClientRect();
+        const dropdown = dropdownElement.current as HTMLDivElement;
+        window.scroll(0, y - dropdown.clientHeight);
+    };
 
     return (
         <div className="flex flex-wrap">
@@ -40,6 +58,7 @@ export default function Navbar(props: NavbarProps) {
                 </button>
             </div>
             <div
+                ref={dropdownElement}
                 className={`md:hidden flex-grow bg-gray-900 overflow-hidden transition-max-height ${
                     dropdownActive ? 'nav__dropdown-container-height' : 'max-h-0'
                 }`}
@@ -50,24 +69,24 @@ export default function Navbar(props: NavbarProps) {
                         <span className="mx-auto text-4xl font-semibold">{props.userName}</span>
                     </div>
                     <span className="text-gray-300 mb-3">Jump To</span>
-                    <a href="#nintendo-entertainment-system" className="nav__dropdown-item mb-3">
+                    <a onClick={onJumpToClick} href="#nintendo-entertainment-system" className="nav__dropdown-item mb-3">
                         NES
                     </a>
-                    <a href="#game-boy" className="nav__dropdown-item mb-3">
+                    <a onClick={onJumpToClick} href="#game-boy" className="nav__dropdown-item mb-3">
                         GB
                     </a>
-                    <a href="#game-boy-color" className="nav__dropdown-item mb-3">
+                    <a onClick={onJumpToClick} href="#game-boy-color" className="nav__dropdown-item mb-3">
                         GBC
                     </a>
-                    <a href="#chip-8" className="nav__dropdown-item mb-8">
+                    <a onClick={onJumpToClick} href="#chip-8" className="nav__dropdown-item mb-8">
                         CHIP 8
                     </a>
 
-                    <Link to="#" className="text-lg w-max hover:text-green-500 mb-5">
+                    <Link to="#" className="text-lg w-max hover:text-green-500 mb-4">
                         <FaCog className="inline-block mr-4" size="" />
                         Settings
                     </Link>
-                    <Link to="#" className="text-lg w-max hover:text-green-500 mb-5">
+                    <Link to="#" className="text-lg w-max hover:text-green-500 mb-4">
                         <FaSignOutAlt className="inline-block mr-4" />
                         Sign Out
                     </Link>
