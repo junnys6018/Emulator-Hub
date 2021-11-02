@@ -1,3 +1,4 @@
+import { toKebabCase } from '@/src/util';
 import React, { Fragment } from 'react';
 
 interface LibraryProps {
@@ -8,7 +9,9 @@ interface LibraryProps {
 export default function Library(props: LibraryProps) {
     return (
         <Fragment>
-            <h2 className="text-xl mb-4 pt-2.5">{props.console}</h2>
+            <h2 id={toKebabCase(props.console)} className="text-xl mb-4 pt-2.5">
+                {props.console}
+            </h2>
             <div
                 className="
                     mb-12 grid gap-9 auto-rows-auto

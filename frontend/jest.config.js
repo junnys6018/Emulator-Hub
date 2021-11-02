@@ -1,7 +1,7 @@
 module.exports = {
     cacheDirectory: 'node_modules/.cache/jest',
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.tsx', 'tests/**/*.ts'],
+    collectCoverageFrom: ['src/**/*.tsx', 'src/**/*.ts', 'tests/**/*.tsx', 'tests/**/*.ts'],
     // coverageThreshold: {
     //     global: {
     //         branches: 90,

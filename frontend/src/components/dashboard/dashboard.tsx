@@ -18,10 +18,10 @@ export default function Dashboard() {
                     <Card image={SMB} name="Super Mario Bros" />
                     <Card image={SMB} name="Super Mario Bros" />
                 </Library>
-                <Library console="Game Boy Color">
+                <Library console="Game Boy">
                     <Card image={SMB} name="Super Mario Bros" />
                 </Library>
-                <Library console="Game Boy">
+                <Library console="Game Boy Color">
                     <Card image={SMB} name="Super Mario Bros" />
                     <Card image={SMB} name="Super Mario Bros" />
                 </Library>

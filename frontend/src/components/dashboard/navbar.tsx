@@ -17,10 +17,18 @@ export default function Navbar(props: NavbarProps) {
         <div className="flex flex-wrap">
             <div className="container my-7 md:my-10 flex items-center">
                 <span className="font-bold text-2xl xs:text-3xl mr-auto xl:mr-20">Emulator Hub</span>
-                <a className="nav__nav-item">NES</a>
-                <a className="nav__nav-item">GB</a>
-                <a className="nav__nav-item">GBC</a>
-                <a className="nav__nav-item mr-auto">CHIP 8</a>
+                <a href="#nintendo-entertainment-system" className="nav__nav-item">
+                    NES
+                </a>
+                <a href="#game-boy" className="nav__nav-item">
+                    GB
+                </a>
+                <a href="#game-boy-color" className="nav__nav-item">
+                    GBC
+                </a>
+                <a href="#chip-8" className="nav__nav-item mr-auto">
+                    CHIP 8
+                </a>
                 <Link to="#" className="hidden md:flex btn-secondary tracking-wider h-10 px-4 mr-10">
                     <FaPlus className="inline-block mr-2.5" size="12px" />
                     ADD ROMS
@@ -42,10 +50,18 @@ export default function Navbar(props: NavbarProps) {
                         <span className="mx-auto text-4xl font-semibold">{props.userName}</span>
                     </div>
                     <span className="text-gray-300 mb-3">Jump To</span>
-                    <span className="nav__dropdown-item mb-3">NES</span>
-                    <span className="nav__dropdown-item mb-3">GB</span>
-                    <span className="nav__dropdown-item mb-3">GBC</span>
-                    <span className="nav__dropdown-item mb-8">CHIP 8</span>
+                    <a href="#nintendo-entertainment-system" className="nav__dropdown-item mb-3">
+                        NES
+                    </a>
+                    <a href="#game-boy" className="nav__dropdown-item mb-3">
+                        GB
+                    </a>
+                    <a href="#game-boy-color" className="nav__dropdown-item mb-3">
+                        GBC
+                    </a>
+                    <a href="#chip-8" className="nav__dropdown-item mb-8">
+                        CHIP 8
+                    </a>
 
                     <Link to="#" className="text-lg w-max hover:text-green-500 mb-5">
                         <FaCog className="inline-block mr-4" size="" />
