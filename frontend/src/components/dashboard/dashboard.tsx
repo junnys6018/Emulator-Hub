@@ -11,24 +11,26 @@ export default function Dashboard() {
     return (
         <Fragment>
             <Navbar userName="Jun Lim" profileImage={profile} />
-            <Library console="Nintendo Entertainment System">
-                <Card image={SMB} name="Super Mario Bros" />
-                <Card image={SMB} name="Super Mario Bros" />
-                <Card image={SMB} name="Super Mario Bros" />
-                <Card image={SMB} name="Super Mario Bros" />
-            </Library>
-            <Library console="Game Boy Color">
-                <Card image={SMB} name="Super Mario Bros" />
-            </Library>
-            <Library console="Game Boy">
-                <Card image={SMB} name="Super Mario Bros" />
-                <Card image={SMB} name="Super Mario Bros" />
-            </Library>
-            <Library console="CHIP 8">
-                <Card image={SMB} name="Super Mario Bros" />
-                <Card image={SMB} name="Super Mario Bros" />
-                <Card image={SMB} name="Super Mario Bros" />
-            </Library>
+            <div className="container">
+                <Library console="Nintendo Entertainment System">
+                    <Card image={SMB} name="Super Mario Bros" />
+                    <Card image={SMB} name="Super Mario Bros" />
+                    <Card image={SMB} name="Super Mario Bros" />
+                    <Card image={SMB} name="Super Mario Bros" />
+                </Library>
+                <Library console="Game Boy Color">
+                    <Card image={SMB} name="Super Mario Bros" />
+                </Library>
+                <Library console="Game Boy">
+                    <Card image={SMB} name="Super Mario Bros" />
+                    <Card image={SMB} name="Super Mario Bros" />
+                </Library>
+                <Library console="CHIP 8">
+                    <Card image={SMB} name="Super Mario Bros" />
+                    <Card image={SMB} name="Super Mario Bros" />
+                    <Card image={SMB} name="Super Mario Bros" />
+                </Library>
+            </div>
         </Fragment>
     );
 }

@@ -2,14 +2,13 @@ import React from 'react';
 import { FaCog, FaSignOutAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-export default function ProfileDropdown(props: { profileImage: string; id: string }) {
+export default function ProfileDropdown(props: { profileImage: string }) {
     return (
         <div
-            id={props.id}
             className="
                 pointer-events-none opacity-0 absolute w-max -right-1 transform translate-y-6 z-10
                 filter drop-shadow bg-gray-700 transition-opacity duration-75 rounded-2xl cursor-default
-                flex flex-col items-stretch
+                flex flex-col items-stretch dropdown
             "
             tabIndex={1}
         >
