@@ -8,6 +8,8 @@ import './navbar.css';
 interface NavbarProps {
     profileImage: string;
     userName: string;
+    searchQuery: string;
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function Navbar(props: NavbarProps) {
@@ -37,6 +39,8 @@ export default function Navbar(props: NavbarProps) {
     const onSearchButtonClick = () => {
         if (!searchActive) {
             searchInputElement.current?.focus();
+        } else {
+            props.setSearchQuery('');
         }
         setSearchActive(!searchActive);
     };
@@ -116,7 +120,13 @@ export default function Navbar(props: NavbarProps) {
                 }`}
             >
                 <div className="container py-5 flex items-center">
-                    <button className="mr-5 active:text-green-500" onClick={() => setSearchActive(false)}>
+                    <button
+                        className="mr-5 active:text-green-500"
+                        onClick={() => {
+                            setSearchActive(false);
+                            props.setSearchQuery('');
+                        }}
+                    >
                         <FaArrowLeft size="16px" />
                     </button>
                     <input
@@ -128,6 +138,8 @@ export default function Navbar(props: NavbarProps) {
                         type="text"
                         placeholder="Search Roms"
                         ref={searchInputElement}
+                        value={props.searchQuery}
+                        onChange={e => props.setSearchQuery(e.currentTarget.value)}
                     ></input>
                     <FaSearch size="16px" />
                 </div>
