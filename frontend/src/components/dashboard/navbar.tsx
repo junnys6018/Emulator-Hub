@@ -86,7 +86,11 @@ export default function Navbar(props: NavbarProps) {
                         <span className="mx-auto text-4xl font-semibold">{props.userName}</span>
                     </div>
                     <span className="text-gray-300 mb-3">Jump To</span>
-                    <a onClick={onJumpToClick} href="#nintendo-entertainment-system" className="nav__dropdown-item mb-3">
+                    <a
+                        onClick={onJumpToClick}
+                        href="#nintendo-entertainment-system"
+                        className="nav__dropdown-item mb-3"
+                    >
                         NES
                     </a>
                     <a onClick={onJumpToClick} href="#game-boy" className="nav__dropdown-item mb-3">

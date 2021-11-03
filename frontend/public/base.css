@@ -43,4 +43,6 @@
 }
 
 /* remove default blue highlight that tailwind sets*/
-* { -webkit-tap-highlight-color: transparent; }
+* {
+    -webkit-tap-highlight-color: transparent;
+}

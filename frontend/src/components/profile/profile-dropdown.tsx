@@ -12,7 +12,12 @@ export default function ProfileDropdown(props: { profileImage: string }) {
             "
             tabIndex={1}
         >
-            <img className="rounded-full filter drop-shadow my-3 mx-11" width="120px" height="120px" src={props.profileImage}></img>
+            <img
+                className="rounded-full filter drop-shadow my-3 mx-11"
+                width="120px"
+                height="120px"
+                src={props.profileImage}
+            ></img>
             <div className="border-t border-gray-600"></div>
             <Link to="#" className="w-max ml-11 my-3 text-left hover:text-green-500">
                 <FaCog className="inline-block mr-4" size="" />

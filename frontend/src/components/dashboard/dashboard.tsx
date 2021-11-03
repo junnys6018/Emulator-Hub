@@ -29,7 +29,12 @@ export default function Dashboard() {
 
     return (
         <Fragment>
-            <Navbar userName="Jun Lim" profileImage={profile} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+            <Navbar
+                userName="Jun Lim"
+                profileImage={profile}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+            />
             <div className="container">
                 <Library console="Nintendo Entertainment System">
                     {NESnames.map(name => (
@@ -51,7 +56,11 @@ export default function Dashboard() {
                         <GameItem key={name} image={SMB} name={name} />
                     ))}
                 </Library>
-                {noneFound && <p className="text-lg font-medium mt-10 mb-32 break-words text-center">Couldn&apos;t find &quot;{searchQuery}&quot;</p>}
+                {noneFound && (
+                    <p className="text-lg font-medium mt-10 mb-32 break-words text-center">
+                        Couldn&apos;t find &quot;{searchQuery}&quot;
+                    </p>
+                )}
             </div>
         </Fragment>
     );
