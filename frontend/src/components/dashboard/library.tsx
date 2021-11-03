@@ -7,6 +7,10 @@ interface LibraryProps {
 }
 
 export default function Library(props: LibraryProps) {
+    if (React.Children.count(props.children) === 0) {
+        return null;
+    }
+
     return (
         <Fragment>
             <h2 id={toKebabCase(props.console)} className="text-xl mb-4 pt-2.5">

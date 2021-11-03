@@ -15,10 +15,15 @@ export default function Dashboard() {
     const GBCnames = ['Super Mario World'];
     const CHIP8names = ['Tetris'];
 
+    let noneFound = false;
     if (searchQuery !== '') {
+        noneFound = true;
         for (const names of [NESnames, GBnames, GBCnames, CHIP8names]) {
             const filteredNames = names.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));
             names.splice(0, names.length, ...filteredNames);
+            if (names.length !== 0) {
+                noneFound = false;
+            }
         }
     }
 
@@ -46,6 +51,7 @@ export default function Dashboard() {
                         <GameItem key={name} image={SMB} name={name} />
                     ))}
                 </Library>
+                {noneFound && <p className="text-lg font-medium mt-10 mb-32 break-words text-center">Couldn&apos;t find &quot;{searchQuery}&quot;</p>}
             </div>
         </Fragment>
     );
