@@ -20,7 +20,7 @@ export default function Navbar(props: NavbarProps) {
         // Close the dropdown menu
         setDropDownActive(false);
 
-        // The height of the dropdown is included in the scroll offset calculation made by the brower.
+        // The height of the dropdown is included in the scroll offset calculation made by the browser.
         // This is because we set the height to be transitioned, so its not instantly set to zero.
         // As such, we have to manually calculate the height of the dropdown and subtract it from the y position
         // of the target element.
@@ -51,8 +51,8 @@ export default function Navbar(props: NavbarProps) {
                     <FaPlus className="inline-block mr-2.5" size="12px" />
                     ADD ROMS
                 </Link>
-                <FaSearch className="md:hidden mr-5 hover:text-green-500 hover:cursor-pointer" size="24px" />
                 <Profile className="hidden md:block" profileImage={props.profileImage} userName={props.userName} />
+                <FaSearch className="md:hidden mr-5 hover:text-green-500 hover:cursor-pointer" size="24px" />
                 <button className="select-none md:hidden" onClick={() => setDropDownActive(!dropdownActive)}>
                     <img className="rounded-full" src={props.profileImage} width="40px" height="40px"></img>
                 </button>
