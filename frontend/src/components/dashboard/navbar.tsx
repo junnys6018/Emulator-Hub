@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaCog, FaPlus, FaSearch, FaSignOutAlt } from 'react-icons/fa';
+import { FaCog, FaPlus, FaSearch, FaSignOutAlt, FaArrowLeft } from 'react-icons/fa';
 
 import Profile from '../profile/profile';
 import './navbar.css';
@@ -12,8 +12,10 @@ interface NavbarProps {
 
 export default function Navbar(props: NavbarProps) {
     const [dropdownActive, setDropDownActive] = useState(false);
+    const [searchActive, setSearchActive] = useState(false);
 
     const dropdownElement: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
+    const searchInputElement: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
 
     const onJumpToClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -29,6 +31,14 @@ export default function Navbar(props: NavbarProps) {
         const { y } = target.getBoundingClientRect();
         const dropdown = dropdownElement.current as HTMLDivElement;
         window.scroll(0, y - dropdown.clientHeight);
+    };
+
+    // FIXME: The active state is stolen by the search input, so the search button never goes green
+    const onSearchButtonClick = () => {
+        if (!searchActive) {
+            searchInputElement.current?.focus();
+        }
+        setSearchActive(!searchActive);
     };
 
     return (
@@ -52,7 +62,9 @@ export default function Navbar(props: NavbarProps) {
                     ADD ROMS
                 </Link>
                 <Profile className="hidden md:block" {...props} />
-                <FaSearch className="md:hidden mr-5 hover:text-green-500 hover:cursor-pointer" size="24px" />
+                <button className="md:hidden mr-5 active:text-green-500" onClick={onSearchButtonClick}>
+                    <FaSearch size="24px" />
+                </button>
                 <button className="select-none md:hidden" onClick={() => setDropDownActive(!dropdownActive)}>
                     <img className="rounded-full" src={props.profileImage} width="40px" height="40px"></img>
                 </button>
@@ -95,6 +107,29 @@ export default function Navbar(props: NavbarProps) {
                         <FaPlus className="inline-block mr-4" />
                         ADD ROMS
                     </Link>
+                </div>
+            </div>
+            {/* Search Dropdown */}
+            <div
+                className={`md:hidden flex-grow w-full bg-gray-900 overflow-hidden transition-max-height ${
+                    searchActive ? 'nav__search-container-height' : 'max-h-0'
+                }`}
+            >
+                <div className="container py-5 flex items-center">
+                    <button className="mr-5 active:text-green-500" onClick={() => setSearchActive(false)}>
+                        <FaArrowLeft size="16px" />
+                    </button>
+                    <input
+                        // On mobile, for some reason the input overflows if the width is not set, so we set it to 4px here
+                        // then let it grow to take up the available space with flex-grow.
+                        className="appearance-none mr-5 w-1 flex-grow bg-gray-900 focus:outline-none"
+                        name="search-roms"
+                        id="search-roms"
+                        type="text"
+                        placeholder="Search Roms"
+                        ref={searchInputElement}
+                    ></input>
+                    <FaSearch size="16px" />
                 </div>
             </div>
         </div>

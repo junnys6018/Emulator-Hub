@@ -10,4 +10,8 @@
     .nav__dropdown-container-height {
         max-height: 500px;
     }
+
+    .nav__search-container-height {
+        max-height: 64px;
+    }
 }
