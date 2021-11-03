@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import Card from './card';
+import GameItem from './game-item';
 import Navbar from './navbar';
 import Library from './library';
 
@@ -13,22 +13,22 @@ export default function Dashboard() {
             <Navbar userName="Jun Lim" profileImage={profile} />
             <div className="container">
                 <Library console="Nintendo Entertainment System">
-                    <Card image={SMB} name="Super Mario Bros" />
-                    <Card image={SMB} name="Super Mario Bros" />
-                    <Card image={SMB} name="Super Mario Bros" />
-                    <Card image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
                 </Library>
                 <Library console="Game Boy">
-                    <Card image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
                 </Library>
                 <Library console="Game Boy Color">
-                    <Card image={SMB} name="Super Mario Bros" />
-                    <Card image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
                 </Library>
                 <Library console="CHIP 8">
-                    <Card image={SMB} name="Super Mario Bros" />
-                    <Card image={SMB} name="Super Mario Bros" />
-                    <Card image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
+                    <GameItem image={SMB} name="Super Mario Bros" />
                 </Library>
             </div>
         </Fragment>

@@ -51,7 +51,7 @@ export default function Navbar(props: NavbarProps) {
                     <FaPlus className="inline-block mr-2.5" size="12px" />
                     ADD ROMS
                 </Link>
-                <Profile className="hidden md:block" profileImage={props.profileImage} userName={props.userName} />
+                <Profile className="hidden md:block" {...props} />
                 <FaSearch className="md:hidden mr-5 hover:text-green-500 hover:cursor-pointer" size="24px" />
                 <button className="select-none md:hidden" onClick={() => setDropDownActive(!dropdownActive)}>
                     <img className="rounded-full" src={props.profileImage} width="40px" height="40px"></img>
