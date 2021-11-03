@@ -43,3 +43,6 @@
             hover:ring-green-500;
     }
 }
+
+/* remove default blue highlight that tailwind sets*/
+* { -webkit-tap-highlight-color: transparent; }
