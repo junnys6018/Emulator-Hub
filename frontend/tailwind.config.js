@@ -53,6 +53,7 @@ module.exports = {
             ringWidth: ['hover'],
             cursor: ['hover', 'focus'],
             margin: ['last'],
+            textColor: ['active'],
         },
     },
     plugins: [],

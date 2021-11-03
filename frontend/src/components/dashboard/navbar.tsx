@@ -57,9 +57,10 @@ export default function Navbar(props: NavbarProps) {
                     <img className="rounded-full" src={props.profileImage} width="40px" height="40px"></img>
                 </button>
             </div>
+            {/* Profile Dropdown */}
             <div
                 ref={dropdownElement}
-                className={`md:hidden flex-grow bg-gray-900 overflow-hidden transition-max-height ${
+                className={`md:hidden flex-grow w-full bg-gray-900 overflow-hidden transition-max-height ${
                     dropdownActive ? 'nav__dropdown-container-height' : 'max-h-0'
                 }`}
             >
@@ -82,15 +83,15 @@ export default function Navbar(props: NavbarProps) {
                         CHIP 8
                     </a>
 
-                    <Link to="#" className="text-lg w-max hover:text-green-500 mb-4">
+                    <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
                         <FaCog className="inline-block mr-4" size="" />
                         Settings
                     </Link>
-                    <Link to="#" className="text-lg w-max hover:text-green-500 mb-4">
+                    <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
                         <FaSignOutAlt className="inline-block mr-4" />
                         Sign Out
                     </Link>
-                    <Link to="#" className="text-lg  tracking-wider w-max hover:text-green-500 mb-6">
+                    <Link to="#" className="text-lg  tracking-wider w-max active:text-green-500 mb-6">
                         <FaPlus className="inline-block mr-4" />
                         ADD ROMS
                     </Link>

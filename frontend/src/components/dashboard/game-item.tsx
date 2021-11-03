@@ -47,7 +47,7 @@ export function GameListItem(props: GameItemProps) {
         <div className={classNames('flex items-center', props.className)}>
             <button className="flex-shrink-0 rounded bg-cover bg-center mr-4" style={image}></button>
             <span className="mr-auto truncate">{props.name}</span>
-            <button className="ml-2 hover:text-green-500">
+            <button className="ml-2 active:text-green-500">
                 <FaEllipsisV />
             </button>
         </div>
