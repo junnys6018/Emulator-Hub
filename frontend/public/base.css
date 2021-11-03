@@ -6,7 +6,6 @@
 
 @layer base {
     html {
-        @apply h-full;
         scroll-behavior: smooth;
     }
 
@@ -15,7 +14,6 @@
         @apply font-normal;
         @apply bg-gray-800;
         @apply text-base;
-        @apply h-full;
     }
 }
 
