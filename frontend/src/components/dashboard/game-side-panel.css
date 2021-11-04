@@ -1,0 +1,5 @@
+@layer components {
+    .game-side-panel__active-save-item {
+        @apply text-primary-500;
+    }
+}

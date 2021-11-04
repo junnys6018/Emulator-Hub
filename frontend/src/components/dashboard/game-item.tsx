@@ -5,10 +5,11 @@ import { FaPlay, FaEllipsisH, FaEllipsisV } from 'react-icons/fa';
 interface GameItemProps {
     image: string;
     name: string;
-    className?: string;
+    onActiveCallback: () => void;
 }
 
-export function GameCard(props: GameItemProps) {
+type GameItemInnerProps = GameItemProps & { className?: string };
+export function GameCard(props: GameItemInnerProps) {
     const image: React.CSSProperties = {
         backgroundImage: `url(${props.image})`,
         imageRendering: 'pixelated',
@@ -27,7 +28,7 @@ export function GameCard(props: GameItemProps) {
                 <button className="mr-2 hover:text-green-500 p-1">
                     <FaPlay size="12px" />
                 </button>
-                <button className="hover:text-green-500 p-1">
+                <button className="hover:text-green-500 p-1" onClick={props.onActiveCallback}>
                     <FaEllipsisH size="12px" />
                 </button>
             </div>
@@ -35,7 +36,7 @@ export function GameCard(props: GameItemProps) {
     );
 }
 
-export function GameListItem(props: GameItemProps) {
+export function GameListItem(props: GameItemInnerProps) {
     const image: React.CSSProperties = {
         backgroundImage: `url(${props.image})`,
         imageRendering: 'pixelated',
@@ -47,14 +48,14 @@ export function GameListItem(props: GameItemProps) {
         <div className={classNames('flex items-center', props.className)}>
             <button className="flex-shrink-0 rounded bg-cover bg-center mr-4" style={image}></button>
             <span className="mr-auto truncate">{props.name}</span>
-            <button className="ml-2 active:text-green-500">
+            <button className="ml-2 active:text-green-500" onClick={props.onActiveCallback}>
                 <FaEllipsisV />
             </button>
         </div>
     );
 }
 
-export default function GameItem(props: { image: string; name: string }) {
+export default function GameItem(props: GameItemProps) {
     return (
         <Fragment>
             <GameListItem {...props} className="md:hidden" />
