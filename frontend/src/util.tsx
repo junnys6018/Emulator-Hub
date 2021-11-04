@@ -17,7 +17,7 @@ function matchBreakpoints() {
     return transformBreakpoint(queryLists, queryList => queryList.matches);
 }
 
-const BreakpointContext = React.createContext<null | string>(null);
+const BreakpointContext = React.createContext<Breakpoints<boolean> | null>(null);
 
 export function BreakpointProvider(props: { children: React.ReactNode }) {
     const [breakpointMatch, setBreakpointMatch] = useState(matchBreakpoints());
@@ -39,16 +39,20 @@ export function BreakpointProvider(props: { children: React.ReactNode }) {
         };
     }, []);
 
+    return <BreakpointContext.Provider value={breakpointMatch}>{props.children}</BreakpointContext.Provider>;
+}
+
+export function getMaxBreakpoint(breakpointMatch: Breakpoints<boolean>) {
     const breakpointsInOrder = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
-    let current = '2xs';
+    let max = '2xs';
     for (const breakpoint of breakpointsInOrder) {
         if (breakpointMatch[breakpoint as BreakpointKeys]) {
-            current = breakpoint;
+            max = breakpoint;
         } else {
             break;
         }
     }
-    return <BreakpointContext.Provider value={current}>{props.children}</BreakpointContext.Provider>;
+    return max;
 }
 
 export function useBreakpoint() {

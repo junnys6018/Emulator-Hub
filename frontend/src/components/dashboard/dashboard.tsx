@@ -6,9 +6,11 @@ import Library from './library';
 
 import SMB from '@/public/assets/SMB.png';
 import profile from '@/public/assets/test-profile.png';
+import { useBreakpoint } from '@/src/util';
 
 export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
+    const breakpoint = useBreakpoint();
 
     const NESnames = ['Super Mario Bros', 'Zelda', 'Donkey Kong', 'Mario Cart'];
     const GBnames = ['Pokemon'];
@@ -16,7 +18,7 @@ export default function Dashboard() {
     const CHIP8names = ['Tetris'];
 
     let noneFound = false;
-    if (searchQuery !== '') {
+    if (searchQuery !== '' && !breakpoint.md) {
         noneFound = true;
         for (const names of [NESnames, GBnames, GBCnames, CHIP8names]) {
             const filteredNames = names.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()));

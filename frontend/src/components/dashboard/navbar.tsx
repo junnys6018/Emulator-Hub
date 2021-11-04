@@ -111,6 +111,7 @@ export default function Navbar(props: NavbarProps) {
                         <FaSignOutAlt className="inline-block mr-4" />
                         Sign Out
                     </Link>
+                    {/* FIXME: Bottom margin does not show on firefox mobile */}
                     <Link to="#" className="text-lg  tracking-wider w-max active:text-green-500 mb-6">
                         <FaPlus className="inline-block mr-4" />
                         ADD ROMS
