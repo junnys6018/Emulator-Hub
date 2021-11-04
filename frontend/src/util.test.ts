@@ -1,3 +1,4 @@
+import '@/tests/mocks/matchMedia';
 import { toKebabCase } from './util';
 
 test('toKebabCase()', () => {
