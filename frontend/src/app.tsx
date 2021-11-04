@@ -7,26 +7,30 @@ import About from './components/about/about';
 import Dashboard from './components/dashboard/dashboard';
 import Footer from './components/footer/footer';
 
+import { BreakpointProvider } from '@/src/util';
+
 function App() {
     return (
         <Router>
-            <div className="flex-grow">
-                <Switch>
-                    <Route exact path="/">
-                        <Index />
-                    </Route>
-                    <Route exact path="/dashboard">
-                        <Dashboard />
-                    </Route>
-                    <Route exact path="/about">
-                        <About />
-                    </Route>
-                    <Route path="*">
-                        <NotFound />
-                    </Route>
-                </Switch>
-            </div>
-            <Footer />
+            <BreakpointProvider>
+                <div className="flex-grow">
+                    <Switch>
+                        <Route exact path="/">
+                            <Index />
+                        </Route>
+                        <Route exact path="/dashboard">
+                            <Dashboard />
+                        </Route>
+                        <Route exact path="/about">
+                            <About />
+                        </Route>
+                        <Route path="*">
+                            <NotFound />
+                        </Route>
+                    </Switch>
+                </div>
+                <Footer />
+            </BreakpointProvider>
         </Router>
     );
 }

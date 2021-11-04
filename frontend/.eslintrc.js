@@ -14,6 +14,7 @@ module.exports = {
     },
     extends: [
         'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
+        'plugin:react-hooks/recommended',
         'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
 
         // Enables eslint-plugin-prettier and eslint-config-prettier.

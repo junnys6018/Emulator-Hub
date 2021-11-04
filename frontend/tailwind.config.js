@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { fontFamily } = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
+const breakpoints = require('./breakpoints');
 
 fontFamily['sans'] = ['Poppins', 'system-ui'];
 
@@ -15,14 +16,7 @@ module.exports = {
             primary: colors.sky,
             green: colors.emerald,
         },
-        screens: {
-            xs: '375px',
-            sm: '576px',
-            md: '768px',
-            lg: '992px',
-            xl: '1200px',
-            '2xl': '1400px',
-        },
+        screens: breakpoints,
         dropShadow: {
             DEFAULT: '1px 1px 2px rgba(0, 0, 0, 0.25)',
         },
