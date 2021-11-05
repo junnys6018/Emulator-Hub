@@ -9,6 +9,6 @@
         transform: translate(calc(-100% - 4px), -50%);
         width: 7px;
         height: 7px;
-        @apply absolute rounded-full bg-primary-500
+        @apply absolute rounded-full bg-primary-500;
     }
 }

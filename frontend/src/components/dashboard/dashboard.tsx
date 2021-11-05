@@ -4,31 +4,25 @@ import GameItem from './game-item';
 import Navbar from './navbar';
 import Library from './library';
 import GameSidePanel from './game-side-panel';
+import Sidebar from '../util/sidebar';
 
 import profile from '@/public/assets/test-profile.png';
-import { useBreakpoint } from '@/src/util';
+import { isEmptyObject, useBreakpoint } from '@/src/util';
 import { useGameMetaData, GameMetaData, Console } from '@/src/game-data';
 
 export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sidePanelOpen, setSidePanelOpen] = useState(false);
-    let gameMetaData = useGameMetaData();
     const [activeGame, setActiveGame] = useState<GameMetaData | Record<string, never>>({});
+
+    let gameMetaData = useGameMetaData();
     const breakpoint = useBreakpoint();
 
     let noneFound = false;
+    // Only apply search on mobile
     if (searchQuery !== '' && !breakpoint.md) {
         gameMetaData = gameMetaData.filter(game => game.name.toLowerCase().includes(searchQuery.toLowerCase()));
         noneFound = gameMetaData.length === 0;
-    }
-
-    // If the side panel is open and the breakpoint changes, we need to lock/unlock the scroll lock on the body
-    if (sidePanelOpen) {
-        if (breakpoint.lg) {
-            document.body.classList.remove('overflow-hidden');
-        } else {
-            document.body.classList.add('overflow-hidden');
-        }
     }
 
     const filterForConsole = (console: Console) => {
@@ -40,10 +34,6 @@ export default function Dashboard() {
                     image={game.image}
                     name={game.name}
                     onActiveCallback={() => {
-                        // Lock scrolling on mobile
-                        if (!breakpoint.lg) {
-                            document.body.classList.add('overflow-hidden');
-                        }
                         setSidePanelOpen(true);
                         setActiveGame(game);
                     }}
@@ -52,7 +42,6 @@ export default function Dashboard() {
     };
 
     const closePanel = () => {
-        document.body.classList.remove('overflow-hidden');
         setSidePanelOpen(false);
     };
 
@@ -75,13 +64,11 @@ export default function Dashboard() {
                     </p>
                 )}
             </div>
-            <GameSidePanel
-                {...activeGame}
-                closePanel={closePanel}
-                className={`fixed z-10 left-0 top-0 w-screen lg:max-w-2xl h-screen transform transition-transform ${
-                    sidePanelOpen ? 'translate-x-0' : '-translate-x-full'
-                }`}
-            />
+            <Sidebar show={sidePanelOpen} hide={closePanel} className="w-screen lg:w-168 h-screen flex flex-col">
+                {!isEmptyObject(activeGame) && (
+                    <GameSidePanel {...(activeGame as GameMetaData)} closePanel={closePanel} />
+                )}
+            </Sidebar>
         </Fragment>
     );
 }

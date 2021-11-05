@@ -12,6 +12,8 @@ module.exports = {
         colors: {
             transparent: 'transparent',
             current: 'currentColor',
+            black: colors.black,
+            white: colors.white,
             gray: colors.trueGray,
             primary: colors.sky,
             green: colors.emerald,
@@ -38,6 +40,9 @@ module.exports = {
             }),
             transitionProperty: {
                 'max-height': 'max-height',
+            },
+            spacing: {
+                168: '42rem',
             },
         },
     },
