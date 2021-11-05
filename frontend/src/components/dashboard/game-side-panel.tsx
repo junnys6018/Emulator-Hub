@@ -19,7 +19,7 @@ export default function GameSidePanel(props: GameSidePanelProps) {
             <div
                 key={save}
                 className={`
-                    ${index % 2 === 0 ? 'bg-gray-700 lg:bg-gray-600' : 'bg-gray-800 lg:bg-gray-700'}
+                    ${index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-800'}
                     ${index === props.activeSaveIndex ? 'text-primary-500' : ''}
                 `}
             >
@@ -40,7 +40,7 @@ export default function GameSidePanel(props: GameSidePanelProps) {
     return (
         <Fragment>
             <div className="h-1 flex-shrink-0 bg-primary-500"></div>
-            <div className="flex flex-grow flex-col overflow-y-auto bg-gray-800 lg:bg-gray-700">
+            <div className="flex flex-grow flex-col overflow-y-auto bg-gray-800">
                 <div className="container flex flex-col">
                     <div className="flex items-center py-5 md:py-8">
                         <button
