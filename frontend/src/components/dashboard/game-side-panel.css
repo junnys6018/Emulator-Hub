@@ -1,5 +1,14 @@
 @layer components {
-    .game-side-panel__active-save-item {
-        @apply text-primary-500;
+    .game-side-panel__circle {
+        position: relative;
+    }
+
+    .game-side-panel__circle::before {
+        content: '';
+        top: 50%;
+        transform: translate(calc(-100% - 4px), -50%);
+        width: 7px;
+        height: 7px;
+        @apply absolute rounded-full bg-primary-500
     }
 }

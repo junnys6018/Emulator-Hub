@@ -13,7 +13,6 @@ export function GameCard(props: GameItemInnerProps) {
     const image: React.CSSProperties = {
         backgroundImage: `url(${props.image})`,
         imageRendering: 'pixelated',
-        opacity: 0.8,
         aspectRatio: '1',
     };
 
@@ -40,7 +39,6 @@ export function GameListItem(props: GameItemInnerProps) {
     const image: React.CSSProperties = {
         backgroundImage: `url(${props.image})`,
         imageRendering: 'pixelated',
-        opacity: 0.8,
         width: '80px',
         height: '80px',
     };

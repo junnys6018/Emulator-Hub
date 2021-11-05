@@ -12,6 +12,9 @@ interface GameSidePanelProps {
     className?: string;
 }
 
+// TODO: swipe right to close
+// TODO: better integration with back button on android
+
 export default function GameSidePanel(props: GameSidePanelProps) {
     if (props.name === undefined) {
         return <div className={props.className}></div>;
@@ -22,13 +25,18 @@ export default function GameSidePanel(props: GameSidePanelProps) {
             <div
                 key={save}
                 className={`
-                    ${index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-800'}
-                    ${index === props.activeSaveIndex ? 'game-side-panel__active-save-item' : ''}
+                    ${index % 2 === 0 ? 'bg-gray-700 lg:bg-gray-600' : 'bg-gray-800 lg:bg-gray-700'}
+                    ${index === props.activeSaveIndex ? 'text-primary-500' : ''}
                 `}
             >
                 <div className="container h-12 flex items-center">
-                    <span className="text-lg mr-auto">{save}</span>
-                    {/* TODO: Add a blue circle to the left of the active save */}
+                    <span
+                        className={`text-lg mr-auto ${
+                            index === props.activeSaveIndex ? 'game-side-panel__circle' : ''
+                        }`}
+                    >
+                        {save}
+                    </span>
                     {index === props.activeSaveIndex && <span className="text-lg">Active</span>}
                 </div>
             </div>
@@ -36,23 +44,30 @@ export default function GameSidePanel(props: GameSidePanelProps) {
     });
 
     return (
-        <div className={classNames('flex flex-col overflow-y-auto bg-gray-800', props.className)}>
+        <div className={classNames('flex flex-col overflow-y-auto bg-gray-800 lg:bg-gray-700', props.className)}>
+            <div className="h-1 flex-shrink-0 bg-primary-500"></div>
             <div className="container flex flex-col">
-                <div className="flex items-center py-5 md:py-10">
-                    <button className="mr-3 flex-shrink-0 active:text-green-500" onClick={props.closePanel}>
+                <div className="flex items-center py-5 md:py-8">
+                    <button
+                        className="mr-3 flex-shrink-0 active:text-green-500 hover:text-green-500"
+                        onClick={props.closePanel}
+                    >
                         <FaArrowLeft size="20px" />
                     </button>
                     <h1 className="mr-auto font-semibold text-2xl truncate">{props.name}</h1>
-                    <button className="flex-shrink-0 active:text-green-500">
+                    <button className="flex-shrink-0 active:text-green-500 hover:text-green-500">
                         <FaEdit size="20px" />
                     </button>
                 </div>
-                <img className="rounded-2xl pixelated drop-shadow" src={props.image}></img>
+                <img
+                    className="rounded-2xl pixelated drop-shadow object-center object-cover md:max-w-sm mx-auto"
+                    src={props.image}
+                ></img>
                 <h2 className="font-medium text-2xl pt-6 pb-2 md:py-6">Saves</h2>
             </div>
             {saves}
             <div className="container flex flex-col mt-2">
-                <button className="text-gray-300 active:text-green-500 flex items-center mb-9 w-max">
+                <button className="text-gray-300 active:text-green-500 hover:text-green-500 flex items-center mb-9 w-max">
                     <span className="font-medium text-xs mr-1">Add Save</span>
                     <FaPlus size="8px" />
                 </button>

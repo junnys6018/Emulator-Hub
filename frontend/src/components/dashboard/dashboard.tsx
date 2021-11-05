@@ -22,6 +22,15 @@ export default function Dashboard() {
         noneFound = gameMetaData.length === 0;
     }
 
+    // If the side panel is open and the breakpoint changes, we need to lock/unlock the scroll lock on the body
+    if (sidePanelOpen) {
+        if (breakpoint.lg) {
+            document.body.classList.remove('overflow-hidden');
+        } else {
+            document.body.classList.add('overflow-hidden');
+        }
+    }
+
     const filterForConsole = (console: Console) => {
         return gameMetaData
             .filter(game => game.console == console)
@@ -31,7 +40,10 @@ export default function Dashboard() {
                     image={game.image}
                     name={game.name}
                     onActiveCallback={() => {
-                        document.body.classList.add('overflow-hidden');
+                        // Lock scrolling on mobile
+                        if (!breakpoint.lg) {
+                            document.body.classList.add('overflow-hidden');
+                        }
                         setSidePanelOpen(true);
                         setActiveGame(game);
                     }}
@@ -66,8 +78,8 @@ export default function Dashboard() {
             <GameSidePanel
                 {...activeGame}
                 closePanel={closePanel}
-                className={`fixed z-10 left-0 top-0 w-screen h-screen transform transition-transform ${
-                    sidePanelOpen ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed z-10 left-0 top-0 w-screen lg:max-w-2xl h-screen transform transition-transform ${
+                    sidePanelOpen ? 'translate-x-0' : '-translate-x-full'
                 }`}
             />
         </Fragment>
