@@ -7,7 +7,8 @@ import GameSidePanel from './game-side-panel';
 import Sidebar from '../util/sidebar';
 
 import profile from '@/public/assets/test-profile.png';
-import { isEmptyObject, useBreakpoint } from '@/src/util';
+import { useBreakpoint } from '@/src/use-breakpoint';
+import { isEmptyObject } from '@/src/util';
 import { useGameMetaData, GameMetaData, Console } from '@/src/game-data';
 
 export default function Dashboard() {

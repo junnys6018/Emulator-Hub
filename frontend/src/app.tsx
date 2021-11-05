@@ -7,7 +7,7 @@ import About from './components/about/about';
 import Dashboard from './components/dashboard/dashboard';
 import Footer from './components/footer/footer';
 
-import { BreakpointProvider } from '@/src/util';
+import { BreakpointProvider } from '@/src/use-breakpoint';
 
 function App() {
     return (
