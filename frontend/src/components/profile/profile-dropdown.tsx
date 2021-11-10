@@ -1,31 +1,35 @@
 import React from 'react';
-import { FaCog, FaSignOutAlt } from 'react-icons/fa';
+import { FaCog, FaPlus, FaSignOutAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-export default function ProfileDropdown(props: { profileImage: string }) {
+interface ProfileDropdownProps {
+    profileImage: string;
+    userName: string;
+    children?: React.ReactNode;
+}
+
+export default function ProfileDropdown(props: ProfileDropdownProps) {
     return (
-        <div
-            className="
-                pointer-events-none opacity-0 absolute w-max -right-1 transform translate-y-6 z-10
-                filter drop-shadow bg-gray-700 transition-opacity duration-75 rounded-2xl cursor-default
-                flex flex-col items-stretch dropdown
-            "
-            tabIndex={1}
-        >
-            <img
-                className="rounded-full filter drop-shadow my-3 mx-11"
-                width="120px"
-                height="120px"
-                src={props.profileImage}
-            ></img>
-            <div className="border-t border-gray-600"></div>
-            <Link to="#" className="w-max ml-11 my-3 text-left hover:text-green-500">
+        <div className="container flex flex-col">
+            <div className="flex my-6 items-center">
+                <img className="rounded-full" src={props.profileImage} width="100px" height="100px"></img>
+                <span className="mx-auto text-4xl font-semibold">{props.userName}</span>
+            </div>
+
+            {props.children}
+
+            <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
                 <FaCog className="inline-block mr-4" size="" />
                 Settings
             </Link>
-            <Link to="#" className="w-max ml-11 mb-3 text-left hover:text-green-500">
+            <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
                 <FaSignOutAlt className="inline-block mr-4" />
                 Sign Out
+            </Link>
+            {/* FIXME: Bottom margin does not show on firefox mobile */}
+            <Link to="#" className="text-lg  tracking-wider w-max active:text-green-500 mb-6">
+                <FaPlus className="inline-block mr-4" />
+                ADD ROMS
             </Link>
         </div>
     );

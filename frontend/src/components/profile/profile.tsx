@@ -2,7 +2,7 @@ import React from 'react';
 import { FaAngleDown } from 'react-icons/fa';
 import classNames from 'classnames';
 
-import ProfileDropdown from './profile-dropdown';
+import ProfilePopup from './profile-popup';
 import './profile.css';
 
 interface ProfileProps {
@@ -24,7 +24,7 @@ export default function Profile(props: ProfileProps) {
                 <span className="text-xl align-middle mr-1.5">{props.userName}</span>
                 <FaAngleDown className="inline-block" />
             </button>
-            <ProfileDropdown profileImage={props.profileImage} />
+            <ProfilePopup profileImage={props.profileImage} />
         </div>
     );
 }

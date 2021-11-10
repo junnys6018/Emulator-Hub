@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaCog, FaPlus, FaSearch, FaSignOutAlt, FaArrowLeft } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaArrowLeft } from 'react-icons/fa';
 
 import Profile from '../profile/profile';
 import './navbar.css';
+import ProfileDropdown from '../profile/profile-dropdown';
 
 interface NavbarProps {
     profileImage: string;
@@ -80,11 +81,7 @@ export default function Navbar(props: NavbarProps) {
                     dropdownActive ? 'nav__dropdown-container-height' : 'max-h-0'
                 }`}
             >
-                <div className="container flex flex-col">
-                    <div className="flex my-6 items-center">
-                        <img className="rounded-full" src={props.profileImage} width="100px" height="100px"></img>
-                        <span className="mx-auto text-4xl font-semibold">{props.userName}</span>
-                    </div>
+                <ProfileDropdown profileImage={props.profileImage} userName={props.userName}>
                     <span className="text-gray-300 mb-3">Jump To</span>
                     <a
                         onClick={onJumpToClick}
@@ -102,21 +99,7 @@ export default function Navbar(props: NavbarProps) {
                     <a onClick={onJumpToClick} href="#chip-8" className="nav__dropdown-item mb-8">
                         CHIP 8
                     </a>
-
-                    <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
-                        <FaCog className="inline-block mr-4" size="" />
-                        Settings
-                    </Link>
-                    <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
-                        <FaSignOutAlt className="inline-block mr-4" />
-                        Sign Out
-                    </Link>
-                    {/* FIXME: Bottom margin does not show on firefox mobile */}
-                    <Link to="#" className="text-lg  tracking-wider w-max active:text-green-500 mb-6">
-                        <FaPlus className="inline-block mr-4" />
-                        ADD ROMS
-                    </Link>
-                </div>
+                </ProfileDropdown>
             </div>
             {/* Search Dropdown */}
             <div

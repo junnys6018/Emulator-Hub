@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import NotFound from './components/not-found/not-found';
 import Index from './components/index/index';
-import About from './components/about/about';
+import AddRoms from './components/add-roms/add-roms';
 import Dashboard from './components/dashboard/dashboard';
 import Footer from './components/footer/footer';
 
@@ -21,8 +21,8 @@ function App() {
                         <Route exact path="/dashboard">
                             <Dashboard />
                         </Route>
-                        <Route exact path="/about">
-                            <About />
+                        <Route exact path="/add-roms">
+                            <AddRoms />
                         </Route>
                         <Route path="*">
                             <NotFound />
