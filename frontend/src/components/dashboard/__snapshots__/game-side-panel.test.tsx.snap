@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GameSidePanel /> snapshot 1`] = `
+Array [
+  <div
+    className="h-1 flex-shrink-0 bg-primary-500"
+  />,
+  <div
+    className="flex flex-grow flex-col overflow-y-auto bg-gray-800"
+  >
+    <div
+      className="container flex flex-col"
+    >
+      <div
+        className="flex items-center py-5 md:py-8"
+      >
+        <button
+          className="mr-3 flex-shrink-0 active:text-green-500 hover:text-green-500"
+          onClick={[Function]}
+        >
+          <svg
+            fill="currentColor"
+            height="20px"
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 448 512"
+            width="20px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"
+            />
+          </svg>
+        </button>
+        <h1
+          className="mr-auto font-semibold text-2xl truncate"
+        >
+          Zelda
+        </h1>
+        <button
+          className="flex-shrink-0 active:text-green-500 hover:text-green-500"
+        >
+          <svg
+            fill="currentColor"
+            height="20px"
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 576 512"
+            width="20px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+            />
+          </svg>
+        </button>
+      </div>
+      <img
+        className="rounded-2xl pixelated drop-shadow object-center object-cover md:max-w-sm mx-auto"
+        src="/image.png"
+      />
+      <h2
+        className="font-medium text-2xl pt-6 pb-2 md:py-6"
+      >
+        Saves
+      </h2>
+    </div>
+    <div
+      className="
+                    bg-gray-700
+                    
+                "
+    >
+      <div
+        className="container h-12 flex items-center"
+      >
+        <span
+          className="text-lg mr-auto "
+        >
+          Save 1
+        </span>
+      </div>
+    </div>
+    <div
+      className="
+                    bg-gray-800
+                    text-primary-500
+                "
+    >
+      <div
+        className="container h-12 flex items-center"
+      >
+        <span
+          className="text-lg mr-auto game-side-panel__circle"
+        >
+          Save 2
+        </span>
+        <span
+          className="text-lg"
+        >
+          Active
+        </span>
+      </div>
+    </div>
+    <div
+      className="
+                    bg-gray-700
+                    
+                "
+    >
+      <div
+        className="container h-12 flex items-center"
+      >
+        <span
+          className="text-lg mr-auto "
+        >
+          Save 3
+        </span>
+      </div>
+    </div>
+    <div
+      className="container flex flex-col mt-2"
+    >
+      <button
+        className="text-gray-300 active:text-green-500 hover:text-green-500 flex items-center mb-9 w-max"
+      >
+        <span
+          className="font-medium text-xs mr-1"
+        >
+          Add Save
+        </span>
+        <svg
+          fill="currentColor"
+          height="8px"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 448 512"
+          width="8px"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+          />
+        </svg>
+      </button>
+      <h2
+        className="font-medium text-2xl mb-2"
+      >
+        Settings
+      </h2>
+      <form
+        className="mb-10"
+      >
+        <input
+          className="mr-2"
+          id="hidden"
+          name="hidden"
+          type="checkbox"
+        />
+        <label
+          className="text-sm font-medium"
+          htmlFor="hidden"
+        >
+          Hidden
+        </label>
+      </form>
+    </div>
+    <div
+      className="container mt-auto"
+    >
+      <button
+        className="btn-primary mb-10 h-12 w-full"
+      >
+        <svg
+          className="mr-4"
+          fill="currentColor"
+          height="12px"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 448 512"
+          width="12px"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"
+          />
+        </svg>
+        <span
+          className="font-medium text-2xl"
+        >
+          Play
+        </span>
+      </button>
+    </div>
+  </div>,
+]
+`;

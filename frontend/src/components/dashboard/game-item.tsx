@@ -9,6 +9,7 @@ interface GameItemProps {
 }
 
 type GameItemInnerProps = GameItemProps & { className?: string };
+
 export function GameCard(props: GameItemInnerProps) {
     const image: React.CSSProperties = {
         backgroundImage: `url(${props.image})`,

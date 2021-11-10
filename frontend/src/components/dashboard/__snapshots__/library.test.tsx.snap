@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Library /> renders children 1`] = `
+Array [
+  <h2
+    className="text-xl mb-4 pt-2.5"
+    id="chip-8"
+  >
+    CHIP 8
+  </h2>,
+  <div
+    className=" mb-6 md:mb-12 grid gap-3 md:gap-9 auto-rows-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 "
+  >
+    <span>
+      child 1
+    </span>
+    <span>
+      child 2
+    </span>
+  </div>,
+]
+`;
+
+exports[`<Library /> renders null 1`] = `null`;

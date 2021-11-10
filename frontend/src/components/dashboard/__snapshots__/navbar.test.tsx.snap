@@ -1,0 +1,397 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Navbar /> snapshot 1`] = `
+<div
+  className="flex flex-wrap"
+>
+  <div
+    className="container my-7 md:my-10 flex items-center"
+  >
+    <span
+      className="font-bold text-2xl xs:text-3xl mr-auto xl:mr-20"
+    >
+      Emulator Hub
+    </span>
+    <a
+      className="nav__nav-item"
+      href="#nintendo-entertainment-system"
+    >
+      NES
+    </a>
+    <a
+      className="nav__nav-item"
+      href="#game-boy"
+    >
+      GB
+    </a>
+    <a
+      className="nav__nav-item"
+      href="#game-boy-color"
+    >
+      GBC
+    </a>
+    <a
+      className="nav__nav-item mr-auto"
+      href="#chip-8"
+    >
+      CHIP 8
+    </a>
+    <a
+      className="hidden md:flex btn-secondary tracking-wider h-10 px-4 mr-10"
+      href="/"
+      onClick={[Function]}
+    >
+      <svg
+        className="inline-block mr-2.5"
+        fill="currentColor"
+        height="12px"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 448 512"
+        width="12px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+        />
+      </svg>
+      ADD ROMS
+    </a>
+    <div
+      className="relative dropdown-container hidden md:block"
+    >
+      <button
+        className="select-none h-10 pr-5 rounded-full bg-gray-700 hover:text-green-500"
+      >
+        <img
+          className="inline-block rounded-full mr-2"
+          height="40px"
+          src="/profile.png"
+          width="40px"
+        />
+        <span
+          className="text-xl align-middle mr-1.5"
+        >
+          Jun Lim
+        </span>
+        <svg
+          className="inline-block"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 320 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"
+          />
+        </svg>
+      </button>
+      <div
+        className=" pointer-events-none opacity-0 absolute w-max -right-1 transform translate-y-6 z-10 filter drop-shadow bg-gray-700 transition-opacity duration-75 rounded-2xl cursor-default flex flex-col items-stretch dropdown "
+        tabIndex={1}
+      >
+        <img
+          className="rounded-full filter drop-shadow my-3 mx-11"
+          height="120px"
+          src="/profile.png"
+          width="120px"
+        />
+        <div
+          className="border-t border-gray-600"
+        />
+        <a
+          className="w-max ml-11 my-3 text-left hover:text-green-500"
+          href="/"
+          onClick={[Function]}
+        >
+          <svg
+            className="inline-block mr-4"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+            />
+          </svg>
+          Settings
+        </a>
+        <a
+          className="w-max ml-11 mb-3 text-left hover:text-green-500"
+          href="/"
+          onClick={[Function]}
+        >
+          <svg
+            className="inline-block mr-4"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+            />
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </div>
+    <button
+      className="md:hidden mr-5 active:text-green-500"
+      onClick={[Function]}
+    >
+      <svg
+        fill="currentColor"
+        height="24px"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 512 512"
+        width="24px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+        />
+      </svg>
+    </button>
+    <button
+      className="select-none md:hidden"
+      onClick={[Function]}
+    >
+      <img
+        className="rounded-full"
+        height="40px"
+        src="/profile.png"
+        width="40px"
+      />
+    </button>
+  </div>
+  <div
+    className="md:hidden flex-grow w-full bg-gray-900 overflow-hidden transition-max-height max-h-0"
+  >
+    <div
+      className="container flex flex-col"
+    >
+      <div
+        className="flex my-6 items-center"
+      >
+        <img
+          className="rounded-full"
+          height="100px"
+          src="/profile.png"
+          width="100px"
+        />
+        <span
+          className="mx-auto text-4xl font-semibold"
+        >
+          Jun Lim
+        </span>
+      </div>
+      <span
+        className="text-gray-300 mb-3"
+      >
+        Jump To
+      </span>
+      <a
+        className="nav__dropdown-item mb-3"
+        href="#nintendo-entertainment-system"
+        onClick={[Function]}
+      >
+        NES
+      </a>
+      <a
+        className="nav__dropdown-item mb-3"
+        href="#game-boy"
+        onClick={[Function]}
+      >
+        GB
+      </a>
+      <a
+        className="nav__dropdown-item mb-3"
+        href="#game-boy-color"
+        onClick={[Function]}
+      >
+        GBC
+      </a>
+      <a
+        className="nav__dropdown-item mb-8"
+        href="#chip-8"
+        onClick={[Function]}
+      >
+        CHIP 8
+      </a>
+      <a
+        className="text-lg w-max active:text-green-500 mb-4"
+        href="/"
+        onClick={[Function]}
+      >
+        <svg
+          className="inline-block mr-4"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+          />
+        </svg>
+        Settings
+      </a>
+      <a
+        className="text-lg w-max active:text-green-500 mb-4"
+        href="/"
+        onClick={[Function]}
+      >
+        <svg
+          className="inline-block mr-4"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+          />
+        </svg>
+        Sign Out
+      </a>
+      <a
+        className="text-lg  tracking-wider w-max active:text-green-500 mb-6"
+        href="/"
+        onClick={[Function]}
+      >
+        <svg
+          className="inline-block mr-4"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 448 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+          />
+        </svg>
+        ADD ROMS
+      </a>
+    </div>
+  </div>
+  <div
+    className="md:hidden flex-grow w-full bg-gray-900 overflow-hidden transition-max-height max-h-0"
+  >
+    <div
+      className="container py-5 flex items-center"
+    >
+      <button
+        className="mr-5 active:text-green-500"
+        onClick={[Function]}
+      >
+        <svg
+          fill="currentColor"
+          height="16px"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 448 512"
+          width="16px"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"
+          />
+        </svg>
+      </button>
+      <input
+        className="appearance-none mr-5 w-1 flex-grow bg-gray-900 focus:outline-none"
+        id="search-roms"
+        name="search-roms"
+        onChange={[Function]}
+        placeholder="Search Roms"
+        type="text"
+        value=""
+      />
+      <svg
+        fill="currentColor"
+        height="16px"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 512 512"
+        width="16px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
