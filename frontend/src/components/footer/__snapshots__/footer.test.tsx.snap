@@ -21,6 +21,7 @@ exports[`<Footer /> snapshot 1`] = `
     </span>
     <a
       className="text-sm mb-7 lg:mb-0 mr-12"
+      href="https://github.com/junnys6018/Emulator-Hub"
     >
       Source Code
     </a>
