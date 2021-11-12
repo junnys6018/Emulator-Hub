@@ -6,6 +6,7 @@ import Index from './components/index/index';
 import AddRoms from './components/add-roms/add-roms';
 import Dashboard from './components/dashboard/dashboard';
 import Footer from './components/footer/footer';
+import Settings from './settings/settings';
 
 import { BreakpointProvider } from '@/src/use-breakpoint';
 
@@ -23,6 +24,9 @@ function App() {
                         </Route>
                         <Route exact path="/add-roms">
                             <AddRoms />
+                        </Route>
+                        <Route exact path="/settings">
+                            <Settings />
                         </Route>
                         <Route path="*">
                             <NotFound />

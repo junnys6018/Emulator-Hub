@@ -21,7 +21,7 @@ export default function ProfileDropdown(props: ProfileDropdownProps) {
                 <FaTable className="inline-block mr-4" />
                 Dashboard
             </Link>
-            <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
+            <Link to="/settings" className="text-lg w-max active:text-green-500 mb-4">
                 <FaCog className="inline-block mr-4" />
                 Settings
             </Link>

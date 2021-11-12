@@ -55,10 +55,11 @@ module.exports = {
         extend: {
             ringColor: ['hover', 'active'],
             ringWidth: ['hover'],
-            cursor: ['hover', 'focus'],
+            cursor: ['hover', 'focus', 'disabled'],
             margin: ['last'],
             textColor: ['active'],
-            backgroundColor: ['active'],
+            backgroundColor: ['active', 'checked'],
+            opacity: ['disabled'],
         },
     },
     plugins: [],

@@ -19,7 +19,7 @@ export default function ProfilePopup(props: { profileImage: string }) {
                 src={props.profileImage}
             ></img>
             <div className="border-t border-gray-600"></div>
-            <Link to="#" className="w-max ml-11 my-3 text-left hover:text-green-500">
+            <Link to="/settings" className="w-max ml-11 my-3 text-left hover:text-green-500">
                 <FaCog className="inline-block mr-4" size="" />
                 Settings
             </Link>

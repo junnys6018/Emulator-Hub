@@ -1,0 +1,39 @@
+@layer components {
+    .switch {
+        @apply appearance-none
+            w-9
+            h-4
+            rounded-full
+            relative
+            transition
+            bg-gray-600
+            cursor-pointer
+            disabled:cursor-not-allowed
+            disabled:opacity-70;
+    }
+
+    .switch:not(:disabled):checked {
+        @apply bg-green-700
+    }
+
+    .switch::after {
+        @apply transition
+            absolute
+            rounded-full
+            bg-gray-500;
+        content: '';
+        left: 0px;
+        top: -1px;
+        width: 18px;
+        height: 18px;
+        transform: translateX(var(--x, 0));
+    }
+
+    .switch:checked {
+        --x: 20px;
+    }
+
+    .switch:not(:disabled):checked::after {
+        @apply bg-green-500;
+    }
+}

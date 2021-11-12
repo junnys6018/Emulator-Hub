@@ -1,10 +1,10 @@
 @layer components {
     .nav__nav-item {
-        @apply text-primary-500 tracking-wider mr-14 hover:underline hover:cursor-pointer hidden xl:inline-block;
+        @apply text-primary-500 tracking-wider mr-14 hover:underline cursor-pointer hidden xl:inline-block;
     }
 
     .nav__dropdown-item {
-        @apply text-primary-500 tracking-wider w-max hover:underline hover:cursor-pointer;
+        @apply text-primary-500 tracking-wider w-max hover:underline cursor-pointer;
     }
 
     .nav__dropdown-container-height {
