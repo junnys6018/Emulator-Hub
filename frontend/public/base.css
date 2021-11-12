@@ -33,7 +33,8 @@
             rounded-full
             bg-green-500
             hover:cursor-pointer
-            hover:bg-green-400;
+            md:hover:bg-green-400
+            active:bg-green-400;
     }
 
     .btn-secondary {
@@ -45,8 +46,10 @@
             ring-2
             ring-gray-50
             hover:cursor-pointer
-            hover:text-green-500
-            hover:ring-green-500;
+            md:hover:text-green-500
+            md:hover:ring-green-500
+            active:text-green-500
+            active:ring-green-500;
     }
 }
 

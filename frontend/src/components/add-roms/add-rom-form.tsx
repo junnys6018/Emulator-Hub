@@ -49,7 +49,9 @@ export default function AddRomForm(props: AddRomFormProps) {
                     <FaPlus className="inline-block mr-1.5" size="8px" />
                     <span className="font-medium">Add</span>
                 </button>
-                <button className="font-medium text-primary-100 hover:text-red-500 active:text-red-500">Delete</button>
+                <button className="font-medium text-primary-100 md:hover:text-red-500 active:text-red-500">
+                    Delete
+                </button>
             </div>
         </div>
     );

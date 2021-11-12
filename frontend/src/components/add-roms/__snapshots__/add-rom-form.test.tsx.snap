@@ -93,7 +93,7 @@ exports[`<AddRomForm /> snapshot 1`] = `
       </span>
     </button>
     <button
-      className="font-medium text-primary-100 hover:text-red-500 active:text-red-500"
+      className="font-medium text-primary-100 md:hover:text-red-500 active:text-red-500"
     >
       Delete
     </button>

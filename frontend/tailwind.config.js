@@ -52,11 +52,12 @@ module.exports = {
     },
     variants: {
         extend: {
-            ringColor: ['hover'],
+            ringColor: ['hover', 'active'],
             ringWidth: ['hover'],
             cursor: ['hover', 'focus'],
             margin: ['last'],
             textColor: ['active'],
+            backgroundColor: ['active'],
         },
     },
     plugins: [],

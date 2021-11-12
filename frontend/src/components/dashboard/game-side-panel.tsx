@@ -44,13 +44,13 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                 <div className="container flex flex-col">
                     <div className="flex items-center py-5 md:py-8">
                         <button
-                            className="mr-3 flex-shrink-0 active:text-green-500 hover:text-green-500"
+                            className="mr-3 flex-shrink-0 active:text-green-500 md:hover:text-green-500"
                             onClick={props.closePanel}
                         >
                             <FaArrowLeft size="20px" />
                         </button>
                         <h1 className="mr-auto font-semibold text-2xl truncate">{props.name}</h1>
-                        <button className="flex-shrink-0 active:text-green-500 hover:text-green-500">
+                        <button className="flex-shrink-0 active:text-green-500 md:hover:text-green-500">
                             <FaEdit size="20px" />
                         </button>
                     </div>
@@ -62,7 +62,7 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                 </div>
                 {saves}
                 <div className="container flex flex-col mt-2">
-                    <button className="text-gray-300 active:text-green-500 hover:text-green-500 flex items-center mb-9 w-max">
+                    <button className="text-gray-300 active:text-green-500 md:hover:text-green-500 flex items-center mb-9 w-max">
                         <span className="font-medium text-xs mr-1">Add Save</span>
                         <FaPlus size="8px" />
                     </button>
