@@ -46,7 +46,7 @@ export default function AddRomForm(props: AddRomFormProps) {
             </select>
             <div className="flex mx-auto">
                 <button className="btn-primary h-7 w-24 mr-10">
-                    <FaPlus className="inline-block mr-1.5" size="8px" />
+                    <FaPlus className="inline-block mr-1.5" size="10px" />
                     <span className="font-medium">Add</span>
                 </button>
                 <button className="font-medium text-primary-100 md:hover:text-red-500 active:text-red-500">

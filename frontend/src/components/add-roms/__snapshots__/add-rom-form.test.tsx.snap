@@ -70,7 +70,7 @@ exports[`<AddRomForm /> snapshot 1`] = `
       <svg
         className="inline-block mr-1.5"
         fill="currentColor"
-        height="8px"
+        height="10px"
         stroke="currentColor"
         strokeWidth="0"
         style={
@@ -79,7 +79,7 @@ exports[`<AddRomForm /> snapshot 1`] = `
           }
         }
         viewBox="0 0 448 512"
-        width="8px"
+        width="10px"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

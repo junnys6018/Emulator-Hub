@@ -4,25 +4,31 @@ import AddFileIcon from '@/public/assets/add-file.svg';
 
 import profile from '@/public/assets/test-profile.png'; // temporary
 import AddRomForm from './add-rom-form';
+import './add-roms.css';
 
 export default function AddRoms() {
     return (
         <Fragment>
             <Navbar userName="Jun Lim" profileImage={profile} />
-            <div className="container flex flex-col pt-2.5">
-                <h1 className="font-semibold text-xl">Add Roms</h1>
-                <div className="w-60 h-44 self-center rounded-2xl border-4 border-gray-50 border-dashed flex flex-col items-center justify-center my-12">
-                    <AddFileIcon className="mb-6" />
-                    <span className="text-2xl">Add Roms</span>
+            <div className="container flex flex-col pt-2.5 md:pt-0">
+                <h1 className="font-semibold text-xl md:text-3xl">Add Roms</h1>
+                <div className="w-60 h-44 md:w-168 md:h-80 self-center rounded-2xl md:rounded-5xl border-4 border-gray-50 border-dashed flex flex-col items-center justify-center my-12">
+                    <AddFileIcon className="mb-6 md:transform md:scale-150" />
+                    <span className="text-2xl md:hidden">Add Roms</span>
+                    <span className="text-2xl hidden md:inline-block">Drag &amp; Drop Your Roms</span>
                 </div>
-                <div className="flex mb-4">
-                    <h1 className="font-semibold text-xl mr-auto">New Roms</h1>
-                    <button className="btn-primary h-8 px-4 ring-2 ring-inset ring-green-600">Add All</button>
+                <div className="flex mb-4 md:mb-8">
+                    <h1 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h1>
+                    <button className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ring-2 ring-inset ring-green-600">
+                        Add All
+                    </button>
                 </div>
-                <AddRomForm className="mb-4" id={0} />
-                <AddRomForm className="mb-4" id={1} />
-                <AddRomForm className="mb-4" id={2} />
-                <AddRomForm className="mb-4" id={3} />
+                <div className="add-roms__forms-container">
+                    <AddRomForm className="flex-shrink-0 mb-4 md:mr-8" id={0} />
+                    <AddRomForm className="flex-shrink-0 mb-4 md:mr-8" id={1} />
+                    <AddRomForm className="flex-shrink-0 mb-4 md:mr-8" id={2} />
+                    <AddRomForm className="flex-shrink-0 mb-4" id={3} />
+                </div>
             </div>
         </Fragment>
     );
