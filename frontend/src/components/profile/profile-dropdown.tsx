@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCog, FaPlus, FaSignOutAlt } from 'react-icons/fa';
+import { FaCog, FaPlus, FaSignOutAlt, FaTable } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 interface ProfileDropdownProps {
@@ -17,9 +17,12 @@ export default function ProfileDropdown(props: ProfileDropdownProps) {
             </div>
 
             {props.children}
-
+            <Link to="/dashboard" className="text-lg w-max active:text-green-500 mb-4">
+                <FaTable className="inline-block mr-4" />
+                Dashboard
+            </Link>
             <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
-                <FaCog className="inline-block mr-4" size="" />
+                <FaCog className="inline-block mr-4" />
                 Settings
             </Link>
             <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
