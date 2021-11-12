@@ -17,6 +17,7 @@ module.exports = {
             gray: colors.trueGray,
             primary: colors.sky,
             green: colors.emerald,
+            red: colors.red,
         },
         screens: breakpoints,
         dropShadow: {
@@ -43,6 +44,9 @@ module.exports = {
             },
             spacing: {
                 168: '42rem',
+            },
+            borderRadius: {
+                '4xl': '2rem',
             },
         },
     },

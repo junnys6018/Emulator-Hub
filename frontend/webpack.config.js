@@ -35,12 +35,16 @@ module.exports = (env, options) => {
                     ],
                 },
                 {
-                    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                    test: /\.(png|jpg|jpeg|gif)$/i,
                     type: 'asset/resource',
                 },
                 {
                     test: /\.css$/i,
                     use: ['style-loader', 'css-loader', 'postcss-loader'],
+                },
+                {
+                    test: /\.svg$/i,
+                    use: ['@svgr/webpack'],
                 },
             ],
         },
