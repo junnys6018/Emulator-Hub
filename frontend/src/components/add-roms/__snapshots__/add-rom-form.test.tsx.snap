@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddRomForm /> snapshot 1`] = `
+<div
+  className="flex flex-col self-center rounded-4xl w-80 bg-primary-800 p-5"
+>
+  <div
+    className="rounded-3xl bg-primary-900 h-48 mb-3 flex items-center justify-center"
+  >
+    <button
+      className="btn-secondary h-10 px-2.5 text-primary-100"
+    >
+      Choose Image
+    </button>
+  </div>
+  <label
+    className="font-semibold mb-3.5"
+    htmlFor="name-0"
+  >
+    Name*
+  </label>
+  <input
+    className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
+    id="name-0"
+    name="name-0"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <label
+    className="font-semibold mb-3.5"
+    htmlFor="console-0"
+  >
+    Console*
+  </label>
+  <select
+    className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
+    id="console-0"
+    name="console-0"
+    onChange={[Function]}
+    value="NES"
+  >
+    <option
+      value="NES"
+    >
+      NES
+    </option>
+    <option
+      value="GB"
+    >
+      Game Boy
+    </option>
+    <option
+      value="GBC"
+    >
+      Game Boy Color
+    </option>
+    <option
+      value="CHIP 8"
+    >
+      CHIP 8
+    </option>
+  </select>
+  <div
+    className="flex mx-auto"
+  >
+    <button
+      className="btn-primary h-7 w-24 mr-10"
+    >
+      <svg
+        className="inline-block mr-1.5"
+        fill="currentColor"
+        height="8px"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 448 512"
+        width="8px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+        />
+      </svg>
+      <span
+        className="font-medium"
+      >
+        Add
+      </span>
+    </button>
+    <button
+      className="font-medium text-primary-100 hover:text-red-500 active:text-red-500"
+    >
+      Delete
+    </button>
+  </div>
+</div>
+`;
