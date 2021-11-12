@@ -38,7 +38,7 @@ exports[`<Navbar /> snapshot 1`] = `
     </a>
     <a
       className="hidden md:flex btn-secondary tracking-wider h-10 px-4 mr-10"
-      href="/"
+      href="/add-roms"
       onClick={[Function]}
     >
       <svg
@@ -309,7 +309,7 @@ exports[`<Navbar /> snapshot 1`] = `
       </a>
       <a
         className="text-lg  tracking-wider w-max active:text-green-500 mb-6"
-        href="/"
+        href="/add-roms"
         onClick={[Function]}
       >
         <svg

@@ -6,7 +6,7 @@ import Library from './library';
 import GameSidePanel from './game-side-panel';
 import Sidebar from '../util/sidebar';
 
-import profile from '@/public/assets/test-profile.png';
+import profile from '@/public/assets/test-profile.png'; // temporary
 import { useBreakpoint } from '@/src/use-breakpoint';
 import { isEmptyObject } from '@/src/util';
 import { useGameMetaData, GameMetaData, Console } from '@/src/game-data';
@@ -31,7 +31,7 @@ export default function Dashboard() {
             .filter(game => game.console == console)
             .map(game => (
                 <GameItem
-                    key={game.name}
+                    key={game.uuid}
                     image={game.image}
                     name={game.name}
                     onActiveCallback={() => {

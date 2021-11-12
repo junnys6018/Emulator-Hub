@@ -14,7 +14,9 @@ export default function Navbar(props: NavbarProps) {
     return (
         <div className="flex flex-wrap">
             <div className="container my-7 md:my-10 flex items-center">
-                <span className="md:hidden font-bold text-2xl xs:text-3xl mr-auto">Emulator Hub</span>
+                <Link to="/dashboard" className="md:hidden font-bold text-2xl xs:text-3xl mr-auto">
+                    Emulator Hub
+                </Link>
                 <Link
                     to="/dashboard"
                     className="hidden md:inline-block font-medium text-xl text-primary-500 hover:underline mr-auto"

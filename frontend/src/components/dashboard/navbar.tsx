@@ -62,7 +62,7 @@ export default function Navbar(props: NavbarProps) {
                 <a href="#chip-8" className="nav__nav-item mr-auto">
                     CHIP 8
                 </a>
-                <Link to="#" className="hidden md:flex btn-secondary tracking-wider h-10 px-4 mr-10">
+                <Link to="/add-roms" className="hidden md:flex btn-secondary tracking-wider h-10 px-4 mr-10">
                     <FaPlus className="inline-block mr-2.5" size="12px" />
                     ADD ROMS
                 </Link>
