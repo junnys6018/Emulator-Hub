@@ -14,7 +14,7 @@ function App() {
     return (
         <Router>
             <BreakpointProvider>
-                <div className="flex-grow">
+                <div className="flex-grow relative">
                     <Switch>
                         <Route exact path="/">
                             <Index />

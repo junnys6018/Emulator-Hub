@@ -61,3 +61,38 @@
 * {
     -webkit-tap-highlight-color: transparent;
 }
+
+:root {
+    --container-margin: calc(0.5 * (100vw - var(--inner-container-size)));
+}
+
+@screen xs {
+    :root {
+        --inner-container-size: calc(theme('screens.xs') - 2 * theme('container.padding.DEFAULT'));
+    }
+}
+@screen sm {
+    :root {
+        --inner-container-size: calc(theme('screens.sm') - 2 * theme('container.padding.sm'));
+    }
+}
+@screen md {
+    :root {
+        --inner-container-size: calc(theme('screens.md') - 2 * theme('container.padding.md'));
+    }
+}
+@screen lg {
+    :root {
+        --inner-container-size: calc(theme('screens.lg') - 2 * theme('container.padding.lg'));
+    }
+}
+@screen xl {
+    :root {
+        --inner-container-size: calc(theme('screens.xl') - 2 * theme('container.padding.xl'));
+    }
+}
+@screen 2xl {
+    :root {
+        --inner-container-size: calc(theme('screens.2xl') - 2 * theme('container.padding.2xl'));
+    }
+}

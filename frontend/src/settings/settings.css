@@ -1,0 +1,28 @@
+@layer components {
+    .settings__button button {
+        @apply font-medium tracking-wider text-primary-500 w-max hover:underline h-10 flex items-center;
+    }
+
+    .settings__button.active {
+        @apply bg-gray-800 rounded-full relative -left-3;
+        width: 212px;
+    }
+
+    .settings__button.active button {
+        @apply pl-3;
+    }
+
+    .settings__side-column {
+        @apply absolute -z-10 bg-gray-900 h-full top-0 left-0;
+        width: calc(var(--container-margin) + 280px);
+    }
+
+    .settings__control-button {
+        @apply py-1 px-5 my-1.5 w-52 tracking-wider bg-gray-600 rounded-full text-left hover:text-primary-500;
+    }
+
+    .settings__control-button.disabled {
+        background-color: #343434;
+        @apply text-gray-400 cursor-not-allowed;
+    }
+}
