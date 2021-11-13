@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Console } from '@/src/game-data';
+import { Console } from '@/src/storage/game-data';
 import { FaPlus } from 'react-icons/fa';
 import classNames from 'classnames';
 

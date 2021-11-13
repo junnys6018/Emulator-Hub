@@ -6,15 +6,16 @@ import Library from './library';
 import GameSidePanel from './game-side-panel';
 import Sidebar from '../util/sidebar';
 
-import profile from '@/public/assets/test-profile.png'; // temporary
 import { useBreakpoint } from '@/src/use-breakpoint';
 import { isEmptyObject } from '@/src/util';
-import { useGameMetaData, GameMetaData, Console } from '@/src/game-data';
+import { useGameMetaData, GameMetaData, Console } from '@/src/storage/game-data';
+import { useUserProfile } from '@/src/storage/user-data';
 
 export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sidePanelOpen, setSidePanelOpen] = useState(false);
     const [activeGame, setActiveGame] = useState<GameMetaData | Record<string, never>>({});
+    const { userName, profileImage } = useUserProfile();
 
     let gameMetaData = useGameMetaData();
     const breakpoint = useBreakpoint();
@@ -49,8 +50,8 @@ export default function Dashboard() {
     return (
         <Fragment>
             <Navbar
-                userName="Jun Lim"
-                profileImage={profile}
+                userName={userName}
+                profileImage={profileImage}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
             />

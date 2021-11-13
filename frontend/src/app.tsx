@@ -6,7 +6,7 @@ import Index from './components/index/index';
 import AddRoms from './components/add-roms/add-roms';
 import Dashboard from './components/dashboard/dashboard';
 import Footer from './components/footer/footer';
-import Settings from './settings/settings';
+import Settings from './components/settings/settings';
 
 import { BreakpointProvider } from '@/src/use-breakpoint';
 

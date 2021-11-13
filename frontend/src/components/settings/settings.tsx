@@ -1,11 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import Navbar from '../components/util/navbar';
+import Navbar from '../util/navbar';
 
-import profile from '@/public/assets/test-profile.png'; // temporary
 import ProfilePicture from './profile-picture';
-import Switch from '../components/util/switch';
-import { useBreakpoint } from '../use-breakpoint';
-import { Console } from '../game-data';
+import Switch from '../util/switch';
+import { useBreakpoint } from '../../use-breakpoint';
+import { Console } from '../../storage/game-data';
 
 import GeneralSettings from './general-settings';
 import NESSettings from './nes-settings';
@@ -14,12 +13,14 @@ import GBCSettings from './gbc-settings';
 import CHIP8Settings from './chip8-settings';
 
 import './settings.css';
+import { useUserProfile } from '@/src/storage/user-data';
 
 type SettingsPanel = Console | 'GENERAL';
 
 export default function Settings() {
     const breakpoint = useBreakpoint();
     const [currentPanel, setCurrentPanel] = useState<SettingsPanel>('GENERAL');
+    const { userName, profileImage } = useUserProfile();
 
     let settingsPanel;
     switch (currentPanel) {
@@ -44,15 +45,14 @@ export default function Settings() {
         setCurrentPanel(target);
     };
 
-    const name = 'Jun Lim'; // temporary
     if (breakpoint.lg) {
         return (
             <Fragment>
-                <Navbar userName="Jun Lim" profileImage={profile} />
+                <Navbar userName={userName} profileImage={profileImage} />
                 <div className="container flex">
                     <div className="w-72 flex flex-col">
-                        <ProfilePicture size="200px" profileImage={profile} className="mb-6" />
-                        <h1 className="font-bold text-3xl mb-24 truncate">{name}</h1>
+                        <ProfilePicture size="200px" profileImage={profileImage} className="mb-6" />
+                        <h1 className="font-bold text-3xl mb-24 truncate">{userName}</h1>
                         <div className={`settings__button mb-6 ${currentPanel === 'GENERAL' ? 'active' : ''}`}>
                             <button onClick={() => onSideButtonClick('GENERAL')}>General</button>
                         </div>
@@ -79,10 +79,10 @@ export default function Settings() {
 
     return (
         <Fragment>
-            <Navbar userName="Jun Lim" profileImage={profile} />
+            <Navbar userName={userName} profileImage={profileImage} />
             <div className="container flex flex-col pt-2.5 md:pt-0">
-                <ProfilePicture size="130px" profileImage={profile} className="mb-5" />
-                <h1 className="font-semibold text-3xl mb-6">{name}</h1>
+                <ProfilePicture size="130px" profileImage={profileImage} className="mb-5" />
+                <h1 className="font-semibold text-3xl mb-6">{userName}</h1>
                 <h2 className="font-medium text-xl mb-4">General</h2>
                 <div className="flex items-center">
                     <label htmlFor="show-hidden-games" className="mr-auto">
