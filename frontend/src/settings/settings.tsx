@@ -53,12 +53,9 @@ export default function Settings() {
                     <div className="w-72 flex flex-col">
                         <ProfilePicture size="200px" profileImage={profile} className="mb-6" />
                         <h1 className="font-bold text-3xl mb-24 truncate">{name}</h1>
-                        <button
-                            className="font-medium text-primary-500 w-max hover:underline mb-9"
-                            onClick={() => onSideButtonClick('GENERAL')}
-                        >
-                            General
-                        </button>
+                        <div className={`settings__button mb-6 ${currentPanel === 'GENERAL' ? 'active' : ''}`}>
+                            <button onClick={() => onSideButtonClick('GENERAL')}>General</button>
+                        </div>
                         <h4 className="font-medium text-xs text-gray-500 mb-2">Controls</h4>
                         <div className={`settings__button mb-3.5 ${currentPanel === 'NES' ? 'active' : ''}`}>
                             <button onClick={() => onSideButtonClick('NES')}>NES</button>

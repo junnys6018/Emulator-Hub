@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCog, FaSignOutAlt } from 'react-icons/fa';
+import { FaCog, FaPlus, FaSignOutAlt, FaTable } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 export default function ProfilePopup(props: { profileImage: string }) {
@@ -18,14 +18,22 @@ export default function ProfilePopup(props: { profileImage: string }) {
                 height="120px"
                 src={props.profileImage}
             ></img>
-            <div className="border-t border-gray-600"></div>
-            <Link to="/settings" className="w-max ml-11 my-3 text-left hover:text-green-500">
-                <FaCog className="inline-block mr-4" size="" />
+            <div className="border-t border-gray-600 mb-3"></div>
+            <Link to="/dashboard" className="w-max ml-11 mb-3 text-left hover:text-green-500">
+                <FaTable className="inline-block mr-4" />
+                Dashboard
+            </Link>
+            <Link to="/settings" className="w-max ml-11 mb-3 text-left hover:text-green-500">
+                <FaCog className="inline-block mr-4" />
                 Settings
             </Link>
             <Link to="#" className="w-max ml-11 mb-3 text-left hover:text-green-500">
                 <FaSignOutAlt className="inline-block mr-4" />
                 Sign Out
+            </Link>
+            <Link to="/add-roms" className="w-max ml-11 mb-3 text-left hover:text-green-500">
+                <FaPlus className="inline-block mr-4" />
+                ADD ROMS
             </Link>
         </div>
     );

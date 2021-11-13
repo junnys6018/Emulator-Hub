@@ -19,7 +19,7 @@ export default function AddRoms() {
                 </div>
                 <div className="flex mb-4 md:mb-8">
                     <h1 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h1>
-                    <button className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ring-2 ring-inset ring-green-600">
+                    <button className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ring-2 md:ring-4 ring-inset ring-green-600">
                         Add All
                     </button>
                 </div>
