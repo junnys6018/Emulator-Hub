@@ -25,7 +25,18 @@ module.exports = api => {
     }
 
     return {
-        presets: ['@babel/preset-env', '@babel/preset-react'],
+        presets: [
+            [
+                '@babel/preset-env',
+                {
+                    targets: {
+                        chrome: '73',
+                        node: 'current',
+                    },
+                },
+            ],
+            '@babel/preset-react',
+        ],
         plugins,
     };
 };

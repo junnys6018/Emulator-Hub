@@ -1,9 +1,5 @@
+import { Record } from './storage';
 export type Console = 'NES' | 'GB' | 'GBC' | 'CHIP 8';
-
-interface Record {
-    uuid: string;
-    age: number;
-}
 
 export interface GameMetaData extends Record {
     name: string;
