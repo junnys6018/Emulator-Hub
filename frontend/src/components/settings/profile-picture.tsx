@@ -22,9 +22,8 @@ export default function ProfilePicture(props: ProfilePictureProps) {
         <div className={classNames('relative', props.className)}>
             <img
                 src={props.profileImage}
-                width={props.size}
-                height={props.size}
-                className="rounded-full filter drop-shadow"
+                className="rounded-full filter drop-shadow object-cover"
+                style={{ width: props.size, height: props.size }}
             ></img>
             <button
                 className="

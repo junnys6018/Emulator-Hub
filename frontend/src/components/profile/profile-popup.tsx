@@ -14,8 +14,7 @@ export default function ProfilePopup(props: { profileImage: string }) {
         >
             <img
                 className="rounded-full filter drop-shadow my-3 mx-11"
-                width="120px"
-                height="120px"
+                style={{ width: '120px', height: '120px' }}
                 src={props.profileImage}
             ></img>
             <div className="border-t border-gray-600 mb-3"></div>

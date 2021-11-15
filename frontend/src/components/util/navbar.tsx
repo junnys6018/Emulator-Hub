@@ -25,7 +25,7 @@ export default function Navbar(props: NavbarProps) {
                 </Link>
                 <Profile className="hidden md:block" {...props} />
                 <button className="select-none md:hidden" onClick={() => setDropDownActive(!dropdownActive)}>
-                    <img className="rounded-full" src={props.profileImage} width="40px" height="40px"></img>
+                    <img className="rounded-full w-10 h-10" src={props.profileImage}></img>
                 </button>
             </div>
             {/* Profile Dropdown */}

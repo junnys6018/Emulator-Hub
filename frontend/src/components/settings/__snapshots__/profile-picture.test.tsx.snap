@@ -5,13 +5,20 @@ exports[`<ProfilePicture /> snapshot 1`] = `
   className="relative"
 >
   <img
-    className="rounded-full filter drop-shadow"
-    height="200px"
+    className="rounded-full filter drop-shadow object-cover"
     src="/image.png"
-    width="200px"
+    style={
+      Object {
+        "height": "200px",
+        "width": "200px",
+      }
+    }
   />
   <button
-    className=" absolute top-0 left-0 w-8 h-8 rounded-full bg-gray-800 filter drop-shadow flex items-center justify-center active:text-green-500 md:hover:text-green-500 "
+    className="
+ absolute top-0 left-0 w-8 h-8 rounded-full bg-gray-800 filter drop-shadow
+ flex items-center justify-center active:text-green-500 md:hover:text-green-500
+ "
     style={
       Object {
         "transform": "translate(154.710678119px, 154.710678119px)",
