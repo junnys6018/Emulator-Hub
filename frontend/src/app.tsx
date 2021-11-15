@@ -9,31 +9,34 @@ import Footer from './components/footer/footer';
 import Settings from './components/settings/settings';
 
 import { BreakpointProvider } from '@/src/use-breakpoint';
+import { UserProfileProvider } from './storage/user-data';
 
 function App() {
     return (
         <Router>
             <BreakpointProvider>
-                <div className="flex-grow relative">
-                    <Switch>
-                        <Route exact path="/">
-                            <Index />
-                        </Route>
-                        <Route exact path="/dashboard">
-                            <Dashboard />
-                        </Route>
-                        <Route exact path="/add-roms">
-                            <AddRoms />
-                        </Route>
-                        <Route exact path="/settings">
-                            <Settings />
-                        </Route>
-                        <Route path="*">
-                            <NotFound />
-                        </Route>
-                    </Switch>
-                </div>
-                <Footer />
+                <UserProfileProvider>
+                    <div className="flex-grow relative">
+                        <Switch>
+                            <Route exact path="/">
+                                <Index />
+                            </Route>
+                            <Route exact path="/dashboard">
+                                <Dashboard />
+                            </Route>
+                            <Route exact path="/add-roms">
+                                <AddRoms />
+                            </Route>
+                            <Route exact path="/settings">
+                                <Settings />
+                            </Route>
+                            <Route path="*">
+                                <NotFound />
+                            </Route>
+                        </Switch>
+                    </div>
+                    <Footer />
+                </UserProfileProvider>
             </BreakpointProvider>
         </Router>
     );

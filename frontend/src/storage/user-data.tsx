@@ -1,6 +1,7 @@
-import { Record } from './storage';
+import { Record, EmulatorHubDB } from './storage';
 import { v4 as uuidv4 } from 'uuid';
-import { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { openDB } from 'idb';
 
 export interface UserData extends Record {
     profileImage: Blob;
@@ -58,28 +59,53 @@ export async function generateGuestAccount(): Promise<UserData> {
 
 const whiteImage =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAADUExURf///6fEG8gAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAfSURBVGje7cExAQAAAMKg9U9tCF8gAAAAAAAAAIBLDSCAAAEf1udwAAAAAElFTkSuQmCC';
-export function useUserProfile() {
+
+const UserProfileContext = React.createContext<UserProfile>({
+    profileImage: whiteImage,
+    userName: 'Loading...',
+});
+
+export function UserProfileProvider(props: { children: React.ReactNode }) {
     const [userProfile, setUserProfile] = useState<UserProfile>({
         profileImage: whiteImage,
         userName: 'Loading...',
     });
 
     useEffect(() => {
-        // setup
         let url = '';
-        generateGuestAccount()
-            .then(userData => {
-                url = URL.createObjectURL(userData.profileImage);
-                setUserProfile({
-                    profileImage: url,
-                    userName: userData.userName,
-                });
-            })
-            .catch(error => {
-                alert(error);
-            });
+        const guestUuid = localStorage.getItem('guest-uuid');
 
-        // cleanup
+        const loadUserDataFromUuid = (uuid: string) => {
+            openDB<EmulatorHubDB>('emulator-hub', 1)
+                .then(db => db.get('users', uuid))
+                .then(userData => {
+                    if (userData) {
+                        url = URL.createObjectURL(userData.profileImage);
+                        setUserProfile({
+                            profileImage: url,
+                            userName: userData.userName,
+                        });
+                    } else {
+                        // TODO
+                        alert(`[FATAL] uuid ${uuid} does not point to an account`);
+                    }
+                });
+        };
+
+        if (guestUuid) {
+            console.log('[INFO] found guestUuid, loading from storage');
+            loadUserDataFromUuid(guestUuid);
+        } else {
+            console.log('[INFO] guestUuid not found, adding event listener...');
+            window.addEventListener('storage', function callback(e) {
+                if (e.key === 'guest-uuid' && e.newValue !== null) {
+                    console.log('[INFO] guestUuid found, removing event listener...');
+                    loadUserDataFromUuid(e.newValue);
+                    window.removeEventListener('storage', callback);
+                }
+            });
+        }
+
         return () => {
             if (url) {
                 URL.revokeObjectURL(url);
@@ -87,5 +113,9 @@ export function useUserProfile() {
         };
     }, []);
 
-    return userProfile;
+    return <UserProfileContext.Provider value={userProfile}>{props.children}</UserProfileContext.Provider>;
+}
+
+export function useUserProfile() {
+    return useContext(UserProfileContext);
 }
