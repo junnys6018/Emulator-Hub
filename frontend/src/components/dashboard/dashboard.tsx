@@ -15,7 +15,7 @@ export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sidePanelOpen, setSidePanelOpen] = useState(false);
     const [activeGame, setActiveGame] = useState<GameMetaData | Record<string, never>>({});
-    const { userName, profileImage } = useUserProfile();
+    const [{ userName, profileImage }] = useUserProfile();
 
     let gameMetaData = useGameMetaData();
     const breakpoint = useBreakpoint();

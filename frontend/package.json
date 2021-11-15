@@ -37,6 +37,7 @@
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react": "^7.26.1",
         "eslint-plugin-react-hooks": "^4.2.0",
+        "fake-indexeddb": "^3.1.7",
         "html-loader": "^3.0.0",
         "html-webpack-plugin": "^5.4.0",
         "idb": "^6.1.5",

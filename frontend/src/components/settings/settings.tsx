@@ -20,7 +20,7 @@ type SettingsPanel = Console | 'GENERAL';
 export default function Settings() {
     const breakpoint = useBreakpoint();
     const [currentPanel, setCurrentPanel] = useState<SettingsPanel>('GENERAL');
-    const { userName, profileImage } = useUserProfile();
+    const [{ userName, profileImage }, setUserData] = useUserProfile();
 
     let settingsPanel;
     switch (currentPanel) {
@@ -45,13 +45,21 @@ export default function Settings() {
         setCurrentPanel(target);
     };
 
+    const onEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('[INFO] User profile image has been edited');
+        if (e.target.files) {
+            const newProfileImage: Blob = e.target.files[0];
+            setUserData({ profileImage: newProfileImage });
+        }
+    };
+
     if (breakpoint.lg) {
         return (
             <Fragment>
                 <Navbar userName={userName} profileImage={profileImage} />
                 <div className="container flex">
                     <div className="w-72 flex flex-col">
-                        <ProfilePicture size="200px" profileImage={profileImage} className="mb-6" />
+                        <ProfilePicture size="200px" profileImage={profileImage} className="mb-6" onEdit={onEdit} />
                         <h1 className="font-bold text-3xl mb-24 truncate">{userName}</h1>
                         <div className={`settings__button mb-6 ${currentPanel === 'GENERAL' ? 'active' : ''}`}>
                             <button onClick={() => onSideButtonClick('GENERAL')}>General</button>
@@ -81,7 +89,7 @@ export default function Settings() {
         <Fragment>
             <Navbar userName={userName} profileImage={profileImage} />
             <div className="container flex flex-col pt-2.5 md:pt-0">
-                <ProfilePicture size="130px" profileImage={profileImage} className="mb-5" />
+                <ProfilePicture size="130px" profileImage={profileImage} className="mb-5" onEdit={onEdit} />
                 <h1 className="font-semibold text-3xl mb-6">{userName}</h1>
                 <h2 className="font-medium text-xl mb-4">General</h2>
                 <div className="flex items-center">

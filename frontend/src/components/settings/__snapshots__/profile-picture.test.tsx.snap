@@ -14,17 +14,22 @@ exports[`<ProfilePicture /> snapshot 1`] = `
       }
     }
   />
-  <button
-    className="
- absolute top-0 left-0 w-8 h-8 rounded-full bg-gray-800 filter drop-shadow
- flex items-center justify-center active:text-green-500 md:hover:text-green-500
- "
+  <label
+    className=" absolute top-0 left-0 w-8 h-8 rounded-full bg-gray-800 filter drop-shadow cursor-pointer flex items-center justify-center active:text-green-500 md:hover:text-green-500 "
+    htmlFor="change-profile-image"
     style={
       Object {
         "transform": "translate(154.710678119px, 154.710678119px)",
       }
     }
   >
+    <input
+      accept="image/png, image/jpeg"
+      className="hidden"
+      id="change-profile-image"
+      name="change-profile-image"
+      type="file"
+    />
     <svg
       fill="currentColor"
       height="1em"
@@ -43,6 +48,6 @@ exports[`<ProfilePicture /> snapshot 1`] = `
         d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"
       />
     </svg>
-  </button>
+  </label>
 </div>
 `;

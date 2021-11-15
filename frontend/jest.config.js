@@ -18,4 +18,5 @@ module.exports = {
             '<rootDir>/tests/mocks/fileMock.js',
         '\\.css$': '<rootDir>/tests/mocks/styleMock.js',
     },
+    setupFiles: ['fake-indexeddb/auto'],
 };

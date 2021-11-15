@@ -6,6 +6,7 @@ interface ProfilePictureProps {
     size: string;
     profileImage: string;
     className?: string;
+    onEdit?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SCALE_FACTOR = 1.70710678119; // 1 + 1 / sqrt(2)
@@ -25,15 +26,24 @@ export default function ProfilePicture(props: ProfilePictureProps) {
                 className="rounded-full filter drop-shadow object-cover"
                 style={{ width: props.size, height: props.size }}
             ></img>
-            <button
+            <label
+                htmlFor="change-profile-image"
                 className="
-                    absolute top-0 left-0 w-8 h-8 rounded-full bg-gray-800 filter drop-shadow
+                    absolute top-0 left-0 w-8 h-8 rounded-full bg-gray-800 filter drop-shadow cursor-pointer
                     flex items-center justify-center active:text-green-500 md:hover:text-green-500
                 "
                 style={buttonTransform}
             >
+                <input
+                    className="hidden"
+                    type="file"
+                    id="change-profile-image"
+                    name="change-profile-image"
+                    accept="image/png, image/jpeg"
+                    onChange={props.onEdit}
+                />
                 <FaPen />
-            </button>
+            </label>
         </div>
     );
 }

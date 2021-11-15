@@ -7,7 +7,7 @@ import './add-roms.css';
 import { useUserProfile } from '@/src/storage/user-data';
 
 export default function AddRoms() {
-    const { userName, profileImage } = useUserProfile();
+    const [{ userName, profileImage }] = useUserProfile();
     return (
         <Fragment>
             <Navbar userName={userName} profileImage={profileImage} />

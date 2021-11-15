@@ -1,7 +1,7 @@
-import { Record, EmulatorHubDB } from './storage';
+import { Record } from './storage';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useContext, useEffect, useState } from 'react';
-import { openDB } from 'idb';
+import dbConnection from './db-connection';
 
 export interface UserData extends Record {
     profileImage: Blob;
@@ -60,10 +60,7 @@ export async function generateGuestAccount(): Promise<UserData> {
 const whiteImage =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAADUExURf///6fEG8gAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAfSURBVGje7cExAQAAAMKg9U9tCF8gAAAAAAAAAIBLDSCAAAEf1udwAAAAAElFTkSuQmCC';
 
-const UserProfileContext = React.createContext<UserProfile>({
-    profileImage: whiteImage,
-    userName: 'Loading...',
-});
+const UserProfileContext = React.createContext<[UserProfile, (newUserData: Partial<UserData>) => void] | null>(null);
 
 export function UserProfileProvider(props: { children: React.ReactNode }) {
     const [userProfile, setUserProfile] = useState<UserProfile>({
@@ -71,20 +68,20 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
         userName: 'Loading...',
     });
 
-    useEffect(() => {
-        let url = '';
-        const guestUuid = localStorage.getItem('guest-uuid');
+    const [userData, _setUserData] = useState<UserData>();
 
+    useEffect(() => {
         const loadUserDataFromUuid = (uuid: string) => {
-            openDB<EmulatorHubDB>('emulator-hub', 1)
+            dbConnection
                 .then(db => db.get('users', uuid))
                 .then(userData => {
                     if (userData) {
-                        url = URL.createObjectURL(userData.profileImage);
+                        const url = URL.createObjectURL(userData.profileImage);
                         setUserProfile({
                             profileImage: url,
                             userName: userData.userName,
                         });
+                        _setUserData(userData);
                     } else {
                         // TODO
                         alert(`[FATAL] uuid ${uuid} does not point to an account`);
@@ -92,6 +89,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                 });
         };
 
+        const guestUuid = localStorage.getItem('guest-uuid');
         if (guestUuid) {
             console.log('[INFO] found guestUuid, loading from storage');
             loadUserDataFromUuid(guestUuid);
@@ -105,17 +103,36 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                 }
             });
         }
-
-        return () => {
-            if (url) {
-                URL.revokeObjectURL(url);
-            }
-        };
     }, []);
 
-    return <UserProfileContext.Provider value={userProfile}>{props.children}</UserProfileContext.Provider>;
+    const setUserData = (newUserData: Partial<UserData>) => {
+        if (userData) {
+            console.log('[INFO] setting new user data');
+            const updatedUserData = { ...userData, ...newUserData };
+            // update UserProfile
+            URL.revokeObjectURL(userProfile.profileImage);
+            const url = URL.createObjectURL(updatedUserData.profileImage);
+            setUserProfile({
+                profileImage: url,
+                userName: updatedUserData.userName,
+            });
+            _setUserData(updatedUserData);
+            // write to db
+            dbConnection.then(db => {
+                db.put('users', updatedUserData);
+            });
+        }
+    };
+
+    return (
+        <UserProfileContext.Provider value={[userProfile, setUserData]}>{props.children}</UserProfileContext.Provider>
+    );
 }
 
 export function useUserProfile() {
-    return useContext(UserProfileContext);
+    const userProfile = useContext(UserProfileContext);
+    if (!userProfile) {
+        throw new Error('useUserProfile() must be called with a UserProfileProvider');
+    }
+    return userProfile;
 }
