@@ -71,7 +71,7 @@ export default function Navbar(props: NavbarProps) {
                     <FaSearch size="24px" />
                 </button>
                 <button className="select-none md:hidden" onClick={() => setDropDownActive(!dropdownActive)}>
-                    <img className="rounded-full w-10 h-10" src={props.profileImage}></img>
+                    <img className="rounded-full w-10 h-10 object-cover" src={props.profileImage}></img>
                 </button>
             </div>
             {/* Profile Dropdown */}

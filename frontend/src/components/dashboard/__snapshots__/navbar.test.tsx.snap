@@ -69,7 +69,7 @@ exports[`<Navbar /> snapshot 1`] = `
         className="select-none h-10 pr-5 rounded-full bg-gray-700 hover:text-green-500"
       >
         <img
-          className="inline-block rounded-full mr-2 w-10 h-10"
+          className="inline-block rounded-full mr-2 w-10 h-10 object-cover"
           src="/profile.png"
         />
         <span
@@ -102,7 +102,7 @@ exports[`<Navbar /> snapshot 1`] = `
         tabIndex={1}
       >
         <img
-          className="rounded-full filter drop-shadow my-3 mx-11"
+          className="rounded-full filter drop-shadow my-3 mx-11 object-cover"
           src="/profile.png"
           style={
             Object {
@@ -248,7 +248,7 @@ exports[`<Navbar /> snapshot 1`] = `
       onClick={[Function]}
     >
       <img
-        className="rounded-full w-10 h-10"
+        className="rounded-full w-10 h-10 object-cover"
         src="/profile.png"
       />
     </button>
@@ -263,7 +263,7 @@ exports[`<Navbar /> snapshot 1`] = `
         className="flex my-6 items-center"
       >
         <img
-          className="rounded-full"
+          className="rounded-full object-cover"
           src="/profile.png"
           style={
             Object {
