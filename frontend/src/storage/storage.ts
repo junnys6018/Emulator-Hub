@@ -25,7 +25,7 @@ export async function createGuestAccount(db: IDBPDatabase<EmulatorHubDB>) {
             if (error.name === 'ConstraintError') {
                 console.warn('[WARN] primary key collision, regenerating uuid');
                 guestUser.uuid = uuidv4();
-                addGuestAccount();
+                await addGuestAccount();
             } else {
                 throw error;
             }
@@ -53,7 +53,7 @@ export async function initializeDatabase() {
                     db.createObjectStore('users', { keyPath: 'uuid' });
             }
         },
-        blocked() {},
+        //blocked() {},
         blocking() {
             db.close();
             alert('The application is outdated, please reload the page');
