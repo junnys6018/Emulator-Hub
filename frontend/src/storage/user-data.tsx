@@ -1,7 +1,8 @@
 import { Record } from './storage';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useContext, useEffect, useState } from 'react';
-import dbConnection from './db-connection';
+import { useAlert } from '../components/util/alert';
+import { useDatabase } from './storage';
 
 export interface UserData extends Record {
     profileImage: Blob;
@@ -69,24 +70,27 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
     });
 
     const [userData, _setUserData] = useState<UserData>();
+    const db = useDatabase();
+    const alert = useAlert();
 
     useEffect(() => {
         const loadUserDataFromUuid = (uuid: string) => {
-            dbConnection
-                .then(db => db.get('users', uuid))
-                .then(userData => {
-                    if (userData) {
-                        const url = URL.createObjectURL(userData.profileImage);
-                        setUserProfile({
-                            profileImage: url,
-                            userName: userData.userName,
-                        });
-                        _setUserData(userData);
-                    } else {
-                        // TODO
-                        alert(`[FATAL] uuid ${uuid} does not point to an account`);
-                    }
-                });
+            db.get('users', uuid).then(userData => {
+                if (userData) {
+                    const url = URL.createObjectURL(userData.profileImage);
+                    setUserProfile({
+                        profileImage: url,
+                        userName: userData.userName,
+                    });
+                    _setUserData(userData);
+                } else {
+                    localStorage.removeItem('guest-uuid');
+                    alert(`UUID ${uuid} does not point to an account`, {
+                        severity: 'ERROR',
+                        action: 'REFRESH',
+                    });
+                }
+            });
         };
 
         const guestUuid = localStorage.getItem('guest-uuid');
@@ -94,13 +98,9 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
             console.log('[INFO] found guestUuid, loading from storage');
             loadUserDataFromUuid(guestUuid);
         } else {
-            console.log('[INFO] guestUuid not found, adding event listener...');
-            window.addEventListener('storage', function callback(e) {
-                if (e.key === 'guest-uuid' && e.newValue !== null) {
-                    console.log('[INFO] guestUuid found, removing event listener...');
-                    loadUserDataFromUuid(e.newValue);
-                    window.removeEventListener('storage', callback);
-                }
+            alert('Guest UUID not found', {
+                severity: 'ERROR',
+                action: 'REFRESH',
             });
         }
     }, []);
@@ -118,9 +118,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
             });
             _setUserData(updatedUserData);
             // write to db
-            dbConnection.then(db => {
-                db.put('users', updatedUserData);
-            });
+            db.put('users', updatedUserData);
         }
     };
 

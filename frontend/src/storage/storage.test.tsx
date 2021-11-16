@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { EmulatorHubDB, initializeDatabase, createGuestAccount } from './storage';
+import { EmulatorHubDB, createGuestAccount, initializeDatabase } from './storage';
 import { generateGuestAccount } from './user-data';
 import { openDB } from 'idb';
 
@@ -13,31 +12,18 @@ jest.mock('./user-data', () => {
     };
 });
 
-jest.mock('./db-connection', () => {
+jest.mock('../components/util/alert', () => {
     return {
         __esModule: true,
-        default: jest.fn(),
+        useAlert: jest.fn(),
     };
 });
 
-beforeEach(done => {
+beforeEach(() => {
     localStorage.clear();
-
-    const request = indexedDB.deleteDatabase('emulator-hub');
-    request.onsuccess = () => done();
-    request.onerror = e => console.log(e);
 });
 
-test('initializeDatabase() with guest-uuid already set', async () => {
-    localStorage.setItem('guest-uuid', 'mock');
-    await initializeDatabase();
-    const db = await openDB<EmulatorHubDB>('emulator-hub');
-    const users = await db.getAll('users');
-    expect(users.length).toBe(0);
-    db.close();
-});
-
-test('initializeDatabase() setups up correct initial state', async () => {
+test('<DatabaseProvider /> setups up correct initial state', async () => {
     (generateGuestAccount as jest.Mock<any, any>).mockReturnValueOnce({
         uuid: 'mock',
         age: 0,
@@ -45,8 +31,8 @@ test('initializeDatabase() setups up correct initial state', async () => {
         profileImage: '/image.png',
     });
 
-    await initializeDatabase();
-    const db = await openDB<EmulatorHubDB>('emulator-hub');
+    await initializeDatabase('test 2');
+    const db = await openDB<EmulatorHubDB>('test 2');
     const users = await db.getAll('users');
     expect(users).toEqual([
         {
@@ -57,7 +43,14 @@ test('initializeDatabase() setups up correct initial state', async () => {
         },
     ]);
     expect(localStorage.getItem('guest-uuid')).toEqual('mock');
-    db.close();
+});
+
+test('<DatabaseProvider /> with guest-uuid already set', async () => {
+    localStorage.setItem('guest-uuid', 'mock');
+    await initializeDatabase('test 1');
+    const db = await openDB<EmulatorHubDB>('test 1');
+    const users = await db.getAll('users');
+    expect(users.length).toBe(0);
 });
 
 test('createGuestAccount() with uuid collision', async () => {
@@ -75,8 +68,8 @@ test('createGuestAccount() with uuid collision', async () => {
             profileImage: '/image.png',
         });
 
-    await initializeDatabase();
-    const db = await openDB<EmulatorHubDB>('emulator-hub');
+    await initializeDatabase('test 3');
+    const db = await openDB<EmulatorHubDB>('test 3');
 
     // create guest account
     await createGuestAccount(db);
@@ -95,5 +88,4 @@ test('createGuestAccount() with uuid collision', async () => {
         profileImage: '/image.png',
     });
     expect(localStorage.getItem('guest-uuid')).toEqual(otherUser?.uuid);
-    db.close();
 });
