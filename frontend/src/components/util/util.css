@@ -36,4 +36,47 @@
     .switch:not(:disabled):checked::after {
         @apply bg-green-500;
     }
+
+    .alert {
+        @apply flex flex-col
+            items-center
+            fixed
+            z-50
+          bg-gray-800
+            top-1/2
+            left-1/2
+            transform 
+            -translate-x-1/2
+            -translate-y-1/2
+            overflow-y-auto
+            opacity-100
+            transition;
+        width: 280px;
+        height: 500px;
+    }
+
+    .alert.hide {
+        @apply opacity-0;
+        --tw-translate-y: 50vh;
+    }
+
+    @screen xs {
+        .alert {
+            width: 340px;
+            height: 500px;
+        }
+    }
+
+    @screen sm {
+        .alert {
+            width: 500px;
+            height: 400px;
+        }
+    }
+    @screen md {
+        .alert {
+            width: 600px;
+            height: 300px;
+        }
+    }
 }

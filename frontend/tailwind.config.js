@@ -18,6 +18,7 @@ module.exports = {
             primary: colors.sky,
             green: colors.emerald,
             red: colors.red,
+            yellow: colors.yellow,
         },
         screens: breakpoints,
         dropShadow: {
