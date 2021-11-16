@@ -87,6 +87,7 @@ export function DatabaseProvider(props: { children?: React.ReactNode; name?: str
                 });
             },
         }).then(db => setDb(db));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <DatabaseContext.Provider value={db}>{db !== null && props.children}</DatabaseContext.Provider>;
