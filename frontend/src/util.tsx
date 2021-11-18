@@ -43,3 +43,46 @@ export function unlockBodyScrolling() {
 export function isEmptyObject(obj: Object) {
     return Object.keys(obj).length === 0;
 }
+
+// returns a human readable version of a keycode
+// for a list of keycodes see: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
+export function displayKeyCode(code: string) {
+    if (code.startsWith('Arrow')) {
+        const rest = code.replace(/^Arrow/, '');
+        return `${rest.toUpperCase()} ARROW`;
+    }
+    if (code.startsWith('Key')) {
+        const rest = code.replace(/^Key/, '');
+        return rest.toUpperCase();
+    }
+    if (code.startsWith('Digit')) {
+        const rest = code.replace(/^Digit/, '');
+        return rest.toUpperCase();
+    }
+    return code.toUpperCase();
+}
+
+// returns a human readable string corresponding to a controller index
+// assumes the standard index to button mapping: https://w3c.github.io/gamepad/#remapping
+export function displayControllerIndex(index: number) {
+    const mapping = [
+        'A',
+        'B',
+        'X',
+        'Y',
+        'ZL',
+        'ZR',
+        'L TRIGGER',
+        'R TRIGGER',
+        'SELECT',
+        'START',
+        'JOY LEFT',
+        'JOY RIGHT',
+        'DPAD UP',
+        'DPAD DOWN',
+        'DPAD LEFT',
+        'DPAD RIGHT',
+        'HOME',
+    ];
+    return mapping[index];
+}

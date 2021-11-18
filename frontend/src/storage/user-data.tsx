@@ -4,14 +4,53 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useAlert } from '../components/util/alert';
 import { useDatabase } from './storage';
 
-export interface UserData extends Record {
-    profileImage: Blob;
-    userName: string;
+// strings corresponding to KeyboardEvent.code, and an index into Gamepad.buttons
+interface GamepadSettings {
+    up: [string, number];
+    down: [string, number];
+    left: [string, number];
+    right: [string, number];
+    a: [string, number];
+    b: [string, number];
+    start: [string, number];
+    select: [string, number];
+}
+
+const defaultGamepadSettings = Object.freeze({
+    up: ['ArrowUp', 12] as [string, number],
+    down: ['ArrowDown', 13] as [string, number],
+    left: ['ArrowLeft', 14] as [string, number],
+    right: ['ArrowRight', 15] as [string, number],
+    a: ['KeyZ', 0] as [string, number],
+    b: ['KeyX', 1] as [string, number],
+    start: ['KeyQ', 9] as [string, number],
+    select: ['Enter', 8] as [string, number],
+});
+
+const defaultSettings = Object.freeze({
+    showHiddenGames: false,
+    nesSettings: defaultGamepadSettings,
+    gbSettings: defaultGamepadSettings,
+    gbcSettings: defaultGamepadSettings,
+});
+
+interface Settings {
+    showHiddenGames: boolean;
+    nesSettings: GamepadSettings;
+    gbSettings: GamepadSettings;
+    gbcSettings: GamepadSettings;
 }
 
 interface UserProfile {
     profileImage: string;
     userName: string;
+    settings: Settings;
+}
+
+export interface UserData extends Record {
+    profileImage: Blob;
+    userName: string;
+    settings: Settings;
 }
 
 /**
@@ -55,6 +94,7 @@ export async function generateGuestAccount(): Promise<UserData> {
         age: 0,
         userName: 'Guest',
         profileImage: profileImage,
+        settings: defaultSettings,
     };
 }
 
@@ -67,6 +107,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
     const [userProfile, setUserProfile] = useState<UserProfile>({
         profileImage: whiteImage,
         userName: 'Loading...',
+        settings: defaultSettings,
     });
 
     const [userData, _setUserData] = useState<UserData>();
@@ -81,6 +122,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                     setUserProfile({
                         profileImage: url,
                         userName: userData.userName,
+                        settings: userData.settings,
                     });
                     _setUserData(userData);
                 } else {
@@ -116,6 +158,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
             setUserProfile({
                 profileImage: url,
                 userName: updatedUserData.userName,
+                settings: updatedUserData.settings,
             });
             _setUserData(updatedUserData);
             // write to db

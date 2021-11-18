@@ -1,3 +1,4 @@
+import { displayKeyCode, displayControllerIndex } from '@/src/util';
 import React, { Fragment } from 'react';
 
 interface SettingsTitleProps {
@@ -14,27 +15,25 @@ export function SettingsTitle(props: SettingsTitleProps) {
 }
 
 interface SettingsControlGridProps {
-    actions: string[];
-    defaultKeyboard: string[];
-    defaultController: string[];
+    controls: { [action: string]: [string, number] };
 }
 
 export function SettingsControlGrid(props: SettingsControlGridProps) {
     const gridItems = [];
-    for (let i = 0; i < props.actions.length; i++) {
+    for (const key in props.controls) {
         gridItems.push(
-            <span key={3 * i + 0} className="py-1 my-1.5 tracking-wider">
-                {props.actions[i]}
+            <span key={`${key}-label`} className="py-1 my-1.5 tracking-wider">
+                {key.toUpperCase()}
             </span>,
         );
         gridItems.push(
-            <button key={3 * i + 1} className="settings__control-button">
-                {props.defaultKeyboard[i]}
+            <button key={`${key}-keyboard`} className="settings__control-button">
+                {displayKeyCode(props.controls[key][0])}
             </button>,
         );
         gridItems.push(
-            <button key={3 * i + 2} className="settings__control-button disabled">
-                {props.defaultController[i]}
+            <button key={`${key}-controller`} className="settings__control-button disabled">
+                {displayControllerIndex(props.controls[key][1])}
             </button>,
         );
     }
