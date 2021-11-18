@@ -23,6 +23,12 @@
         background-size: 5px 5px, 5px 5px;
         background-repeat: no-repeat;
     }
+
+    :focus-visible {
+        outline-width: 1px;
+        outline-style: solid;
+        outline-color: theme('colors.gray.50');
+    }
 }
 
 @layer components {

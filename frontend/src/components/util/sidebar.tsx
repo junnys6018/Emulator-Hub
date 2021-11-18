@@ -43,7 +43,7 @@ export default function Sidebar(props: SidebarProps) {
             </div>
             <div
                 onClick={props.hide}
-                className={`fixed z-40 top-0 left-0 w-screen h-screen bg-black hover:cursor-pointer transition-opacity ease-linear ${
+                className={`fixed z-40 top-0 left-0 w-screen h-screen bg-black hover:cursor-pointer transition-opacity ease-linear select-none ${
                     props.show ? 'opacity-50' : 'opacity-0 pointer-events-none'
                 }`}
             ></div>
