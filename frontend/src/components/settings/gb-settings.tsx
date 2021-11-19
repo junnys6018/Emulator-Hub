@@ -1,4 +1,4 @@
-import { defaultGamepadSettings, useUserProfile, GamepadSettings } from '@/src/storage/user-data';
+import { defaultGamepadControls, useUserProfile, GamepadControls } from '@/src/storage/user-data';
 import React, { Fragment } from 'react';
 import { SettingsControlGrid, SettingsTitle } from './common';
 
@@ -9,16 +9,16 @@ export default function GBSettings() {
         if (action.endsWith('keyboard')) {
             action = action.replace(/-keyboard$/, '');
             if (key === null) {
-                key = defaultGamepadSettings[action as keyof typeof defaultGamepadSettings][0];
+                key = defaultGamepadControls[action as keyof typeof defaultGamepadControls][0];
             }
-            settings.gbSettings[action as keyof GamepadSettings][0] = key as string;
+            settings.gbControls[action as keyof GamepadControls][0] = key as string;
             setUserData({ settings });
         }
     };
 
     const resetAll = () => {
         // Create a deep clone here
-        settings.gbSettings = JSON.parse(JSON.stringify(defaultGamepadSettings));
+        settings.gbControls = JSON.parse(JSON.stringify(defaultGamepadControls));
         setUserData({ settings });
     };
 
@@ -27,7 +27,7 @@ export default function GBSettings() {
             <SettingsTitle title="Game Boy Controls" />
             <SettingsControlGrid
                 controls={
-                    settings.gbSettings as unknown as {
+                    settings.gbControls as unknown as {
                         [action: string]: [string, number];
                     }
                 }

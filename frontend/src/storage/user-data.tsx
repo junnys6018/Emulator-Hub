@@ -5,7 +5,7 @@ import { useAlert } from '../components/util/alert';
 import { useDatabase } from './storage';
 
 // strings corresponding to KeyboardEvent.code, and an index into Gamepad.buttons
-export interface GamepadSettings {
+export interface GamepadControls {
     up: [string, number];
     down: [string, number];
     left: [string, number];
@@ -16,7 +16,7 @@ export interface GamepadSettings {
     select: [string, number];
 }
 
-export const defaultGamepadSettings = Object.freeze({
+export const defaultGamepadControls = Object.freeze({
     up: ['ArrowUp', 12] as [string, number],
     down: ['ArrowDown', 13] as [string, number],
     left: ['ArrowLeft', 14] as [string, number],
@@ -29,16 +29,16 @@ export const defaultGamepadSettings = Object.freeze({
 
 const defaultSettings = Object.freeze({
     showHiddenGames: false,
-    nesSettings: defaultGamepadSettings,
-    gbSettings: defaultGamepadSettings,
-    gbcSettings: defaultGamepadSettings,
+    nesControls: defaultGamepadControls,
+    gbControls: defaultGamepadControls,
+    gbcControls: defaultGamepadControls,
 });
 
 interface Settings {
     showHiddenGames: boolean;
-    nesSettings: GamepadSettings;
-    gbSettings: GamepadSettings;
-    gbcSettings: GamepadSettings;
+    nesControls: GamepadControls;
+    gbControls: GamepadControls;
+    gbcControls: GamepadControls;
 }
 
 interface UserProfile {
