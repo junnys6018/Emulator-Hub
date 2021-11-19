@@ -5,7 +5,7 @@ import { useAlert } from '../components/util/alert';
 import { useDatabase } from './storage';
 
 // strings corresponding to KeyboardEvent.code, and an index into Gamepad.buttons
-interface GamepadSettings {
+export interface GamepadSettings {
     up: [string, number];
     down: [string, number];
     left: [string, number];
@@ -16,7 +16,7 @@ interface GamepadSettings {
     select: [string, number];
 }
 
-const defaultGamepadSettings = Object.freeze({
+export const defaultGamepadSettings = Object.freeze({
     up: ['ArrowUp', 12] as [string, number],
     down: ['ArrowDown', 13] as [string, number],
     left: ['ArrowLeft', 14] as [string, number],

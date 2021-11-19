@@ -1,5 +1,6 @@
 import { displayKeyCode, displayControllerIndex } from '@/src/util';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { FaRedo, FaTimes } from 'react-icons/fa';
 
 interface SettingsTitleProps {
     title: string;
@@ -16,9 +17,73 @@ export function SettingsTitle(props: SettingsTitleProps) {
 
 interface SettingsControlGridProps {
     controls: { [action: string]: [string, number] };
+    onChange: (action: string, key: string | number | null) => void;
 }
 
 export function SettingsControlGrid(props: SettingsControlGridProps) {
+    const [activeButton, setActiveButton] = useState<string | null>(null);
+    const [editing, setEditing] = useState(false);
+    const controller = false;
+
+    const clearActiveButton = () => {
+        if (!editing) setActiveButton(null);
+    };
+
+    const { onChange } = props;
+    useEffect(() => {
+        const listener = (e: KeyboardEvent) => {
+            if (activeButton && activeButton.endsWith('keyboard') && editing) {
+                onChange(activeButton, e.code);
+                setEditing(false);
+            }
+        };
+
+        window.addEventListener('keydown', listener);
+
+        return () => {
+            window.removeEventListener('keydown', listener);
+        };
+    }, [activeButton, editing, onChange]);
+
+    const ActiveControlButton = ({ action, display }: { action: string; display: string }) => {
+        return (
+            <div className="settings__control-button flex text-primary-500" onMouseLeave={clearActiveButton}>
+                <button
+                    className="tracking-wider text-left flex-grow focus-visible:outline-none"
+                    onClick={() => setEditing(true)}
+                >
+                    {editing ? 'PRESS A KEY' : display}
+                </button>
+                <button
+                    className="px-1 focus-visible:outline-none"
+                    onClick={() => {
+                        if (editing) {
+                            setEditing(false);
+                        } else {
+                            props.onChange(action, null);
+                        }
+                    }}
+                >
+                    {editing ? <FaTimes size="14px" className="text-red-500" /> : <FaRedo size="12px" />}
+                </button>
+            </div>
+        );
+    };
+
+    const ControlButton = ({ action, display, disabled }: { action: string; display: string; disabled?: boolean }) => {
+        return (
+            <div
+                className={`settings__control-button ${disabled ? 'disabled' : ''}`}
+                onMouseLeave={clearActiveButton}
+                onMouseEnter={() => {
+                    if (!editing) setActiveButton(action);
+                }}
+            >
+                {display}
+            </div>
+        );
+    };
+
     const gridItems = [];
     for (const key in props.controls) {
         gridItems.push(
@@ -26,16 +91,42 @@ export function SettingsControlGrid(props: SettingsControlGridProps) {
                 {key.toUpperCase()}
             </span>,
         );
-        gridItems.push(
-            <button key={`${key}-keyboard`} className="settings__control-button">
-                {displayKeyCode(props.controls[key][0])}
-            </button>,
-        );
-        gridItems.push(
-            <button key={`${key}-controller`} className="settings__control-button disabled">
-                {displayControllerIndex(props.controls[key][1])}
-            </button>,
-        );
+        if (`${key}-keyboard` === activeButton) {
+            gridItems.push(
+                <ActiveControlButton
+                    key={`${key}-keyboard`}
+                    action={`${key}-keyboard`}
+                    display={displayKeyCode(props.controls[key][0])}
+                />,
+            );
+        } else {
+            gridItems.push(
+                <ControlButton
+                    key={`${key}-keyboard`}
+                    action={`${key}-keyboard`}
+                    display={displayKeyCode(props.controls[key][0])}
+                />,
+            );
+        }
+
+        if (`${key}-controller` === activeButton && controller) {
+            gridItems.push(
+                <ActiveControlButton
+                    key={`${key}-controller`}
+                    action={`${key}-controller`}
+                    display={displayControllerIndex(props.controls[key][1])}
+                />,
+            );
+        } else {
+            gridItems.push(
+                <ControlButton
+                    key={`${key}-controller`}
+                    action={`${key}-controller`}
+                    display={displayControllerIndex(props.controls[key][1])}
+                    disabled={!controller}
+                />,
+            );
+        }
     }
 
     return (

@@ -68,6 +68,7 @@ module.exports = {
             textColor: ['active'],
             backgroundColor: ['active', 'checked'],
             opacity: ['disabled'],
+            outline: ['focus-visible'],
         },
     },
     plugins: [],
