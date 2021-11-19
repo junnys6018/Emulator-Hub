@@ -1,10 +1,6 @@
-import React, { Fragment } from 'react';
-import { SettingsTitle } from './common';
+import React from 'react';
+import { _InternalSettings } from './common';
 
 export default function GBCSettings() {
-    return (
-        <Fragment>
-            <SettingsTitle title="Game Boy Color Controls" />
-        </Fragment>
-    );
+    return <_InternalSettings title="Game Boy Color Controls" controls="gbcControls" />;
 }

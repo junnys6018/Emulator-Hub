@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import Navbar from '../util/navbar';
 
 import ProfilePicture from './profile-picture';
-import Switch from '../util/switch';
 import { useBreakpoint } from '../../use-breakpoint';
 import { Console } from '../../storage/game-data';
 
@@ -92,12 +91,7 @@ export default function Settings() {
                 <ProfilePicture size="130px" profileImage={profileImage} className="mb-5" onEdit={onEdit} />
                 <h1 className="font-semibold text-3xl mb-6">{userName}</h1>
                 <h2 className="font-medium text-xl mb-4">General</h2>
-                <div className="flex items-center">
-                    <label htmlFor="show-hidden-games" className="mr-auto">
-                        Show Hidden Games
-                    </label>
-                    <Switch id="show-hidden-games" name="show-hidden-games" />
-                </div>
+                <GeneralSettings />
             </div>
         </Fragment>
     );
