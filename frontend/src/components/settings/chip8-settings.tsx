@@ -3,6 +3,7 @@ import { displayKeyCode } from '@/src/util';
 import React, { Fragment, useEffect, useState } from 'react';
 import { FaRedo, FaTimes } from 'react-icons/fa';
 import { SettingsTitle } from './common';
+import _ from 'lodash';
 
 export default function CHIP8Settings() {
     // The button the mouse is hovered over, if any
@@ -19,18 +20,18 @@ export default function CHIP8Settings() {
     };
 
     const [{ settings }, setUserData] = useUserProfile();
-    const [currentSettings, setCurrentSettings] = useState([...settings.chip8Controls]);
+    const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(settings.chip8Controls));
 
     const settingsChanged = () => {
-        return !currentSettings.every((value, index) => value === settings.chip8Controls[index]);
+        return !_.isEqual(currentSettings, settings.chip8Controls);
     };
 
     // Reorders the input keys for the grid
     const keyboardMap = [1, 2, 3, 12, 4, 5, 6, 13, 7, 8, 9, 14, 10, 0, 11, 15];
 
     const resetAll = () => {
-        // Create a copy here, so that the defaults dont get modified
-        setCurrentSettings([...defaultChip8Controls]);
+        // Create a deep copy here, so that the defaults dont get modified
+        setCurrentSettings(_.cloneDeep(defaultChip8Controls));
     };
 
     const onChange = (action: number, key: string | null) => {
@@ -38,14 +39,14 @@ export default function CHIP8Settings() {
             key = defaultChip8Controls[action];
         }
         currentSettings[action] = key;
-        // Again, create a copy, to trigger a re-render
-        setCurrentSettings([...currentSettings]);
+        // Again, create a deep copy, to trigger a re-render
+        setCurrentSettings(_.cloneDeep(currentSettings));
     };
 
     const onSave = () => {
         if (settingsChanged()) {
             // Create a copy here, otherwise `settings.chip8Controls` and `currentSettings` will reference the same object
-            settings.chip8Controls = [...currentSettings];
+            settings.chip8Controls = _.cloneDeep(currentSettings);
             setUserData({ settings });
         }
     };

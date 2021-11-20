@@ -2,6 +2,7 @@ import { displayKeyCode, displayControllerIndex } from '@/src/util';
 import { defaultGamepadControls, useUserProfile, GamepadControls } from '@/src/storage/user-data';
 import React, { Fragment, useEffect, useState } from 'react';
 import { FaRedo, FaTimes } from 'react-icons/fa';
+import _ from 'lodash';
 
 interface SettingsTitleProps {
     title: string;
@@ -130,6 +131,11 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
 
 export function _InternalSettings(props: { title: string; controls: 'gbControls' | 'gbcControls' | 'nesControls' }) {
     const [{ settings }, setUserData] = useUserProfile();
+    const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(settings[props.controls]));
+
+    const settingsChanged = () => {
+        return !_.isEqual(settings[props.controls], currentSettings);
+    };
 
     const onChange = (action: string, key: string | number | null) => {
         if (action.endsWith('keyboard')) {
@@ -137,31 +143,41 @@ export function _InternalSettings(props: { title: string; controls: 'gbControls'
             if (key === null) {
                 key = defaultGamepadControls[action as keyof typeof defaultGamepadControls][0];
             }
-            settings[props.controls][action as keyof GamepadControls][0] = key as string;
+            currentSettings[action as keyof GamepadControls][0] = key as string;
+            setCurrentSettings(_.cloneDeep(currentSettings));
+        }
+    };
+
+    const onSave = () => {
+        if (settingsChanged()) {
+            // Create a deep copy here, otherwise `settings[props.controls]` and `currentSettings` will reference the same object
+            settings[props.controls] = _.cloneDeep(currentSettings);
             setUserData({ settings });
         }
     };
 
     const resetAll = () => {
-        // Create a deep clone here
-        settings[props.controls] = JSON.parse(JSON.stringify(defaultGamepadControls));
-        setUserData({ settings });
+        setCurrentSettings(_.cloneDeep(defaultGamepadControls));
     };
 
     return (
         <Fragment>
             <SettingsTitle title={props.title} />
             <SettingsControlGrid
-                controls={
-                    settings[props.controls] as unknown as {
-                        [action: string]: [string, number];
-                    }
-                }
+                controls={currentSettings as unknown as { [action: string]: [string, number] }}
                 onChange={onChange}
             />
-            <button className="btn-secondary mt-auto mb-24 h-10 px-16 w-max" onClick={resetAll}>
-                Reset All
-            </button>
+            <div className="flex mt-auto mb-24">
+                <button
+                    className={`btn-primary h-10 w-52 mr-20 ${settingsChanged() ? '' : 'disabled'}`}
+                    onClick={onSave}
+                >
+                    Save
+                </button>
+                <button className="btn-secondary h-10 w-52" onClick={resetAll}>
+                    Reset All
+                </button>
+            </div>
         </Fragment>
     );
 }
