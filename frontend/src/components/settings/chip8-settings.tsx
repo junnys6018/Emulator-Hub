@@ -19,24 +19,37 @@ export default function CHIP8Settings() {
     };
 
     const [{ settings }, setUserData] = useUserProfile();
+    const [currentSettings, setCurrentSettings] = useState([...settings.chip8Controls]);
+
+    const settingsChanged = () => {
+        return !currentSettings.every((value, index) => value === settings.chip8Controls[index]);
+    };
+
     // Reorders the input keys for the grid
     const keyboardMap = [1, 2, 3, 12, 4, 5, 6, 13, 7, 8, 9, 14, 10, 0, 11, 15];
 
     const resetAll = () => {
-        // Create a deep clone here
-        settings.chip8Controls = JSON.parse(JSON.stringify(defaultChip8Controls));
-        setUserData({ settings });
+        // Create a copy here, so that the defaults dont get modified
+        setCurrentSettings([...defaultChip8Controls]);
     };
 
     const onChange = (action: number, key: string | null) => {
         if (key === null) {
             key = defaultChip8Controls[action];
         }
-        settings.chip8Controls[action] = key as string;
-        setUserData({ settings });
+        currentSettings[action] = key;
+        // Again, create a copy, to trigger a re-render
+        setCurrentSettings([...currentSettings]);
     };
 
-    // FIXME: im pretty sure this effect does not depend on `editingButton`
+    const onSave = () => {
+        if (settingsChanged()) {
+            // Create a copy here, otherwise `settings.chip8Controls` and `currentSettings` will reference the same object
+            settings.chip8Controls = [...currentSettings];
+            setUserData({ settings });
+        }
+    };
+
     useEffect(() => {
         const listener = (e: KeyboardEvent) => {
             if (editingButton !== null) {
@@ -98,14 +111,22 @@ export default function CHIP8Settings() {
                             }}
                         >
                             {/* TODO: text fit */}
-                            {editingButton === index ? '_' : displayKeyCode(settings.chip8Controls[index])}
+                            {editingButton === index ? '_' : displayKeyCode(currentSettings[index])}
                         </button>
                     </div>
                 ))}
             </div>
-            <button className="btn-secondary mt-auto mb-24 h-10 px-16 w-max" onClick={resetAll}>
-                Reset All
-            </button>
+            <div className="flex mt-auto mb-24">
+                <button
+                    className={`btn-primary h-10 w-52 mr-20 ${settingsChanged() ? '' : 'disabled'}`}
+                    onClick={onSave}
+                >
+                    Save
+                </button>
+                <button className="btn-secondary h-10 w-52" onClick={resetAll}>
+                    Reset All
+                </button>
+            </div>
         </Fragment>
     );
 }
