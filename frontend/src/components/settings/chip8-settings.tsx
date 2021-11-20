@@ -5,6 +5,22 @@ import { FaRedo, FaTimes } from 'react-icons/fa';
 import { SettingsTitle } from './common';
 import _ from 'lodash';
 
+// TODO: this function still needs some work
+function fontSizeLookup(keyCode: string) {
+    if (
+        keyCode.startsWith('Key') ||
+        keyCode.startsWith('Digit') ||
+        /* test for function keys */ /^F\d\d?$/.test(keyCode)
+    ) {
+        return 'text-3xl';
+    }
+
+    if (keyCode.length >= 8) {
+        return 'text-xs';
+    }
+    return 'text-base';
+}
+
 export default function CHIP8Settings() {
     // The button the mouse is hovered over, if any
     const [hoveredButton, setHoveredButton] = useState<number | null>(null);
@@ -98,11 +114,11 @@ export default function CHIP8Settings() {
                             </button>
                         )}
                         <button
-                            className={`text-3xl focus-visible:outline-none ${
+                            className={`focus-visible:outline-none ${
                                 editingButton === index || (editingButton === null && hoveredButton === index)
                                     ? 'text-primary-500'
                                     : ''
-                            }`}
+                            } ${fontSizeLookup(currentSettings[index])}`}
                             onClick={e => {
                                 // check e.detail to ensure this button was clicked via mouse button
                                 // without this check the user cannot assign space or enter as the control
@@ -111,7 +127,6 @@ export default function CHIP8Settings() {
                                 }
                             }}
                         >
-                            {/* TODO: text fit */}
                             {editingButton === index ? '_' : displayKeyCode(currentSettings[index])}
                         </button>
                     </div>

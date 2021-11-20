@@ -59,7 +59,7 @@
     }
 
     .btn-primary.disabled {
-        @apply cursor-not-allowed bg-gray-700 text-gray-400
+        @apply cursor-not-allowed bg-gray-700 text-gray-400;
     }
 }
 
