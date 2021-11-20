@@ -10,6 +10,14 @@ export default function CHIP8Settings() {
     // The button that is currently being edited, if any
     const [editingButton, setEditingButton] = useState<number | null>(null);
 
+    const clearHoveredButton = () => {
+        setHoveredButton(null);
+    };
+
+    const clearEditingButton = () => {
+        setEditingButton(null);
+    };
+
     const [{ settings }, setUserData] = useUserProfile();
     // Reorders the input keys for the grid
     const keyboardMap = [1, 2, 3, 12, 4, 5, 6, 13, 7, 8, 9, 14, 10, 0, 11, 15];
@@ -53,7 +61,7 @@ export default function CHIP8Settings() {
                     <div
                         key={index}
                         className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
-                        onMouseLeave={() => setHoveredButton(null)}
+                        onMouseLeave={clearHoveredButton}
                         onMouseEnter={() => setHoveredButton(index)}
                     >
                         <span className="absolute top-1 left-2 font-bold text-sm text-gray-400">
@@ -70,7 +78,7 @@ export default function CHIP8Settings() {
                         {editingButton === index && (
                             <button
                                 className="absolute top-2 right-2 focus-visible:outline-none"
-                                onClick={() => setEditingButton(null)}
+                                onClick={clearEditingButton}
                             >
                                 <FaTimes size="14px" className="text-red-500" />
                             </button>

@@ -33,10 +33,15 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
         setHoveredButton(null);
     };
 
+    const clearEditingButton = () => {
+        setEditingButton(null);
+    };
+
+    // FIXME: im pretty sure this effect does not depend on `editingButton` and `onChange`
     const { onChange } = props;
     useEffect(() => {
         const listener = (e: KeyboardEvent) => {
-            if (editingButton) {
+            if (editingButton !== null) {
                 onChange(editingButton, e.code);
                 setEditingButton(null);
             }
@@ -49,39 +54,42 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
         };
     }, [editingButton, onChange]);
 
-    const ActiveControlButton = ({ action, display }: { action: string; display: string }) => {
-        return (
-            <div className="settings__control-button items-stretch text-primary-500" onMouseLeave={clearHoveredButton}>
-                <button
-                    className="tracking-wider text-left flex-grow focus-visible:outline-none"
-                    onClick={() => setEditingButton(action)}
-                >
-                    {editingButton ? 'PRESS A KEY' : display}
-                </button>
-                <button
-                    className="px-1 focus-visible:outline-none"
-                    onClick={() => {
-                        if (editingButton) {
-                            setEditingButton(null);
-                        } else {
-                            props.onChange(action, null);
-                        }
-                    }}
-                >
-                    {editingButton ? <FaTimes size="14px" className="text-red-500" /> : <FaRedo size="12px" />}
-                </button>
-            </div>
-        );
-    };
-
     const ControlButton = ({ action, display, disabled }: { action: string; display: string; disabled?: boolean }) => {
         return (
             <div
-                className={`settings__control-button ${disabled ? 'disabled' : ''}`}
+                className={`settings__control-button ${
+                    !disabled && (editingButton === action || (editingButton === null && hoveredButton === action))
+                        ? 'text-primary-500'
+                        : ''
+                } 
+                ${disabled ? 'disabled' : ''}`}
                 onMouseLeave={clearHoveredButton}
                 onMouseEnter={() => setHoveredButton(action)}
             >
-                {display}
+                <button
+                    className={`tracking-wider text-left flex-grow focus-visible:outline-none ${
+                        disabled ? 'cursor-not-allowed' : ''
+                    }`}
+                    onClick={e => {
+                        // check e.detail to ensure this button was clicked via mouse button
+                        // without this check the user cannot assign space or enter as the control
+                        if (!disabled && e.detail !== 0) {
+                            setEditingButton(action);
+                        }
+                    }}
+                >
+                    {editingButton === action ? 'PRESS A KEY' : display}
+                </button>
+                {!disabled && hoveredButton === action && editingButton === null && (
+                    <button className="px-1 focus-visible:outline-none" onClick={() => props.onChange(action, null)}>
+                        <FaRedo size="12px" />
+                    </button>
+                )}
+                {!disabled && editingButton === action && (
+                    <button className="px-1 focus-visible:outline-none" onClick={clearEditingButton}>
+                        <FaTimes size="14px" className="text-red-500" />
+                    </button>
+                )}
             </div>
         );
     };
@@ -93,45 +101,21 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
                 {key.toUpperCase()}
             </span>,
         );
-        if (`${key}-keyboard` === editingButton || (!editingButton && `${key}-keyboard` === hoveredButton)) {
-            gridItems.push(
-                <ActiveControlButton
-                    key={`${key}-keyboard`}
-                    action={`${key}-keyboard`}
-                    display={displayKeyCode(props.controls[key][0])}
-                />,
-            );
-        } else {
-            gridItems.push(
-                <ControlButton
-                    key={`${key}-keyboard`}
-                    action={`${key}-keyboard`}
-                    display={displayKeyCode(props.controls[key][0])}
-                />,
-            );
-        }
-
-        if (
-            controller &&
-            (`${key}-controller` === editingButton || (!editingButton && `${key}-controller` === hoveredButton))
-        ) {
-            gridItems.push(
-                <ActiveControlButton
-                    key={`${key}-controller`}
-                    action={`${key}-controller`}
-                    display={displayControllerIndex(props.controls[key][1])}
-                />,
-            );
-        } else {
-            gridItems.push(
-                <ControlButton
-                    key={`${key}-controller`}
-                    action={`${key}-controller`}
-                    display={displayControllerIndex(props.controls[key][1])}
-                    disabled={!controller}
-                />,
-            );
-        }
+        gridItems.push(
+            <ControlButton
+                key={`${key}-keyboard`}
+                action={`${key}-keyboard`}
+                display={displayKeyCode(props.controls[key][0])}
+            />,
+        );
+        gridItems.push(
+            <ControlButton
+                key={`${key}-controller`}
+                action={`${key}-controller`}
+                display={displayControllerIndex(props.controls[key][1])}
+                disabled={!controller}
+            />,
+        );
     }
 
     return (
