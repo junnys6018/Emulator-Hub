@@ -12,36 +12,39 @@ import { BreakpointProvider } from '@/src/use-breakpoint';
 import { UserProfileProvider } from './storage/user-data';
 import { AlertProvider } from './components/util/alert';
 import { DatabaseProvider } from './storage/storage';
+import { MessageProvider } from './components/util/message';
 
 function App() {
     return (
         <Router>
             <BreakpointProvider>
                 <AlertProvider>
-                    <DatabaseProvider>
-                        <UserProfileProvider>
-                            <div className="flex-grow relative">
-                                <Switch>
-                                    <Route exact path="/">
-                                        <Index />
-                                    </Route>
-                                    <Route exact path="/dashboard">
-                                        <Dashboard />
-                                    </Route>
-                                    <Route exact path="/add-roms">
-                                        <AddRoms />
-                                    </Route>
-                                    <Route exact path="/settings">
-                                        <Settings />
-                                    </Route>
-                                    <Route path="*">
-                                        <NotFound />
-                                    </Route>
-                                </Switch>
-                            </div>
-                            <Footer />
-                        </UserProfileProvider>
-                    </DatabaseProvider>
+                    <MessageProvider>
+                        <DatabaseProvider>
+                            <UserProfileProvider>
+                                <div className="flex-grow relative">
+                                    <Switch>
+                                        <Route exact path="/">
+                                            <Index />
+                                        </Route>
+                                        <Route exact path="/dashboard">
+                                            <Dashboard />
+                                        </Route>
+                                        <Route exact path="/add-roms">
+                                            <AddRoms />
+                                        </Route>
+                                        <Route exact path="/settings">
+                                            <Settings />
+                                        </Route>
+                                        <Route path="*">
+                                            <NotFound />
+                                        </Route>
+                                    </Switch>
+                                </div>
+                                <Footer />
+                            </UserProfileProvider>
+                        </DatabaseProvider>
+                    </MessageProvider>
                 </AlertProvider>
             </BreakpointProvider>
         </Router>
