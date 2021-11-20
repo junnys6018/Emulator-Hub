@@ -27,11 +27,31 @@ export const defaultGamepadControls = Object.freeze({
     select: ['Enter', 8] as [string, number],
 });
 
+export const defaultChip8Controls = [
+    'KeyX',
+    'Digit1',
+    'Digit2',
+    'Digit3',
+    'KeyQ',
+    'KeyW',
+    'KeyE',
+    'KeyA',
+    'KeyS',
+    'KeyD',
+    'KeyZ',
+    'KeyC',
+    'Digit4',
+    'KeyR',
+    'KeyF',
+    'KeyV',
+];
+
 const defaultSettings = Object.freeze({
     showHiddenGames: false,
     nesControls: defaultGamepadControls,
     gbControls: defaultGamepadControls,
     gbcControls: defaultGamepadControls,
+    chip8Controls: defaultChip8Controls,
 });
 
 interface Settings {
@@ -39,6 +59,7 @@ interface Settings {
     nesControls: GamepadControls;
     gbControls: GamepadControls;
     gbcControls: GamepadControls;
+    chip8Controls: string[];
 }
 
 interface UserProfile {

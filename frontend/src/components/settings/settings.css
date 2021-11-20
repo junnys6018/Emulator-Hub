@@ -25,4 +25,10 @@
         background-color: #343434;
         @apply text-gray-400 cursor-not-allowed;
     }
+
+    .settings__chip8-grid {
+        display: grid;
+        grid-template-rows: 112px 112px 112px 112px;
+        grid-template-columns: 112px 112px 112px 112px;
+    }
 }
