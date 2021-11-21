@@ -38,7 +38,6 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
         setEditingButton(null);
     };
 
-    // FIXME: im pretty sure this effect does not depend on `editingButton` and `onChange`
     const { onChange } = props;
     useEffect(() => {
         const listener = (e: KeyboardEvent) => {
@@ -150,9 +149,7 @@ export function _InternalSettings(props: { title: string; controls: 'gbControls'
 
     const onSave = () => {
         if (settingsChanged()) {
-            // Create a deep copy here, otherwise `settings[props.controls]` and `currentSettings` will reference the same object
-            settings[props.controls] = _.cloneDeep(currentSettings);
-            setUserData({ settings });
+            setUserData({ settings: { [props.controls]: currentSettings } });
         }
     };
 

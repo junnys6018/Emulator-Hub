@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
-import Navbar from '../util/navbar';
 
 import ProfilePicture from './profile-picture';
+import Navbar from '../util/navbar';
 import { useBreakpoint } from '../../use-breakpoint';
+import { useUserProfile } from '@/src/storage/user-data';
 import { Console } from '../../storage/game-data';
 
 import GeneralSettings from './general-settings';
@@ -12,7 +13,6 @@ import GBCSettings from './gbc-settings';
 import CHIP8Settings from './chip8-settings';
 
 import './settings.css';
-import { useUserProfile } from '@/src/storage/user-data';
 
 type SettingsPanel = Console | 'GENERAL';
 
@@ -40,10 +40,6 @@ export default function Settings() {
             break;
     }
 
-    const onSideButtonClick = (target: SettingsPanel) => {
-        setCurrentPanel(target);
-    };
-
     const onEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('[INFO] User profile image has been edited');
         if (e.target.files) {
@@ -61,20 +57,20 @@ export default function Settings() {
                         <ProfilePicture size="200px" profileImage={profileImage} className="mb-6" onEdit={onEdit} />
                         <h1 className="font-bold text-3xl mb-24 truncate">{userName}</h1>
                         <div className={`settings__button mb-6 ${currentPanel === 'GENERAL' ? 'active' : ''}`}>
-                            <button onClick={() => onSideButtonClick('GENERAL')}>General</button>
+                            <button onClick={() => setCurrentPanel('GENERAL')}>General</button>
                         </div>
                         <h4 className="font-medium text-xs text-gray-500 mb-2">Controls</h4>
                         <div className={`settings__button mb-3.5 ${currentPanel === 'NES' ? 'active' : ''}`}>
-                            <button onClick={() => onSideButtonClick('NES')}>NES</button>
+                            <button onClick={() => setCurrentPanel('NES')}>NES</button>
                         </div>
                         <div className={`settings__button mb-3.5 ${currentPanel === 'GB' ? 'active' : ''}`}>
-                            <button onClick={() => onSideButtonClick('GB')}>GB</button>
+                            <button onClick={() => setCurrentPanel('GB')}>GB</button>
                         </div>
                         <div className={`settings__button mb-3.5 ${currentPanel === 'GBC' ? 'active' : ''}`}>
-                            <button onClick={() => onSideButtonClick('GBC')}>GBC</button>
+                            <button onClick={() => setCurrentPanel('GBC')}>GBC</button>
                         </div>
                         <div className={`settings__button mb-24 ${currentPanel === 'CHIP 8' ? 'active' : ''}`}>
-                            <button onClick={() => onSideButtonClick('CHIP 8')}>CHIP 8</button>
+                            <button onClick={() => setCurrentPanel('CHIP 8')}>CHIP 8</button>
                         </div>
                     </div>
                     <div className="flex-grow flex flex-col ml-20">{settingsPanel}</div>
@@ -90,7 +86,6 @@ export default function Settings() {
             <div className="container flex flex-col pt-2.5 md:pt-0">
                 <ProfilePicture size="130px" profileImage={profileImage} className="mb-5" onEdit={onEdit} />
                 <h1 className="font-semibold text-3xl mb-6">{userName}</h1>
-                <h2 className="font-medium text-xl mb-4">General</h2>
                 <GeneralSettings />
             </div>
         </Fragment>

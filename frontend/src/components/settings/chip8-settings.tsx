@@ -1,9 +1,10 @@
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import _ from 'lodash';
+
 import { defaultChip8Controls, useUserProfile } from '@/src/storage/user-data';
 import { displayKeyCode } from '@/src/util';
-import React, { Fragment, useEffect, useState } from 'react';
 import { FaRedo, FaTimes } from 'react-icons/fa';
 import { SettingsTitle } from './common';
-import _ from 'lodash';
 
 // TODO: this function still needs some work
 function fontSizeLookup(keyCode: string) {
@@ -35,11 +36,17 @@ export default function CHIP8Settings() {
         setEditingButton(null);
     };
 
-    const [{ settings }, setUserData] = useUserProfile();
-    const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(settings.chip8Controls));
+    const [
+        {
+            settings: { chip8Controls },
+        },
+        setUserData,
+    ] = useUserProfile();
+
+    const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(chip8Controls));
 
     const settingsChanged = () => {
-        return !_.isEqual(currentSettings, settings.chip8Controls);
+        return !_.isEqual(currentSettings, chip8Controls);
     };
 
     // Reorders the input keys for the grid
@@ -50,20 +57,21 @@ export default function CHIP8Settings() {
         setCurrentSettings(_.cloneDeep(defaultChip8Controls));
     };
 
-    const onChange = (action: number, key: string | null) => {
-        if (key === null) {
-            key = defaultChip8Controls[action];
-        }
-        currentSettings[action] = key;
-        // Again, create a deep copy, to trigger a re-render
-        setCurrentSettings(_.cloneDeep(currentSettings));
-    };
+    const onChange = useCallback(
+        (action: number, key: string | null) => {
+            if (key === null) {
+                key = defaultChip8Controls[action];
+            }
+            currentSettings[action] = key;
+            // Create a deep copy, to trigger a re-render
+            setCurrentSettings(_.cloneDeep(currentSettings));
+        },
+        [currentSettings],
+    );
 
     const onSave = () => {
         if (settingsChanged()) {
-            // Create a copy here, otherwise `settings.chip8Controls` and `currentSettings` will reference the same object
-            settings.chip8Controls = _.cloneDeep(currentSettings);
-            setUserData({ settings });
+            setUserData({ settings: { chip8Controls: currentSettings } });
         }
     };
 
@@ -80,8 +88,7 @@ export default function CHIP8Settings() {
         return () => {
             window.removeEventListener('keydown', listener);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [editingButton]);
+    }, [editingButton, onChange]);
 
     return (
         <Fragment>

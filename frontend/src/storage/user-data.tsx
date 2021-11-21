@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import React, { useContext, useEffect, useState } from 'react';
 import { useAlert } from '../components/util/alert';
 import { useDatabase } from './storage';
+import _ from 'lodash';
 
 // strings corresponding to KeyboardEvent.code, and an index into Gamepad.buttons
 export interface GamepadControls {
@@ -122,7 +123,9 @@ export async function generateGuestAccount(): Promise<UserData> {
 const whiteImage =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAADUExURf///6fEG8gAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAfSURBVGje7cExAQAAAMKg9U9tCF8gAAAAAAAAAIBLDSCAAAEf1udwAAAAAElFTkSuQmCC';
 
-const UserProfileContext = React.createContext<[UserProfile, (newUserData: Partial<UserData>) => void] | null>(null);
+const UserProfileContext = React.createContext<[UserProfile, (newUserData: RecursivePartial<UserData>) => void] | null>(
+    null,
+);
 
 export function UserProfileProvider(props: { children: React.ReactNode }) {
     const [userProfile, setUserProfile] = useState<UserProfile>({
@@ -169,10 +172,10 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const setUserData = (newUserData: Partial<UserData>) => {
+    const setUserData = (newUserData: RecursivePartial<UserData>) => {
         if (userData) {
             console.log('[INFO] setting new user data');
-            const updatedUserData = { ...userData, ...newUserData };
+            const updatedUserData = _.merge(userData, newUserData);
             // update UserProfile
             URL.revokeObjectURL(userProfile.profileImage);
             const url = URL.createObjectURL(updatedUserData.profileImage);
