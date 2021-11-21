@@ -1,16 +1,70 @@
-import React, { Fragment } from 'react';
-import Switch from '../util/switch';
-import { SettingsTitle } from './common';
+import React, { Fragment, useCallback, useState } from 'react';
+import _ from 'lodash';
 
-export default function GeneralSettings() {
+import { defaultGeneralSettings, useUserProfile, GeneralSettings } from '@/src/storage/user-data';
+import { SettingsTitle } from './common';
+import Switch from '../util/switch';
+
+export default function GeneralSettingsPanel() {
+    const [
+        {
+            settings: { general },
+        },
+        setUserData,
+    ] = useUserProfile();
+
+    const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(general));
+
+    const settingsChanged = () => {
+        return !_.isEqual(currentSettings, general);
+    };
+
+    const resetAll = () => {
+        // Create a deep copy here, so that the defaults dont get modified
+        setCurrentSettings(_.cloneDeep(defaultGeneralSettings));
+    };
+
+    const onChange = useCallback(
+        (label: keyof GeneralSettings, key: boolean) => {
+            currentSettings[label] = key;
+            // Create a deep copy, to trigger a re-render
+            setCurrentSettings(_.cloneDeep(currentSettings));
+        },
+        [currentSettings],
+    );
+
+    const onSave = () => {
+        if (settingsChanged()) {
+            setUserData({ settings: { general: currentSettings } });
+        }
+    };
+
     return (
         <Fragment>
             <SettingsTitle title="General" />
-            <div className="flex items-center">
+            <div className="flex items-center pb-48 lg:pb-0">
                 <label htmlFor="show-hidden-games" className="mr-auto">
                     Show Hidden Games
                 </label>
-                <Switch id="show-hidden-games" name="show-hidden-games" />
+                <Switch
+                    id="show-hidden-games"
+                    name="show-hidden-games"
+                    checked={currentSettings.showHiddenGames}
+                    onChange={e => {
+                        onChange('showHiddenGames', e.currentTarget.checked);
+                    }}
+                />
+            </div>
+            <div className="flex mt-auto mb-12 lg:mb-24">
+                <button
+                    className={`btn-primary h-10 w-40 lg:w-52 mr-auto lg:mr-20 ${settingsChanged() ? '' : 'disabled'}`}
+                    onClick={onSave}
+                >
+                    Save
+                </button>
+                <button className="btn-secondary h-10 w-40 lg:w-52" onClick={resetAll}>
+                    Reset All
+                </button>
             </div>
         </Fragment>
     );

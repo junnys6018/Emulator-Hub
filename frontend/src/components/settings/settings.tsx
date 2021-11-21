@@ -6,7 +6,7 @@ import { useBreakpoint } from '../../use-breakpoint';
 import { useUserProfile } from '@/src/storage/user-data';
 import { Console } from '../../storage/game-data';
 
-import GeneralSettings from './general-settings';
+import GeneralSettingsPanel from './general-settings';
 import NESSettings from './nes-settings';
 import GBSettings from './gb-settings';
 import GBCSettings from './gbc-settings';
@@ -24,7 +24,7 @@ export default function Settings() {
     let settingsPanel;
     switch (currentPanel) {
         case 'GENERAL':
-            settingsPanel = <GeneralSettings />;
+            settingsPanel = <GeneralSettingsPanel />;
             break;
         case 'NES':
             settingsPanel = <NESSettings />;
@@ -86,7 +86,7 @@ export default function Settings() {
             <div className="container flex flex-col pt-2.5 md:pt-0">
                 <ProfilePicture size="130px" profileImage={profileImage} className="mb-5" onEdit={onEdit} />
                 <h1 className="font-semibold text-3xl mb-6">{userName}</h1>
-                <GeneralSettings />
+                <GeneralSettingsPanel />
             </div>
         </Fragment>
     );

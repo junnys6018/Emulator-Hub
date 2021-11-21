@@ -17,7 +17,31 @@ export interface GamepadControls {
     select: [string, number];
 }
 
-export const defaultGamepadControls = Object.freeze({
+export interface GeneralSettings {
+    showHiddenGames: boolean;
+}
+
+export interface Settings {
+    general: GeneralSettings;
+    nesControls: GamepadControls;
+    gbControls: GamepadControls;
+    gbcControls: GamepadControls;
+    chip8Controls: string[];
+}
+
+export interface UserProfile {
+    profileImage: string;
+    userName: string;
+    settings: Settings;
+}
+
+export interface UserData extends Record {
+    profileImage: Blob;
+    userName: string;
+    settings: Settings;
+}
+
+export const defaultGamepadControls: GamepadControls = Object.freeze({
     up: ['ArrowUp', 12] as [string, number],
     down: ['ArrowDown', 13] as [string, number],
     left: ['ArrowLeft', 14] as [string, number],
@@ -47,33 +71,17 @@ export const defaultChip8Controls = [
     'KeyV',
 ];
 
-const defaultSettings = Object.freeze({
+export const defaultGeneralSettings: GeneralSettings = Object.freeze({
     showHiddenGames: false,
+});
+
+const defaultSettings: Settings = Object.freeze({
+    general: defaultGeneralSettings,
     nesControls: defaultGamepadControls,
     gbControls: defaultGamepadControls,
     gbcControls: defaultGamepadControls,
     chip8Controls: defaultChip8Controls,
 });
-
-interface Settings {
-    showHiddenGames: boolean;
-    nesControls: GamepadControls;
-    gbControls: GamepadControls;
-    gbcControls: GamepadControls;
-    chip8Controls: string[];
-}
-
-interface UserProfile {
-    profileImage: string;
-    userName: string;
-    settings: Settings;
-}
-
-export interface UserData extends Record {
-    profileImage: Blob;
-    userName: string;
-    settings: Settings;
-}
 
 /**
  * Generate a new guest account with a random color gradient as the profile image

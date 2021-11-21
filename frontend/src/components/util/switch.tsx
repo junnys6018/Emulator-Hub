@@ -8,6 +8,7 @@ interface SwitchProps {
     disabled?: boolean;
     className?: string;
     checked?: boolean;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function Switch(props: SwitchProps) {
@@ -19,6 +20,7 @@ export default function Switch(props: SwitchProps) {
             className={classNames('switch', props.className)}
             disabled={props.disabled}
             checked={props.checked}
+            onChange={props.onChange}
         ></input>
     );
 }
