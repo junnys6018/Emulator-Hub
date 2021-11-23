@@ -131,9 +131,9 @@ export async function generateGuestAccount(): Promise<UserData> {
 const whiteImage =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAADUExURf///6fEG8gAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAfSURBVGje7cExAQAAAMKg9U9tCF8gAAAAAAAAAIBLDSCAAAEf1udwAAAAAElFTkSuQmCC';
 
-const UserProfileContext = React.createContext<[UserProfile, (newUserData: RecursivePartial<UserData>) => void] | null>(
-    null,
-);
+const UserProfileContext = React.createContext<
+    [UserProfile, (newUserData: RecursivePartial<UserData>) => Promise<string>] | null
+>(null);
 
 export function UserProfileProvider(props: { children: React.ReactNode }) {
     const [userProfile, setUserProfile] = useState<UserProfile>({
@@ -180,7 +180,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const setUserData = (newUserData: RecursivePartial<UserData>) => {
+    const setUserData = (newUserData: RecursivePartial<UserData>): Promise<string> => {
         if (userData) {
             console.log('[INFO] setting new user data');
             const updatedUserData = _.merge(userData, newUserData);
@@ -194,8 +194,12 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
             });
             _setUserData(updatedUserData);
             // write to db
-            db.put('users', updatedUserData);
+            return db.put('users', updatedUserData);
         }
+        // User data has not been set yet in the effect hook
+        return new Promise((_resolve, reject) =>
+            reject(new Error('User data has not yet been loaded, please try again')),
+        );
     };
 
     return (

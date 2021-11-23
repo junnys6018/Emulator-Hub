@@ -4,6 +4,8 @@ import _ from 'lodash';
 import { defaultGeneralSettings, useUserProfile, GeneralSettings } from '@/src/storage/user-data';
 import { SettingsTitle } from './common';
 import Switch from '../util/switch';
+import { useMessage } from '../util/message';
+import { useAlert } from '../util/alert';
 
 export default function GeneralSettingsPanel() {
     const [
@@ -14,6 +16,9 @@ export default function GeneralSettingsPanel() {
     ] = useUserProfile();
 
     const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(general));
+
+    const message = useMessage();
+    const alert = useAlert();
 
     const settingsChanged = () => {
         return !_.isEqual(currentSettings, general);
@@ -33,9 +38,13 @@ export default function GeneralSettingsPanel() {
         [currentSettings],
     );
 
+    // TODO: repeat the `.then` logic in other setting pages
     const onSave = () => {
         if (settingsChanged()) {
-            setUserData({ settings: { general: currentSettings } });
+            setUserData({ settings: { general: currentSettings } }).then(
+                () => message('Settings saved', { title: 'Success', severity: 'SUCCESS' }),
+                error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
+            );
         }
     };
 
