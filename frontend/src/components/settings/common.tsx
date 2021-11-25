@@ -73,7 +73,7 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
                     onClick={e => {
                         // check e.detail to ensure this button was clicked via mouse button
                         // without this check the user cannot assign space or enter as the control
-                        if (!disabled && e.detail !== 0) {
+                        if (!disabled && editingButton === null && e.detail !== 0) {
                             setEditingButton(action);
                         }
                     }}
@@ -128,7 +128,7 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
     );
 }
 
-export function _InternalSettings(props: { title: string; controls: 'gbControls' | 'gbcControls' | 'nesControls' }) {
+export function InternalSettings(props: { title: string; controls: 'gbControls' | 'gbcControls' | 'nesControls' }) {
     const [{ settings }, setUserData] = useUserProfile();
     const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(settings[props.controls]));
 

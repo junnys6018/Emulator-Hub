@@ -76,11 +76,11 @@ export const defaultGeneralSettings: GeneralSettings = Object.freeze({
 });
 
 const defaultSettings: Settings = Object.freeze({
-    general: defaultGeneralSettings,
-    nesControls: defaultGamepadControls,
-    gbControls: defaultGamepadControls,
-    gbcControls: defaultGamepadControls,
-    chip8Controls: defaultChip8Controls,
+    general: _.cloneDeep(defaultGeneralSettings),
+    nesControls: _.cloneDeep(defaultGamepadControls),
+    gbControls: _.cloneDeep(defaultGamepadControls),
+    gbcControls: _.cloneDeep(defaultGamepadControls),
+    chip8Controls: _.cloneDeep(defaultChip8Controls),
 });
 
 /**
@@ -124,7 +124,7 @@ export async function generateGuestAccount(): Promise<UserData> {
         age: 0,
         userName: 'Guest',
         profileImage: profileImage,
-        settings: defaultSettings,
+        settings: _.cloneDeep(defaultSettings),
     };
 }
 
@@ -139,7 +139,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
     const [userProfile, setUserProfile] = useState<UserProfile>({
         profileImage: whiteImage,
         userName: 'Loading...',
-        settings: defaultSettings,
+        settings: _.cloneDeep(defaultSettings),
     });
 
     const [userData, _setUserData] = useState<UserData>();
