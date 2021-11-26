@@ -1,7 +1,7 @@
 module.exports = {
     cacheDirectory: 'node_modules/.cache/jest',
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.tsx', 'src/**/*.ts', 'tests/**/*.tsx', 'tests/**/*.ts'],
+    collectCoverageFrom: ['src/**/*.tsx', 'src/**/*.ts'],
     // coverageThreshold: {
     //     global: {
     //         branches: 90,
@@ -17,6 +17,7 @@ module.exports = {
         '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
             '<rootDir>/tests/mocks/fileMock.js',
         '\\.css$': '<rootDir>/tests/mocks/styleMock.js',
+        '@/(.*)$': '<rootDir>/$1',
     },
     setupFiles: ['fake-indexeddb/auto'],
 };

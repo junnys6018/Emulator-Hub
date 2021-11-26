@@ -75,7 +75,7 @@ export const defaultGeneralSettings: GeneralSettings = Object.freeze({
     showHiddenGames: false,
 });
 
-const defaultSettings: Settings = Object.freeze({
+export const defaultSettings: Settings = Object.freeze({
     general: _.cloneDeep(defaultGeneralSettings),
     nesControls: _.cloneDeep(defaultGamepadControls),
     gbControls: _.cloneDeep(defaultGamepadControls),

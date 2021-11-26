@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
 
 import { defaultGeneralSettings, useUserProfile, GeneralSettings } from '@/src/storage/user-data';
@@ -16,6 +16,10 @@ export default function GeneralSettingsPanel() {
     ] = useUserProfile();
 
     const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(general));
+
+    useEffect(() => {
+        setCurrentSettings(_.cloneDeep(general));
+    }, [general]);
 
     const message = useMessage();
     const alert = useAlert();

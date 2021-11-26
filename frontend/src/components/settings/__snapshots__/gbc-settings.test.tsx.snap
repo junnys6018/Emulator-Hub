@@ -1,0 +1,299 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GBC Settings Snapshot 1`] = `
+Array [
+  <h2
+    className="hidden lg:block text-2xl text-gray-500 mb-7"
+  >
+    Settings
+  </h2>,
+  <h1
+    className="font-medium text-xl mb-4 lg:text-3xl lg:mb-10"
+  >
+    Game Boy Color Controls
+  </h1>,
+  <div
+    className="grid grid-cols-3"
+  >
+    <h3
+      className="tracking-wider text-gray-400"
+    >
+      ACTION
+    </h3>
+    <h3
+      className="tracking-wider text-gray-400 ml-5"
+    >
+      KEYBOARD
+    </h3>
+    <h3
+      className="tracking-wider text-gray-400 ml-5"
+    >
+      CONTROLLER
+    </h3>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      UP
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        UP ARROW
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        DPAD UP
+      </button>
+    </div>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      DOWN
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        DOWN ARROW
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        DPAD DOWN
+      </button>
+    </div>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      LEFT
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        LEFT ARROW
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        DPAD LEFT
+      </button>
+    </div>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      RIGHT
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        RIGHT ARROW
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        DPAD RIGHT
+      </button>
+    </div>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      A
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        Z
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        A
+      </button>
+    </div>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      B
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        X
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        B
+      </button>
+    </div>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      START
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        Q
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        START
+      </button>
+    </div>
+    <span
+      className="py-1 my-1.5 tracking-wider"
+    >
+      SELECT
+    </span>
+    <div
+      className="settings__control-button  
+                "
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none "
+        onClick={[Function]}
+      >
+        ENTER
+      </button>
+    </div>
+    <div
+      className="settings__control-button  
+                disabled"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="tracking-wider text-left flex-grow focus-visible:outline-none cursor-not-allowed"
+        onClick={[Function]}
+      >
+        SELECT
+      </button>
+    </div>
+  </div>,
+  <div
+    className="flex mt-auto mb-24"
+  >
+    <button
+      className="btn-primary h-10 w-52 mr-20 disabled"
+      onClick={[Function]}
+    >
+      Save
+    </button>
+    <button
+      className="btn-secondary h-10 w-52"
+      onClick={[Function]}
+    >
+      Reset All
+    </button>
+  </div>,
+]
+`;
