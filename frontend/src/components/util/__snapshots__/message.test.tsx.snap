@@ -12,11 +12,11 @@ exports[`<Message /> snapshot 1`] = `
   <div
     className="w-80 flex flex-col justify-center"
   >
-    <h1
+    <h5
       className="font-semibold ml-3 pt-3"
     >
       Message
-    </h1>
+    </h5>
     <span
       className="text-sm ml-3 pb-3"
     >

@@ -32,7 +32,7 @@ export function Message(props: MessageProps) {
             ref={container}
         >
             <div className={`w-80 flex flex-col justify-center`}>
-                <h1 className="font-semibold ml-3 pt-3">{props.title}</h1>
+                <h5 className="font-semibold ml-3 pt-3">{props.title}</h5>
                 <span className="text-sm ml-3 pb-3">{props.message}</span>
             </div>
             <button className="hover:text-red-500 ml-4 self-start mt-3 mr-3" onClick={props.close}>
