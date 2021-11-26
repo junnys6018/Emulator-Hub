@@ -59,9 +59,7 @@ describe('GB Settings', () => {
         expect(keyboardButtons.length).toBe(8);
         const names = ['UP ARROW', 'DOWN ARROW', 'LEFT ARROW', 'RIGHT ARROW', 'Z', 'X', 'Q', 'ENTER'];
         for (let i = 0; i < 8; i++) {
-            const button = keyboardButtons[i];
-            const innerButton = await button.findElement(By.css('button'));
-            expect(await innerButton.getText()).toBe(names[i]);
+            expect(await keyboardButtons[i].getText()).toBe(names[i]);
         }
 
         const saveButton = await GBSettingsPanel.saveButton();

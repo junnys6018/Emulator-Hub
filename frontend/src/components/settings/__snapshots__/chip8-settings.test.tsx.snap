@@ -1,0 +1,308 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CHIP8 Settings Snapshot 1`] = `
+Array [
+  <h2
+    className="hidden lg:block text-2xl text-gray-500 mb-7"
+  >
+    Settings
+  </h2>,
+  <h1
+    className="font-medium text-xl mb-4 lg:text-3xl lg:mb-10"
+  >
+    CHIP 8 Controls
+  </h1>,
+  <div
+    className="settings__chip8-grid"
+  >
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        1
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        1
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        2
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        2
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        3
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        3
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        C
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        4
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        4
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        Q
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        5
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        W
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        6
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        E
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        D
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        R
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        7
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        A
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        8
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        S
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        9
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        D
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        E
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        F
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        A
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        Z
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        0
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        X
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        B
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        C
+      </button>
+    </div>
+    <div
+      className="bg-gray-600 rounded-xl relative mr-7 mb-7 flex items-center justify-center"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="absolute top-1 left-2 font-bold text-sm text-gray-400"
+      >
+        F
+      </span>
+      <button
+        className="focus-visible:outline-none  text-3xl"
+        onClick={[Function]}
+      >
+        V
+      </button>
+    </div>
+  </div>,
+  <div
+    className="flex mt-auto mb-24"
+  >
+    <button
+      className="btn-primary h-10 w-52 mr-20 disabled"
+      onClick={[Function]}
+    >
+      Save
+    </button>
+    <button
+      className="btn-secondary h-10 w-52"
+      onClick={[Function]}
+    >
+      Reset All
+    </button>
+  </div>,
+]
+`;

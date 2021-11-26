@@ -104,22 +104,6 @@ export default function CHIP8Settings() {
                         <span className="absolute top-1 left-2 font-bold text-sm text-gray-400">
                             {index.toString(16).toUpperCase()}
                         </span>
-                        {hoveredButton === index && editingButton === null && (
-                            <button
-                                className="absolute top-2 right-2 focus-visible:outline-none"
-                                onClick={() => onChange(index, null)}
-                            >
-                                <FaRedo size="12px" className="text-primary-500" />
-                            </button>
-                        )}
-                        {editingButton === index && (
-                            <button
-                                className="absolute top-2 right-2 focus-visible:outline-none"
-                                onClick={clearEditingButton}
-                            >
-                                <FaTimes size="14px" className="text-red-500" />
-                            </button>
-                        )}
                         <button
                             className={`focus-visible:outline-none ${
                                 editingButton === index || (editingButton === null && hoveredButton === index)
@@ -136,6 +120,22 @@ export default function CHIP8Settings() {
                         >
                             {editingButton === index ? '_' : displayKeyCode(currentSettings[index])}
                         </button>
+                        {hoveredButton === index && editingButton === null && (
+                            <button
+                                className="absolute top-2 right-2 focus-visible:outline-none"
+                                onClick={() => onChange(index, null)}
+                            >
+                                <FaRedo size="12px" className="text-primary-500" />
+                            </button>
+                        )}
+                        {editingButton === index && (
+                            <button
+                                className="absolute top-2 right-2 focus-visible:outline-none"
+                                onClick={clearEditingButton}
+                            >
+                                <FaTimes size="14px" className="text-red-500" />
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>
