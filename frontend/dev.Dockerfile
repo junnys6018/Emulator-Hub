@@ -2,9 +2,9 @@ FROM node:14
 
 WORKDIR /code/frontend
 
-COPY package* .
+COPY package* ./
 RUN npm install
 
-COPY . .
+COPY ./ ./
 
 CMD ["npm", "run", "dev"]

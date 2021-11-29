@@ -6,10 +6,10 @@ RUN pip install --upgrade pip
 
 WORKDIR /code/backend
 
-COPY requirements.txt .
+COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY ./ ./
 
 EXPOSE 8000
 

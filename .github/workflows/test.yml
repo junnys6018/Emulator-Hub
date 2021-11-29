@@ -57,6 +57,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Install node http-server
+        run: npm install --global http-server
+
+      - name: Serve files locally
+        run: http-server ../build/production --port 8000 --proxy http://localhost:8000? > /dev/null 2>&1 &
+
       - name: Run Test
         run: npm run test
 
