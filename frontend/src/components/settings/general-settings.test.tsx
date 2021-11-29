@@ -12,6 +12,8 @@ afterEach(async () => {
     resetDriver();
 });
 
+jest.setTimeout(15000);
+
 describe('General Settings', () => {
     test('Click on side panel', async () => {
         await SettingsPage.clickGeneralSidePanelButton();
