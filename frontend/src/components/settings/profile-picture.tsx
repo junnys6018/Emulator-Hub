@@ -23,7 +23,7 @@ export default function ProfilePicture(props: ProfilePictureProps) {
         <div className={classNames('relative', props.className)}>
             <img
                 src={props.profileImage}
-                className="rounded-full filter drop-shadow object-cover"
+                className="rounded-full filter drop-shadow object-cover object-center"
                 style={{ width: props.size, height: props.size }}
             ></img>
             <label

@@ -17,8 +17,8 @@ export default function Navbar(props: NavbarProps) {
     const [dropdownActive, setDropDownActive] = useState(false);
     const [searchActive, setSearchActive] = useState(false);
 
-    const dropdownElement: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
-    const searchInputElement: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
+    const dropdownElement = useRef<HTMLDivElement>(null);
+    const searchInputElement = useRef<HTMLInputElement>(null);
 
     const onJumpToClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -71,7 +71,7 @@ export default function Navbar(props: NavbarProps) {
                     <FaSearch size="24px" />
                 </button>
                 <button className="select-none md:hidden" onClick={() => setDropDownActive(!dropdownActive)}>
-                    <img className="rounded-full w-10 h-10 object-cover" src={props.profileImage}></img>
+                    <img className="rounded-full w-10 h-10 object-cover object-center" src={props.profileImage}></img>
                 </button>
             </div>
             {/* Profile Dropdown */}

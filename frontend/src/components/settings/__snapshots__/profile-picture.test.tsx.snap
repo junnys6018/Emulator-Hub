@@ -5,7 +5,7 @@ exports[`<ProfilePicture /> snapshot 1`] = `
   className="relative"
 >
   <img
-    className="rounded-full filter drop-shadow object-cover"
+    className="rounded-full filter drop-shadow object-cover object-center"
     src="/image.png"
     style={
       Object {

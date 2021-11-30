@@ -18,7 +18,7 @@ interface MessageProps {
 }
 
 export function Message(props: MessageProps) {
-    const container: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
+    const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         (container.current as HTMLDivElement).classList.remove('opacity-0');

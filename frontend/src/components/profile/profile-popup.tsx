@@ -13,7 +13,7 @@ export default function ProfilePopup(props: { profileImage: string }) {
             tabIndex={1}
         >
             <img
-                className="rounded-full filter drop-shadow my-3 mx-11 object-cover"
+                className="rounded-full filter drop-shadow my-3 mx-11 object-cover object-center"
                 style={{ width: '120px', height: '120px' }}
                 src={props.profileImage}
             ></img>

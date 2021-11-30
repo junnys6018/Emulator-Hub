@@ -13,7 +13,7 @@ export default function ProfileDropdown(props: ProfileDropdownProps) {
         <div className="container flex flex-col">
             <div className="flex my-6 items-center">
                 <img
-                    className="rounded-full object-cover"
+                    className="rounded-full object-cover object-center"
                     src={props.profileImage}
                     style={{ width: '100px', height: '100px' }}
                 ></img>

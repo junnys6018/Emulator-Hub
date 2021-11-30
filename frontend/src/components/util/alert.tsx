@@ -48,8 +48,8 @@ export function Alert(props: AlertProps) {
         location.reload();
     };
 
-    const container: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
-    const backdrop: React.MutableRefObject<null | HTMLDivElement> = useRef(null);
+    const container = useRef<HTMLDivElement>(null);
+    const backdrop = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         (container.current as HTMLDivElement).classList.remove('hide');
