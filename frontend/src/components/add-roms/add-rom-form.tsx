@@ -1,7 +1,13 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Console } from '@/src/storage/game-data';
+import { Console, putGameData, useGameMetaData } from '@/src/storage/game-data';
 import { FaPlus } from 'react-icons/fa';
 import classNames from 'classnames';
+import getActiveUserUuid from '@/src/storage/get-active-user';
+import { v4 as uuidv4 } from 'uuid';
+import { useAlert } from '../util/alert';
+import { useMessage } from '../util/message';
+import { b64toBlob } from '@/src/util';
+import { useDatabase } from '@/src/storage/storage';
 
 interface AddRomFormProps {
     id: number;
@@ -12,11 +18,18 @@ interface AddRomFormProps {
     onDelete: () => void;
 }
 
+const defaultImage = b64toBlob(
+    'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURSkpKSEhIW1WaZoAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbSURBVBjTYwACRihGZwhCAW4VDEhqqGGOoCAAhAACORMqTggAAAAASUVORK5CYII=',
+    'image/png',
+);
+
 export default function AddRomForm(props: AddRomFormProps) {
     const [name, setName] = useState(props.initialName);
     const [gameConsole, setGameConsole] = useState<Console>(props.inititalConsole);
+    const [, putGameMetaData] = useGameMetaData();
 
     const backgroundImageDiv = useRef<HTMLDivElement>(null);
+    const form = useRef<HTMLFormElement>(null);
     const backgroundImageUrl: React.MutableRefObject<string | null> = useRef<string>(null);
 
     const onImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,12 +46,66 @@ export default function AddRomForm(props: AddRomFormProps) {
         }
     }, []);
 
-    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    }, []);
+    const message = useMessage();
+    const alert = useAlert();
+    const db = useDatabase();
+
+    const { onDelete } = props;
+    const onSubmit = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            // Add entry to the gameMetaData object store
+            const formData = new FormData(form.current as HTMLFormElement);
+
+            let image = formData.get(`image-${props.id}`) as Blob;
+            if (image.size === 0) {
+                image = defaultImage;
+            }
+
+            const activeUser = getActiveUserUuid() as string;
+
+            putGameMetaData({
+                name: formData.get(`name-${props.id}`) as string,
+                image: image,
+                saveNames: ['Save 1'],
+                activeSaveIndex: 0,
+                console: formData.get(`console-${props.id}`) as Console,
+                user: activeUser,
+                age: 0,
+                uuid: uuidv4(),
+            }).then(
+                () => message('Settings saved', { title: 'Success', severity: 'SUCCESS' }),
+                error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
+            );
+
+            // Add entry to the gameData object store
+            const fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(props.file);
+
+            fileReader.onload = () => {
+                putGameData(db, {
+                    rom: fileReader.result as ArrayBuffer,
+                    saves: [
+                        {
+                            data: new ArrayBuffer(0), // TODO: create a function that determines the required size of saves
+                            age: 0,
+                            uuid: uuidv4(),
+                        },
+                    ],
+                    user: activeUser,
+                    age: 0,
+                    uuid: uuidv4(),
+                });
+            };
+
+            onDelete();
+        },
+        [props.id, props.file, putGameMetaData, db, onDelete, message, alert],
+    );
 
     return (
         <form
+            ref={form}
             onSubmit={onSubmit}
             className={classNames('flex flex-col self-center rounded-4xl w-80 bg-primary-800 p-5', props.className)}
         >
@@ -99,7 +166,11 @@ export default function AddRomForm(props: AddRomFormProps) {
 
                 <button
                     className="font-medium text-primary-100 md:hover:text-red-500 active:text-red-500"
-                    onClick={props.onDelete}
+                    onClick={e => {
+                        // We need to prevent default because this button is submitting the form for some reason
+                        e.preventDefault();
+                        props.onDelete();
+                    }}
                 >
                     Delete
                 </button>

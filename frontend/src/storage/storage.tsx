@@ -3,6 +3,7 @@ import { generateGuestAccount, UserData } from './user-data';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useContext, useEffect, useState } from 'react';
 import { useAlert } from '../components/util/alert';
+import { GameData, GameMetaData } from './game-data';
 
 export interface Record {
     uuid: string;
@@ -13,6 +14,16 @@ export interface EmulatorHubDB extends DBSchema {
     users: {
         value: UserData;
         key: string;
+    };
+    gameMetaData: {
+        value: GameMetaData;
+        key: string;
+        indexes: { 'by-user': string };
+    };
+    gameData: {
+        value: GameData;
+        key: string;
+        indexes: { 'by-user': string };
     };
 }
 
@@ -48,6 +59,12 @@ export async function initializeDatabase(name: string, options?: OpenDBCallbacks
                     // database didnt exist, initialize schema
                     console.log('[INFO] Upgrading database to version 1');
                     db.createObjectStore('users', { keyPath: 'uuid' });
+
+                    const gameMetaData = db.createObjectStore('gameMetaData', { keyPath: 'uuid' });
+                    gameMetaData.createIndex('by-user', 'user');
+
+                    const gameData = db.createObjectStore('gameData', { keyPath: 'uuid' });
+                    gameData.createIndex('by-user', 'user');
             }
         },
         blocked: options?.blocked,

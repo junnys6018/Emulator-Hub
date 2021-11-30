@@ -79,7 +79,6 @@ export function MessageProvider(props: MessageProviderProps) {
         const timerId = setTimeout(() => {
             close(currentKey);
             delete timeouts.current[currentKey];
-            console.log(currentKey);
 
             // We need to do this annoying cast becuse typescript is using the function signature of the nodejs version of setTimeout
             // instead of the browsers version

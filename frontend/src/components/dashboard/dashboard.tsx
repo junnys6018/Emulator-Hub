@@ -7,17 +7,16 @@ import GameSidePanel from './game-side-panel';
 import Sidebar from '../util/sidebar';
 
 import { useBreakpoint } from '@/src/use-breakpoint';
-import { isEmptyObject } from '@/src/util';
-import { useGameMetaData, GameMetaData, Console } from '@/src/storage/game-data';
+import { useGameMetaData, Console, GameMetaDataView } from '@/src/storage/game-data';
 import { useUserProfile } from '@/src/storage/user-data';
 
 export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sidePanelOpen, setSidePanelOpen] = useState(false);
-    const [activeGame, setActiveGame] = useState<GameMetaData | Record<string, never>>({});
+    const [activeGame, setActiveGame] = useState<GameMetaDataView | null>(null);
     const [{ userName, profileImage }] = useUserProfile();
 
-    let gameMetaData = useGameMetaData();
+    let [gameMetaData] = useGameMetaData();
     const breakpoint = useBreakpoint();
 
     let noneFound = false;
@@ -67,8 +66,14 @@ export default function Dashboard() {
                 )}
             </div>
             <Sidebar show={sidePanelOpen} hide={closePanel} className="w-screen lg:w-168 h-screen flex flex-col">
-                {!isEmptyObject(activeGame) && (
-                    <GameSidePanel {...(activeGame as GameMetaData)} closePanel={closePanel} />
+                {activeGame && (
+                    <GameSidePanel
+                        image={activeGame.image}
+                        name={activeGame.name}
+                        saveNames={activeGame.saveNames}
+                        activeSaveIndex={activeGame.activeSaveIndex}
+                        closePanel={closePanel}
+                    />
                 )}
             </Sidebar>
         </Fragment>

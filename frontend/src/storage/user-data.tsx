@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useAlert } from '../components/util/alert';
 import { useDatabase } from './storage';
 import _ from 'lodash';
+import getActiveUserUuid from './get-active-user';
 
 // strings corresponding to KeyboardEvent.code, and an index into Gamepad.buttons
 export interface GamepadControls {
@@ -167,10 +168,10 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
             });
         };
 
-        const guestUuid = localStorage.getItem('guest-uuid');
-        if (guestUuid) {
-            console.log('[INFO] found guestUuid, loading from storage');
-            loadUserDataFromUuid(guestUuid);
+        const activeUuid = getActiveUserUuid();
+        if (activeUuid) {
+            console.log('[INFO] found UUID, loading from storage');
+            loadUserDataFromUuid(activeUuid);
         } else {
             alert('Guest UUID not found', {
                 severity: 'ERROR',

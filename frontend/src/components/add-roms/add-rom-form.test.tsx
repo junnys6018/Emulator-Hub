@@ -3,6 +3,18 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import AddRomForm from './add-rom-form';
 
+jest.mock('@/src/storage/game-data', () => {
+    const useGameMetaData = jest.fn();
+    useGameMetaData.mockReturnValue([undefined, jest.fn()]);
+    return {
+        __esModule: true,
+        useGameMetaData,
+    };
+});
+jest.mock('@/src/storage/storage');
+jest.mock('../util/alert');
+jest.mock('../util/message');
+
 test('<AddRomForm /> snapshot', () => {
     const file = new File([], 'test');
     const tree = renderer

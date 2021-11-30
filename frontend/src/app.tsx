@@ -13,6 +13,7 @@ import { UserProfileProvider } from './storage/user-data';
 import { AlertProvider } from './components/util/alert';
 import { DatabaseProvider } from './storage/storage';
 import { MessageProvider } from './components/util/message';
+import { GameMetaDataProvider } from './storage/game-data';
 
 function App() {
     return (
@@ -22,26 +23,28 @@ function App() {
                     <MessageProvider>
                         <DatabaseProvider>
                             <UserProfileProvider>
-                                <div className="flex-grow relative">
-                                    <Switch>
-                                        <Route exact path="/">
-                                            <Index />
-                                        </Route>
-                                        <Route exact path="/dashboard">
-                                            <Dashboard />
-                                        </Route>
-                                        <Route exact path="/add-roms">
-                                            <AddRoms />
-                                        </Route>
-                                        <Route exact path="/settings">
-                                            <Settings />
-                                        </Route>
-                                        <Route path="*">
-                                            <NotFound />
-                                        </Route>
-                                    </Switch>
-                                </div>
-                                <Footer />
+                                <GameMetaDataProvider>
+                                    <div className="flex-grow relative">
+                                        <Switch>
+                                            <Route exact path="/">
+                                                <Index />
+                                            </Route>
+                                            <Route exact path="/dashboard">
+                                                <Dashboard />
+                                            </Route>
+                                            <Route exact path="/add-roms">
+                                                <AddRoms />
+                                            </Route>
+                                            <Route exact path="/settings">
+                                                <Settings />
+                                            </Route>
+                                            <Route path="*">
+                                                <NotFound />
+                                            </Route>
+                                        </Switch>
+                                    </div>
+                                    <Footer />
+                                </GameMetaDataProvider>
                             </UserProfileProvider>
                         </DatabaseProvider>
                     </MessageProvider>
