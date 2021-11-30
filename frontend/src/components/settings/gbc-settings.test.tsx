@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { driver, resetDriver, elementHasClass } from '@/tests/selenium';
+import { driver, resetDriver, elementHasClass, getIndexedDBSettings } from '@/tests/selenium';
 import { SettingsPage } from './__pageobjects__/settings-page';
 import { GBCSettingsPanel } from './__pageobjects__/gbc-settings';
 import { By } from 'selenium-webdriver';
@@ -88,21 +88,7 @@ describe('GBC Settings', () => {
         await saveButton.click();
 
         // check indexeddb
-        const result = await driver.executeScript(async () => {
-            return await new Promise(resolve => {
-                const openRequest = indexedDB.open('emulator-hub');
-                openRequest.onsuccess = () => {
-                    const db = openRequest.result;
-                    const transaction = db.transaction('users');
-                    const users = transaction.objectStore('users');
-
-                    const request = users.getAll();
-                    request.onsuccess = () => {
-                        resolve(request.result[0].settings);
-                    };
-                };
-            });
-        });
+        let result = await getIndexedDBSettings();
 
         const expected = _.cloneDeep(defaultSettings);
         expected.gbcControls.up[0] = 'Equal';
@@ -118,6 +104,16 @@ describe('GBC Settings', () => {
 
         saveButton = await GBCSettingsPanel.saveButton();
         expect(await elementHasClass(saveButton, 'disabled')).toBe(true);
+
+        // Reset to defaults
+        const resetButton = await GBCSettingsPanel.resetAllButton();
+        await resetButton.click();
+        await saveButton.click();
+
+        // check indexeddb
+        result = await getIndexedDBSettings();
+
+        expect(result).toEqual(_.cloneDeep(defaultSettings));
     });
 
     test('Snapshot', () => {

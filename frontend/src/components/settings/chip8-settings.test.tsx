@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { driver, resetDriver, elementHasClass } from '@/tests/selenium';
+import { driver, resetDriver, elementHasClass, getIndexedDBSettings } from '@/tests/selenium';
 import { SettingsPage } from './__pageobjects__/settings-page';
 import { CHIP8SettingsPanel } from './__pageobjects__/chip8-settings';
 import { By } from 'selenium-webdriver';
@@ -100,21 +100,7 @@ describe('CHIP8 Settings', () => {
         await saveButton.click();
 
         // check indexeddb
-        const result = await driver.executeScript(async () => {
-            return await new Promise(resolve => {
-                const openRequest = indexedDB.open('emulator-hub');
-                openRequest.onsuccess = () => {
-                    const db = openRequest.result;
-                    const transaction = db.transaction('users');
-                    const users = transaction.objectStore('users');
-
-                    const request = users.getAll();
-                    request.onsuccess = () => {
-                        resolve(request.result[0].settings);
-                    };
-                };
-            });
-        });
+        let result = await getIndexedDBSettings();
 
         const expected = _.cloneDeep(defaultSettings);
         expected.chip8Controls[1] = 'Equal';
@@ -131,6 +117,16 @@ describe('CHIP8 Settings', () => {
 
         saveButton = await CHIP8SettingsPanel.saveButton();
         expect(await elementHasClass(saveButton, 'disabled')).toBe(true);
+
+        // Reset to defaults
+        const resetButton = await CHIP8SettingsPanel.resetAllButton();
+        await resetButton.click();
+        await saveButton.click();
+
+        // check indexeddb
+        result = await getIndexedDBSettings();
+
+        expect(result).toEqual(_.cloneDeep(defaultSettings));
     });
 
     test('Snapshot', () => {

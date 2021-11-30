@@ -41,3 +41,21 @@ export function elementHasClass(element: WebElement, className: string) {
         .then(classNames => classNames.split(' '))
         .then(classList => classList.includes(className));
 }
+
+export async function getIndexedDBSettings() {
+    return await driver.executeScript(async () => {
+        return await new Promise(resolve => {
+            const openRequest = indexedDB.open('emulator-hub');
+            openRequest.onsuccess = () => {
+                const db = openRequest.result;
+                const transaction = db.transaction('users');
+                const users = transaction.objectStore('users');
+
+                const request = users.getAll();
+                request.onsuccess = () => {
+                    resolve(request.result[0].settings);
+                };
+            };
+        });
+    });
+}
