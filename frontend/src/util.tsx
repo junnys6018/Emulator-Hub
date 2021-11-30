@@ -86,3 +86,15 @@ export function displayControllerIndex(index: number) {
     ];
     return mapping[index];
 }
+
+export function stripExtension(filename: string) {
+    return filename.replace(/\.[^/.]+$/, '');
+}
+
+export function getExtension(filename: string): string | null {
+    const a = filename.split('.');
+    if (a.length === 1) {
+        return null;
+    }
+    return a.pop()?.toLowerCase() as string;
+}

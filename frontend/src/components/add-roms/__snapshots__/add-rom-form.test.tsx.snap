@@ -1,17 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<AddRomForm /> snapshot 1`] = `
-<div
+<form
   className="flex flex-col self-center rounded-4xl w-80 bg-primary-800 p-5"
+  onSubmit={[Function]}
 >
   <div
-    className="rounded-3xl bg-primary-900 h-48 mb-3 flex items-center justify-center"
+    className="bg-cover bg-center bg-blend-multiply rounded-3xl bg-primary-900 h-48 mb-3 flex items-center justify-center"
   >
-    <button
+    <label
       className="btn-secondary h-10 px-2.5 text-primary-100"
+      htmlFor="image-0"
     >
+      <input
+        accept="image/png, image/jpeg"
+        className="hidden"
+        id="image-0"
+        name="image-0"
+        onChange={[Function]}
+        type="file"
+      />
       Choose Image
-    </button>
+    </label>
   </div>
   <label
     className="font-semibold mb-3.5"
@@ -64,9 +74,16 @@ exports[`<AddRomForm /> snapshot 1`] = `
   <div
     className="flex mx-auto"
   >
-    <button
+    <label
       className="btn-primary h-7 w-24 mr-10"
+      htmlFor="submit-0"
     >
+      <input
+        className="hidden"
+        id="submit-0"
+        name="submit-0"
+        type="submit"
+      />
       <svg
         className="inline-block mr-1.5"
         fill="currentColor"
@@ -91,12 +108,13 @@ exports[`<AddRomForm /> snapshot 1`] = `
       >
         Add
       </span>
-    </button>
+    </label>
     <button
       className="font-medium text-primary-100 md:hover:text-red-500 active:text-red-500"
+      onClick={[Function]}
     >
       Delete
     </button>
   </div>
-</div>
+</form>
 `;
