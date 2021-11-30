@@ -2,7 +2,7 @@
 
 exports[`<Message /> snapshot 1`] = `
 <div
-  className="opacity-0 transition flex mb-4 bg-gray-700 border-l-4 border-green-500"
+  className="opacity-0 transition duration-300 flex mb-4 bg-gray-700 border-l-4 border-green-500"
   style={
     Object {
       "minHeight": "64px",

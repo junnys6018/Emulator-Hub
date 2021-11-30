@@ -27,7 +27,7 @@ export function Message(props: MessageProps) {
 
     return (
         <div
-            className={`opacity-0 transition flex mb-4 bg-gray-700 ${borderColorMap[props.severity]}`}
+            className={`opacity-0 transition duration-300 flex mb-4 bg-gray-700 ${borderColorMap[props.severity]}`}
             style={{ minHeight: '64px' }}
             ref={container}
         >
@@ -58,14 +58,14 @@ export const MessageContext = React.createContext<
 export function MessageProvider(props: MessageProviderProps) {
     const [messages, setMessages] = useState<{ title: string; message: string; severity: Severity; key: number }[]>([]);
 
-    const [key, setKey] = useState(0);
+    const key = useRef(0);
+    const timeouts = useRef<{
+        [key: string]: number;
+    }>({});
 
-    const close = useCallback(
-        (key: number) => {
-            setMessages(messages.filter(value => value.key !== key));
-        },
-        [messages],
-    );
+    const close = useCallback((key: number) => {
+        setMessages(messages => messages.filter(value => value.key !== key));
+    }, []);
 
     const message = (message: string, options?: Partial<MessageOptions>) => {
         const defaults: MessageOptions = {
@@ -74,8 +74,17 @@ export function MessageProvider(props: MessageProviderProps) {
         };
 
         options = { ...defaults, ...options };
-        setMessages(messages.concat({ key, message, ...(options as MessageOptions) }));
-        setKey(key + 1);
+        const currentKey = key.current++;
+        setMessages(messages.concat({ key: currentKey, message, ...(options as MessageOptions) }));
+        const timerId = setTimeout(() => {
+            close(currentKey);
+            delete timeouts.current[currentKey];
+            console.log(currentKey);
+
+            // We need to do this annoying cast becuse typescript is using the function signature of the nodejs version of setTimeout
+            // instead of the browsers version
+        }, 5000) as unknown as number;
+        timeouts.current[currentKey] = timerId;
     };
 
     return (
@@ -83,7 +92,16 @@ export function MessageProvider(props: MessageProviderProps) {
             {props.children}
             <div className="fixed z-10 bottom-4 right-1/2 transform translate-x-1/2 md:right-4 md:translate-x-0 flex flex-col">
                 {messages.map(({ title, message, severity, key }) => (
-                    <Message title={title} message={message} severity={severity} key={key} close={() => close(key)} />
+                    <Message
+                        title={title}
+                        message={message}
+                        severity={severity}
+                        key={key}
+                        close={() => {
+                            close(key);
+                            clearTimeout(timeouts.current[key]);
+                        }}
+                    />
                 ))}
             </div>
         </MessageContext.Provider>
