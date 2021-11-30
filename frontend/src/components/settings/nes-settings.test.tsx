@@ -18,6 +18,8 @@ afterEach(async () => {
 });
 
 jest.setTimeout(15000);
+jest.mock('../util/message');
+jest.mock('../util/alert');
 
 jest.mock('@/src/storage/user-data', () => {
     const originalModule = jest.requireActual('@/src/storage/user-data');

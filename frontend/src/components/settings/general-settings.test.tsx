@@ -13,6 +13,8 @@ afterEach(async () => {
 });
 
 jest.setTimeout(15000);
+jest.mock('../util/message');
+jest.mock('../util/alert');
 
 describe('General Settings', () => {
     test('Click on side panel', async () => {

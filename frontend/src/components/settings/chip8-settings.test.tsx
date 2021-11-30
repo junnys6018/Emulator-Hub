@@ -56,6 +56,9 @@ jest.mock('@/src/storage/user-data', () => {
     };
 });
 
+jest.mock('../util/message');
+jest.mock('../util/alert');
+
 describe('CHIP8 Settings', () => {
     test('Click on side panel', async () => {
         await SettingsPage.clickCHIP8SidePanelButton();

@@ -1,6 +1,13 @@
-import React from 'react';
-import { InternalSettings } from './common';
+import React, { Fragment } from 'react';
+import { makeControllerSettingsComponent, SettingsTitle } from './common';
+
+const Component = makeControllerSettingsComponent('gbControls');
 
 export default function GBSettings() {
-    return <InternalSettings title="Game Boy Controls" controls="gbControls" />;
+    return (
+        <Fragment>
+            <SettingsTitle title="Game Boy Controls" />
+            <Component />
+        </Fragment>
+    );
 }

@@ -1,8 +1,11 @@
-import { displayKeyCode, displayControllerIndex } from '@/src/util';
-import { defaultGamepadControls, useUserProfile, GamepadControls } from '@/src/storage/user-data';
-import React, { Fragment, useEffect, useState } from 'react';
-import { FaRedo, FaTimes } from 'react-icons/fa';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
+
+import { displayKeyCode, displayControllerIndex } from '@/src/util';
+import { defaultGamepadControls, useUserProfile, GamepadControls, defaultSettings } from '@/src/storage/user-data';
+import { FaRedo, FaTimes } from 'react-icons/fa';
+import { useMessage } from '../util/message';
+import { useAlert } from '../util/alert';
 
 interface SettingsTitleProps {
     title: string;
@@ -17,43 +20,133 @@ export function SettingsTitle(props: SettingsTitleProps) {
     );
 }
 
-interface SettingsControlGridProps {
-    controls: { [action: string]: [string, number] };
-    onChange: (action: string, key: string | number | null) => void;
+type Key = string | number | null;
+export interface SettingsComponentProps<T> {
+    clearHoveredButton: () => void;
+    setHoveredButton: (key: Key) => void;
+    hoveredButton: Key;
+    clearEditingButton: () => void;
+    setEditingButton: (key: Key) => void;
+    editingButton: Key;
+    onSave: () => void;
+    onChange: (key: string | number, value: string | number | boolean | null) => void;
+    settingsChanged: () => boolean;
+    resetAll: () => void;
+    currentSettings: T;
 }
 
-// TODO: game controller settings
-function SettingsControlGrid(props: SettingsControlGridProps) {
-    // The button the mouse is hovered over, if any
-    const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-    // The button that is currently being edited, if any
-    const [editingButton, setEditingButton] = useState<string | null>(null);
-    const controller = false;
+/**
+ * Implements the props needed by a settings component
+ * Handles saving and resettings settings, and manages state
+ *
+ * @param T The type of the underlying settings being managed
+ */
+export function installSettingCallbacks<T>(
+    Component: (props: SettingsComponentProps<T>) => JSX.Element,
+    dottedSettingsPath: string,
+    onChange: (key: string | number, value: string | number | boolean | null, currentSettings: T) => T,
+) {
+    return function NewComponent() {
+        // The button the mouse is hovered over, if any
+        const [hoveredButton, setHoveredButton] = useState<Key>(null);
+        // The button that is currently being edited, if any
+        const [editingButton, setEditingButton] = useState<Key>(null);
 
-    const clearHoveredButton = () => {
-        setHoveredButton(null);
-    };
+        const clearHoveredButton = () => {
+            setHoveredButton(null);
+        };
 
-    const clearEditingButton = () => {
-        setEditingButton(null);
-    };
+        const clearEditingButton = () => {
+            setEditingButton(null);
+        };
 
-    const { onChange } = props;
-    useEffect(() => {
-        const listener = (e: KeyboardEvent) => {
-            if (editingButton !== null) {
-                onChange(editingButton, e.code);
-                setEditingButton(null);
+        const [{ settings }, setUserData] = useUserProfile();
+
+        const innerSettings = _.get(settings, dottedSettingsPath);
+
+        const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(innerSettings));
+
+        // update current settings when the underlying settings in indexedDB changes
+        useEffect(() => {
+            setCurrentSettings(_.cloneDeep(innerSettings));
+        }, [innerSettings]);
+
+        const settingsChanged = () => {
+            return !_.isEqual(currentSettings, innerSettings);
+        };
+
+        const resetAll = () => {
+            // Create a deep copy here, so that the defaults dont get modified
+            setCurrentSettings(_.cloneDeep(_.get(defaultSettings, dottedSettingsPath)));
+        };
+
+        const message = useMessage();
+        const alert = useAlert();
+
+        const onSave = () => {
+            if (settingsChanged()) {
+                setUserData(_.set({}, `settings.${dottedSettingsPath}`, currentSettings)).then(
+                    () => message('Settings saved', { title: 'Success', severity: 'SUCCESS' }),
+                    error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
+                );
             }
         };
 
-        window.addEventListener('keydown', listener);
+        const onChangeWrapper = useCallback(
+            (key: string | number, value: string | number | boolean | null) => {
+                const newSettings = onChange(key, value, currentSettings);
+                // Create a deep copy, to trigger a re-render
+                setCurrentSettings(_.cloneDeep(newSettings));
+            },
+            [currentSettings],
+        );
 
-        return () => {
-            window.removeEventListener('keydown', listener);
-        };
-    }, [editingButton, onChange]);
+        useEffect(() => {
+            const listener = (e: KeyboardEvent) => {
+                if (editingButton !== null) {
+                    onChangeWrapper(editingButton, e.code);
+                    setEditingButton(null);
+                }
+            };
 
+            window.addEventListener('keydown', listener);
+
+            return () => {
+                window.removeEventListener('keydown', listener);
+            };
+        }, [editingButton, onChangeWrapper]);
+
+        return (
+            <Component
+                clearHoveredButton={clearHoveredButton}
+                setHoveredButton={setHoveredButton}
+                hoveredButton={hoveredButton}
+                clearEditingButton={clearEditingButton}
+                setEditingButton={setEditingButton}
+                editingButton={editingButton}
+                onSave={onSave}
+                onChange={onChangeWrapper}
+                settingsChanged={settingsChanged}
+                resetAll={resetAll}
+                currentSettings={currentSettings}
+            />
+        );
+    };
+}
+
+// TODO: game controller settings
+function ControllerSettingsComponent(props: SettingsComponentProps<GamepadControls>) {
+    const controller = false;
+
+    const {
+        editingButton,
+        clearEditingButton,
+        setEditingButton,
+        hoveredButton,
+        clearHoveredButton,
+        setHoveredButton,
+        onChange,
+    } = props;
     const ControlButton = ({ action, display, disabled }: { action: string; display: string; disabled?: boolean }) => {
         return (
             <div
@@ -81,7 +174,7 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
                     {editingButton === action ? 'PRESS A KEY' : display}
                 </button>
                 {!disabled && hoveredButton === action && editingButton === null && (
-                    <button className="px-1 focus-visible:outline-none" onClick={() => props.onChange(action, null)}>
+                    <button className="px-1 focus-visible:outline-none" onClick={() => onChange(action, null)}>
                         <FaRedo size="12px" />
                     </button>
                 )}
@@ -95,7 +188,7 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
     };
 
     const gridItems = [];
-    for (const key in props.controls) {
+    for (const key in props.currentSettings) {
         gridItems.push(
             <span key={`${key}-label`} className="py-1 my-1.5 tracking-wider">
                 {key.toUpperCase()}
@@ -105,76 +198,55 @@ function SettingsControlGrid(props: SettingsControlGridProps) {
             <ControlButton
                 key={`${key}-keyboard`}
                 action={`${key}-keyboard`}
-                display={displayKeyCode(props.controls[key][0])}
+                display={displayKeyCode(props.currentSettings[key as keyof GamepadControls][0])}
             />,
         );
         gridItems.push(
             <ControlButton
                 key={`${key}-controller`}
                 action={`${key}-controller`}
-                display={displayControllerIndex(props.controls[key][1])}
+                display={displayControllerIndex(props.currentSettings[key as keyof GamepadControls][1])}
                 disabled={!controller}
             />,
         );
     }
 
     return (
-        <div className="grid grid-cols-3">
-            <h3 className="tracking-wider text-gray-400">ACTION</h3>
-            <h3 className="tracking-wider text-gray-400 ml-5">KEYBOARD</h3>
-            <h3 className="tracking-wider text-gray-400 ml-5">CONTROLLER</h3>
-            {gridItems}
-        </div>
-    );
-}
-
-export function InternalSettings(props: { title: string; controls: 'gbControls' | 'gbcControls' | 'nesControls' }) {
-    const [{ settings }, setUserData] = useUserProfile();
-    const [currentSettings, setCurrentSettings] = useState(_.cloneDeep(settings[props.controls]));
-
-    const settingsChanged = () => {
-        return !_.isEqual(settings[props.controls], currentSettings);
-    };
-
-    const onChange = (action: string, key: string | number | null) => {
-        if (action.endsWith('keyboard')) {
-            action = action.replace(/-keyboard$/, '');
-            if (key === null) {
-                key = defaultGamepadControls[action as keyof typeof defaultGamepadControls][0];
-            }
-            currentSettings[action as keyof GamepadControls][0] = key as string;
-            setCurrentSettings(_.cloneDeep(currentSettings));
-        }
-    };
-
-    const onSave = () => {
-        if (settingsChanged()) {
-            setUserData({ settings: { [props.controls]: currentSettings } });
-        }
-    };
-
-    const resetAll = () => {
-        setCurrentSettings(_.cloneDeep(defaultGamepadControls));
-    };
-
-    return (
         <Fragment>
-            <SettingsTitle title={props.title} />
-            <SettingsControlGrid
-                controls={currentSettings as unknown as { [action: string]: [string, number] }}
-                onChange={onChange}
-            />
+            <div className="grid grid-cols-3">
+                <h3 className="tracking-wider text-gray-400">ACTION</h3>
+                <h3 className="tracking-wider text-gray-400 ml-5">KEYBOARD</h3>
+                <h3 className="tracking-wider text-gray-400 ml-5">CONTROLLER</h3>
+                {gridItems}
+            </div>
             <div className="flex mt-auto mb-24">
                 <button
-                    className={`btn-primary h-10 w-52 mr-20 ${settingsChanged() ? '' : 'disabled'}`}
-                    onClick={onSave}
+                    className={`btn-primary h-10 w-52 mr-20 ${props.settingsChanged() ? '' : 'disabled'}`}
+                    onClick={props.onSave}
                 >
                     Save
                 </button>
-                <button className="btn-secondary h-10 w-52" onClick={resetAll}>
+                <button className="btn-secondary h-10 w-52" onClick={props.resetAll}>
                     Reset All
                 </button>
             </div>
         </Fragment>
+    );
+}
+
+export function makeControllerSettingsComponent(path: string) {
+    return installSettingCallbacks(
+        ControllerSettingsComponent,
+        path,
+        (key: string, value: string | null, currentSettings: GamepadControls) => {
+            if (key.endsWith('keyboard')) {
+                key = key.replace(/-keyboard$/, '');
+                if (value === null) {
+                    value = defaultGamepadControls[key as keyof typeof defaultGamepadControls][0];
+                }
+                currentSettings[key as keyof GamepadControls][0] = value;
+                return currentSettings;
+            }
+        },
     );
 }

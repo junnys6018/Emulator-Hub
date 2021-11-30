@@ -1,6 +1,13 @@
-import React from 'react';
-import { InternalSettings } from './common';
+import React, { Fragment } from 'react';
+import { makeControllerSettingsComponent, SettingsTitle } from './common';
+
+const Component = makeControllerSettingsComponent('nesControls');
 
 export default function NESSettings() {
-    return <InternalSettings title="Nintendo Entertainment System Controls" controls="nesControls" />;
+    return (
+        <Fragment>
+            <SettingsTitle title="Nintendo Entertainment System Controls" />
+            <Component />
+        </Fragment>
+    );
 }

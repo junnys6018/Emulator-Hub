@@ -48,6 +48,9 @@ jest.mock('@/src/storage/user-data', () => {
     };
 });
 
+jest.mock('../util/message');
+jest.mock('../util/alert');
+
 describe('GBC Settings', () => {
     test('Click on side panel', async () => {
         await SettingsPage.clickGBCSidePanelButton();
