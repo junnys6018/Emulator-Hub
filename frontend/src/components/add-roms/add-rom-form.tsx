@@ -57,7 +57,7 @@ export default function AddRomForm(props: AddRomFormProps) {
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            // Add entry to the gameMetaData object store
+            // Validation
             const formData = new FormData(form.current as HTMLFormElement);
 
             let image = formData.get(`image-${props.id}`) as Blob;
@@ -78,6 +78,8 @@ export default function AddRomForm(props: AddRomFormProps) {
             }
             const activeUser = getActiveUserUuid() as string;
 
+            // Add entry to the gameMetaData object store
+            const uuid = uuidv4();
             putGameMetaData({
                 name,
                 image,
@@ -86,7 +88,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                 console: gameConsole as Console,
                 user: activeUser,
                 age: 0,
-                uuid: uuidv4(),
+                uuid,
             }).then(
                 () => message('Settings saved', { title: 'Success', severity: 'SUCCESS' }),
                 error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
@@ -108,7 +110,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                     ],
                     user: activeUser,
                     age: 0,
-                    uuid: uuidv4(),
+                    uuid,
                 });
             };
 

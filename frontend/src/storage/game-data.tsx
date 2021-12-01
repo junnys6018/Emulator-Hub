@@ -88,7 +88,6 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
             }),
         );
 
-        console.log(newGameMetaData.name);
         return db.put('gameMetaData', newGameMetaData as GameMetaData);
     };
 

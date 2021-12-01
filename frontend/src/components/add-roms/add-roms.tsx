@@ -7,6 +7,7 @@ import { useUserProfile } from '@/src/storage/user-data';
 import { Console } from '@/src/storage/game-data';
 import './add-roms.css';
 import { getExtension, stripExtension } from '@/src/util';
+import { useAlert } from '../util/alert';
 
 function consoleForExtension(extension: string | null) {
     switch (extension) {
@@ -22,12 +23,19 @@ function consoleForExtension(extension: string | null) {
     }
 }
 
+interface FormItem {
+    id: number;
+    initialName: string;
+    initialConsole: Console;
+    file: File;
+}
+
 export default function AddRoms() {
     const [{ userName, profileImage }] = useUserProfile();
     const [dragging, setDragging] = useState(false);
     const dragCounter = useRef(0);
     const currentId = useRef(0);
-    const [forms, setForms] = useState<{ id: number; initialName: string; initialConsole: Console; file: File }[]>([]);
+    const [forms, setForms] = useState<FormItem[]>([]);
 
     const onDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -62,23 +70,33 @@ export default function AddRoms() {
         e.stopPropagation();
     }, []);
 
+    const alert = useAlert();
+
     const onDrop = useCallback(
         (e: React.DragEvent<HTMLDivElement>) => {
             e.preventDefault();
             e.stopPropagation();
+
             dragCounter.current = 0;
             setDragging(false);
 
-            for (let i = 0; i < e.dataTransfer.files.length; i++) {
-                const file = e.dataTransfer.files[i];
-
-                const initialName = stripExtension(file.name);
-                const initialConsole = consoleForExtension(getExtension(file.name));
-                forms.push({ id: currentId.current++, initialName, initialConsole, file });
+            for (let i = 0; i < e.dataTransfer.items.length; i++) {
+                const entry = e.dataTransfer.items[i].webkitGetAsEntry();
+                if (entry !== null && entry.isFile) {
+                    (entry as FileSystemFileEntry).file(
+                        file => {
+                            const initialName = stripExtension(file.name);
+                            const initialConsole = consoleForExtension(getExtension(file.name));
+                            setForms(forms =>
+                                forms.concat({ id: currentId.current++, initialName, initialConsole, file }),
+                            );
+                        },
+                        error => alert(error.message, { severity: 'ERROR', title: 'error.name' }),
+                    );
+                }
             }
-            setForms(forms);
         },
-        [forms],
+        [alert],
     );
 
     const onDelete = useCallback((id: number) => {
