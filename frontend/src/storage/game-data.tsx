@@ -77,18 +77,18 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
             URL.revokeObjectURL(existingGameMetaDataView.image);
         }
 
-        const newGameMetaDataView = gameMetaDataView.concat([
-            {
+        setGameMetaData(gameMetaDataView =>
+            gameMetaDataView.concat({
                 name: (newGameMetaData as GameMetaData).name,
                 image: URL.createObjectURL((newGameMetaData as GameMetaData).image),
                 saveNames: (newGameMetaData as GameMetaData).saveNames,
                 activeSaveIndex: (newGameMetaData as GameMetaData).activeSaveIndex,
                 console: (newGameMetaData as GameMetaData).console,
                 uuid: (newGameMetaData as GameMetaData).uuid,
-            },
-        ]);
-        setGameMetaData(newGameMetaDataView);
+            }),
+        );
 
+        console.log(newGameMetaData.name);
         return db.put('gameMetaData', newGameMetaData as GameMetaData);
     };
 

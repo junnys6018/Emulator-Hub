@@ -71,8 +71,8 @@ export default function AddRomForm(props: AddRomFormProps) {
                 return;
             }
 
-            const console = formData.get(`console-${props.id}`) as string;
-            if (console !== 'NES' && console !== 'GB' && console !== 'GBC' && console !== 'CHIP 8') {
+            const gameConsole = formData.get(`console-${props.id}`) as string;
+            if (gameConsole !== 'NES' && gameConsole !== 'GB' && gameConsole !== 'GBC' && gameConsole !== 'CHIP 8') {
                 setGameConsoleError(true);
                 return;
             }
@@ -83,7 +83,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                 image,
                 saveNames: ['Save 1'],
                 activeSaveIndex: 0,
-                console: console as Console,
+                console: gameConsole as Console,
                 user: activeUser,
                 age: 0,
                 uuid: uuidv4(),

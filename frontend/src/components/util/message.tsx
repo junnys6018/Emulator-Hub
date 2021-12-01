@@ -75,7 +75,7 @@ export function MessageProvider(props: MessageProviderProps) {
 
         options = { ...defaults, ...options };
         const currentKey = key.current++;
-        setMessages(messages.concat({ key: currentKey, message, ...(options as MessageOptions) }));
+        setMessages(messages => messages.concat({ key: currentKey, message, ...(options as MessageOptions) }));
         const timerId = setTimeout(() => {
             close(currentKey);
             delete timeouts.current[currentKey];

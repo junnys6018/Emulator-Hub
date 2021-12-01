@@ -85,6 +85,18 @@ export default function AddRoms() {
         setForms(forms => forms.filter(item => item.id !== id));
     }, []);
 
+    const submitAll = useCallback(() => {
+        const formContainer = document.getElementById('form-container') as HTMLDivElement;
+        for (let i = 0; i < formContainer.children.length; i++) {
+            const form = formContainer.children[i];
+            const event = new SubmitEvent('submit', {
+                bubbles: true,
+                cancelable: true,
+            });
+            form.dispatchEvent(event);
+        }
+    }, []);
+
     return (
         <Fragment>
             <Navbar userName={userName} profileImage={profileImage} />
@@ -106,12 +118,15 @@ export default function AddRoms() {
                 {forms.length !== 0 && (
                     <div className="flex mb-4 md:mb-8">
                         <h1 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h1>
-                        <button className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ring-2 md:ring-4 ring-inset ring-green-600">
+                        <button
+                            onClick={submitAll}
+                            className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ring-2 md:ring-4 ring-inset ring-green-600"
+                        >
                             Add All
                         </button>
                     </div>
                 )}
-                <div className="add-roms__forms-container">
+                <div id="form-container" className="add-roms__forms-container">
                     {forms.map(item => (
                         <AddRomForm
                             className="flex-shrink-0 mb-4 md:mr-8 md:last:mr-0"
