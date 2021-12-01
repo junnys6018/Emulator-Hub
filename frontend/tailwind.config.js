@@ -6,7 +6,7 @@ const breakpoints = require('./breakpoints');
 fontFamily['sans'] = ['Poppins', 'system-ui'];
 
 module.exports = {
-    purge: ['./src/**/*.tsx'],
+    purge: ['./src/**/*.tsx', './src/**/*.ts', './public/index.html'],
     darkMode: false, // or 'media' or 'class'
     theme: {
         colors: {
