@@ -26,6 +26,9 @@ const defaultImage = b64toBlob(
 export default function AddRomForm(props: AddRomFormProps) {
     const [name, setName] = useState(props.initialName);
     const [gameConsole, setGameConsole] = useState<Console>(props.inititalConsole);
+    const [nameError, setNameError] = useState(false);
+    const [gameConsoleError, setGameConsoleError] = useState(false);
+
     const [, putGameMetaData] = useGameMetaData();
 
     const backgroundImageDiv = useRef<HTMLDivElement>(null);
@@ -62,14 +65,25 @@ export default function AddRomForm(props: AddRomFormProps) {
                 image = defaultImage;
             }
 
+            const name = (formData.get(`name-${props.id}`) as string).trim();
+            if (name === '') {
+                setNameError(true);
+                return;
+            }
+
+            const console = formData.get(`console-${props.id}`) as string;
+            if (console !== 'NES' && console !== 'GB' && console !== 'GBC' && console !== 'CHIP 8') {
+                setGameConsoleError(true);
+                return;
+            }
             const activeUser = getActiveUserUuid() as string;
 
             putGameMetaData({
-                name: formData.get(`name-${props.id}`) as string,
-                image: image,
+                name,
+                image,
                 saveNames: ['Save 1'],
                 activeSaveIndex: 0,
-                console: formData.get(`console-${props.id}`) as Console,
+                console: console as Console,
                 user: activeUser,
                 age: 0,
                 uuid: uuidv4(),
@@ -125,9 +139,12 @@ export default function AddRomForm(props: AddRomFormProps) {
                     Choose Image
                 </label>
             </div>
-            <label htmlFor={`name-${props.id}`} className="font-semibold mb-3.5">
-                Name*
-            </label>
+            <div className="flex items-center mb-3.5">
+                <label htmlFor={`name-${props.id}`} className="font-semibold mr-auto">
+                    Name*
+                </label>
+                {nameError && <span className="text-sm text-red-500">This Field is Required</span>}
+            </div>
             <input
                 className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
                 name={`name-${props.id}`}
@@ -137,9 +154,12 @@ export default function AddRomForm(props: AddRomFormProps) {
                 onChange={e => setName(e.currentTarget.value)}
             ></input>
 
-            <label htmlFor={`console-${props.id}`} className="font-semibold mb-3.5">
-                Console*
-            </label>
+            <div className="flex items-center mb-3.5">
+                <label htmlFor={`console-${props.id}`} className="font-semibold mr-auto">
+                    Console*
+                </label>
+                {gameConsoleError && <span className="text-sm text-red-500">This Field is Required</span>}
+            </div>
             <select
                 className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
                 name={`console-${props.id}`}

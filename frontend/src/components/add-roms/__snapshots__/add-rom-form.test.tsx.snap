@@ -23,12 +23,16 @@ exports[`<AddRomForm /> snapshot 1`] = `
       Choose Image
     </label>
   </div>
-  <label
-    className="font-semibold mb-3.5"
-    htmlFor="name-0"
+  <div
+    className="flex items-center mb-3.5"
   >
-    Name*
-  </label>
+    <label
+      className="font-semibold mr-auto"
+      htmlFor="name-0"
+    >
+      Name*
+    </label>
+  </div>
   <input
     className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
     id="name-0"
@@ -37,12 +41,16 @@ exports[`<AddRomForm /> snapshot 1`] = `
     type="text"
     value=""
   />
-  <label
-    className="font-semibold mb-3.5"
-    htmlFor="console-0"
+  <div
+    className="flex items-center mb-3.5"
   >
-    Console*
-  </label>
+    <label
+      className="font-semibold mr-auto"
+      htmlFor="console-0"
+    >
+      Console*
+    </label>
+  </div>
   <select
     className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
     id="console-0"
