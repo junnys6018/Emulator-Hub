@@ -55,7 +55,8 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                         </button>
                     </div>
                     <img
-                        className="rounded-2xl pixelated drop-shadow object-center object-cover w-96 h-96 mx-auto"
+                        className="rounded-2xl pixelated drop-shadow object-center object-cover w-full md:w-96 mx-auto"
+                        style={{ aspectRatio: '1' }}
                         src={props.image}
                     ></img>
                     <h2 className="font-medium text-2xl pt-6 pb-2 md:py-6">Saves</h2>
