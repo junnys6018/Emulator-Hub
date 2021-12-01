@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useRef, useState } from 'react';
 import Navbar from '../util/navbar';
-import AddFileIcon from '@/public/assets/add-file.svg';
+import AddFileIcon from '@/public/assets/add-file.svg?react';
+import TicTacToe from '@/public/assets/tic-tac-toe.svg';
 
 import AddRomForm from './add-rom-form';
 import { useUserProfile } from '@/src/storage/user-data';
@@ -131,9 +132,10 @@ export default function AddRoms() {
         }
     }, []);
 
-    const dropperClassName = `w-60 h-44 md:w-168 md:h-80 self-center rounded-2xl md:rounded-5xl border-4 border-dashed flex flex-col items-center justify-center my-12 ${
-        dragging ? 'border-green-500 text-green-500' : 'border-gray-50'
-    }`;
+    const dropperClassName = `w-60 h-44 md:w-168 md:h-80 self-center rounded-2xl md:rounded-5xl border-4
+        border-dashed bg-gray-800 flex flex-col items-center justify-center mt-12 mb-8 md:mb-16 ${
+            dragging ? 'border-green-500 text-green-500' : 'border-gray-50'
+        }`;
 
     const dropperChilren = (
         <Fragment>
@@ -145,32 +147,43 @@ export default function AddRoms() {
 
     return (
         <Fragment>
-            <Navbar userName={userName} profileImage={profileImage} />
-            <div className="container flex flex-col pt-2.5 md:pt-0">
-                <h1 className="font-semibold text-xl md:text-3xl">Add Roms</h1>
-                {mobile ? (
-                    <label htmlFor="dropper-input" className={classNames(dropperClassName, 'cursor-pointer')}>
-                        {dropperChilren}
-                        <input
-                            className="hidden"
-                            type="file"
-                            multiple
-                            id="dropper-input"
-                            name="dropper-input"
-                            onChange={onFileChange}
-                        ></input>
-                    </label>
-                ) : (
-                    <div
-                        onDragEnter={onDragEnter}
-                        onDragLeave={onDragLeave}
-                        onDragOver={onDragOver}
-                        onDrop={onDrop}
-                        className={dropperClassName}
-                    >
-                        {dropperChilren}
-                    </div>
-                )}
+            <div
+                className="bg-gray-800"
+                style={{
+                    backgroundImage: `url(${TicTacToe})`,
+                    backgroundBlendMode: 'multiply',
+                    backgroundSize: '128px',
+                }}
+            >
+                <Navbar userName={userName} profileImage={profileImage} />
+                <div className="container flex flex-col pt-2.5 md:pt-0">
+                    <h1 className="font-semibold text-xl md:text-3xl">Add Roms</h1>
+                    {mobile ? (
+                        <label htmlFor="dropper-input" className={classNames(dropperClassName, 'cursor-pointer')}>
+                            {dropperChilren}
+                            <input
+                                className="hidden"
+                                type="file"
+                                multiple
+                                id="dropper-input"
+                                name="dropper-input"
+                                onChange={onFileChange}
+                            ></input>
+                        </label>
+                    ) : (
+                        <div
+                            onDragEnter={onDragEnter}
+                            onDragLeave={onDragLeave}
+                            onDragOver={onDragOver}
+                            onDrop={onDrop}
+                            className={dropperClassName}
+                        >
+                            {dropperChilren}
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="container flex flex-col pt-8 md:pt-16">
                 <div className="flex mb-4 md:mb-8">
                     <h1 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h1>
                     <button

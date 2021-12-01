@@ -44,7 +44,16 @@ module.exports = (env, options) => {
                 },
                 {
                     test: /\.svg$/i,
-                    use: ['@svgr/webpack'],
+                    oneOf: [
+                        {
+                            issuer: /\.[jt]sx?$/,
+                            resourceQuery: /react/, // *.svg?react
+                            use: ['@svgr/webpack'],
+                        },
+                        {
+                            type: 'asset/resource',
+                        },
+                    ],
                 },
                 {
                     test: /\.js$/,
