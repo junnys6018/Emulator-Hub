@@ -5,6 +5,7 @@ import GameItem, { GameCard, GameListItem } from './game-item';
 
 const props = {
     image: '/image.png',
+    imageRendering: 'pixelated' as const,
     name: 'Zelda',
     onActiveCallback() {},
 };

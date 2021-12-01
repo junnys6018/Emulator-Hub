@@ -34,6 +34,7 @@ export default function Dashboard() {
                     key={game.uuid}
                     image={game.image}
                     name={game.name}
+                    imageRendering={game.settings.imageRendering}
                     onActiveCallback={() => {
                         setSidePanelOpen(true);
                         setActiveGame(game);
@@ -69,6 +70,7 @@ export default function Dashboard() {
                 {activeGame && (
                     <GameSidePanel
                         image={activeGame.image}
+                        imageRendering={activeGame.settings.imageRendering}
                         name={activeGame.name}
                         saveNames={activeGame.saveNames}
                         activeSaveIndex={activeGame.activeSaveIndex}

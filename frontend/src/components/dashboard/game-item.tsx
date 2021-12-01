@@ -4,6 +4,7 @@ import { FaPlay, FaEllipsisH, FaEllipsisV } from 'react-icons/fa';
 
 interface GameItemProps {
     image: string;
+    imageRendering: 'pixelated' | 'unset';
     name: string;
     onActiveCallback: () => void;
 }
@@ -13,7 +14,7 @@ type GameItemInnerProps = GameItemProps & { className?: string };
 export function GameCard(props: GameItemInnerProps) {
     const image: React.CSSProperties = {
         backgroundImage: `url(${props.image})`,
-        imageRendering: 'pixelated',
+        imageRendering: props.imageRendering,
         aspectRatio: '1',
     };
 
@@ -39,7 +40,7 @@ export function GameCard(props: GameItemInnerProps) {
 export function GameListItem(props: GameItemInnerProps) {
     const image: React.CSSProperties = {
         backgroundImage: `url(${props.image})`,
-        imageRendering: 'pixelated',
+        imageRendering: props.imageRendering,
         width: '80px',
         height: '80px',
     };

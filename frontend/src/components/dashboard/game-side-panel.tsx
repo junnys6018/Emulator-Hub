@@ -4,6 +4,7 @@ import './game-side-panel.css';
 
 interface GameSidePanelProps {
     image: string;
+    imageRendering: 'pixelated' | 'unset';
     name: string;
     saveNames: string[];
     activeSaveIndex: number;
@@ -55,8 +56,8 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                         </button>
                     </div>
                     <img
-                        className="rounded-2xl pixelated filter drop-shadow object-center object-cover w-full md:w-96 mx-auto"
-                        style={{ aspectRatio: '1' }}
+                        className="rounded-2xl filter drop-shadow object-center object-cover w-full md:w-96 mx-auto"
+                        style={{ aspectRatio: '1', imageRendering: props.imageRendering }}
                         src={props.image}
                     ></img>
                     <h2 className="font-medium text-2xl pt-6 pb-2 md:py-6">Saves</h2>

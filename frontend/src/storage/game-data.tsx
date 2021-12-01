@@ -12,6 +12,13 @@ export interface GameMetaData extends Record {
     activeSaveIndex: number;
     console: Console;
     user: string; // UUID of the user to which this record belongs to
+    settings: {
+        hidden: boolean;
+        deletable: boolean;
+        imageRendering: 'pixelated' | 'unset';
+        // If true, a screenshot of the game will be taken next time it is played and will be used as the image for this rom
+        captureImage: boolean;
+    };
 }
 
 export interface GameMetaDataView {
@@ -20,6 +27,13 @@ export interface GameMetaDataView {
     saveNames: string[];
     activeSaveIndex: number;
     console: Console;
+    settings: {
+        hidden: boolean;
+        deletable: boolean;
+        imageRendering: 'pixelated' | 'unset';
+        // If true, a screenshot of the game will be taken next time it is played and will be used as the image for this rom
+        captureImage: boolean;
+    };
     uuid: string;
 }
 
@@ -59,6 +73,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                     activeSaveIndex: game.activeSaveIndex,
                     console: game.console,
                     uuid: game.uuid,
+                    settings: game.settings,
                 });
             }
             setGameMetaData(gameMetaDataView);
@@ -85,6 +100,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                 activeSaveIndex: (newGameMetaData as GameMetaData).activeSaveIndex,
                 console: (newGameMetaData as GameMetaData).console,
                 uuid: (newGameMetaData as GameMetaData).uuid,
+                settings: (newGameMetaData as GameMetaData).settings,
             }),
         );
 

@@ -6,6 +6,7 @@ import GameSidePanel from './game-side-panel';
 test('<GameSidePanel /> snapshot', () => {
     const props = {
         image: '/image.png',
+        imageRendering: 'pixelated' as const,
         name: 'Zelda',
         saveNames: ['Save 1', 'Save 2', 'Save 3'],
         activeSaveIndex: 1,

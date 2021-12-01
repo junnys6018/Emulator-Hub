@@ -86,6 +86,12 @@ export default function AddRomForm(props: AddRomFormProps) {
                     activeSaveIndex: 0,
                     console: gameConsole as Console,
                     user: activeUser,
+                    settings: {
+                        hidden: false,
+                        deletable: false,
+                        imageRendering: 'unset',
+                        captureImage: true,
+                    },
                     age: 0,
                     uuid,
                 }).then(
