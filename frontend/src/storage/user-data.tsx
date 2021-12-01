@@ -193,6 +193,8 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                 userName: updatedUserData.userName,
                 settings: updatedUserData.settings,
             });
+
+            // FIXME: updatedUserData depends on the previous state
             _setUserData(updatedUserData);
             // write to db
             return db.put('users', updatedUserData);

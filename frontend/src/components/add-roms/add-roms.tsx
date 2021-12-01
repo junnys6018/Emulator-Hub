@@ -5,9 +5,11 @@ import AddFileIcon from '@/public/assets/add-file.svg';
 import AddRomForm from './add-rom-form';
 import { useUserProfile } from '@/src/storage/user-data';
 import { Console } from '@/src/storage/game-data';
-import './add-roms.css';
-import { getExtension, stripExtension } from '@/src/util';
+import { getExtension, isMobile, stripExtension } from '@/src/util';
 import { useAlert } from '../util/alert';
+import classNames from 'classnames';
+
+import './add-roms.css';
 
 function consoleForExtension(extension: string | null) {
     switch (extension) {
@@ -36,6 +38,8 @@ export default function AddRoms() {
     const dragCounter = useRef(0);
     const currentId = useRef(0);
     const [forms, setForms] = useState<FormItem[]>([]);
+
+    const mobile = isMobile();
 
     const onDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -72,6 +76,12 @@ export default function AddRoms() {
 
     const alert = useAlert();
 
+    const handleFile = useCallback((file: File) => {
+        const initialName = stripExtension(file.name);
+        const initialConsole = consoleForExtension(getExtension(file.name));
+        setForms(forms => forms.concat({ id: currentId.current++, initialName, initialConsole, file }));
+    }, []);
+
     const onDrop = useCallback(
         (e: React.DragEvent<HTMLDivElement>) => {
             e.preventDefault();
@@ -84,19 +94,25 @@ export default function AddRoms() {
                 const entry = e.dataTransfer.items[i].webkitGetAsEntry();
                 if (entry !== null && entry.isFile) {
                     (entry as FileSystemFileEntry).file(
-                        file => {
-                            const initialName = stripExtension(file.name);
-                            const initialConsole = consoleForExtension(getExtension(file.name));
-                            setForms(forms =>
-                                forms.concat({ id: currentId.current++, initialName, initialConsole, file }),
-                            );
-                        },
+                        file => handleFile(file),
                         error => alert(error.message, { severity: 'ERROR', title: 'error.name' }),
                     );
                 }
             }
         },
-        [alert],
+        [alert, handleFile],
+    );
+
+    const onFileChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (e.currentTarget.files) {
+                for (let i = 0; i < e.currentTarget.files.length; i++) {
+                    const file = e.currentTarget.files[i];
+                    handleFile(file);
+                }
+            }
+        },
+        [handleFile],
     );
 
     const onDelete = useCallback((id: number) => {
@@ -115,39 +131,61 @@ export default function AddRoms() {
         }
     }, []);
 
+    const dropperClassName = `w-60 h-44 md:w-168 md:h-80 self-center rounded-2xl md:rounded-5xl border-4 border-dashed flex flex-col items-center justify-center my-12 ${
+        dragging ? 'border-green-500 text-green-500' : 'border-gray-50'
+    }`;
+
+    const dropperChilren = (
+        <Fragment>
+            <AddFileIcon className="mb-6 md:transform md:scale-150" />
+            <span className="text-2xl md:hidden">Add Roms</span>
+            <span className="text-2xl hidden md:inline-block">Drag &amp; Drop Your Roms</span>
+        </Fragment>
+    );
+
     return (
         <Fragment>
             <Navbar userName={userName} profileImage={profileImage} />
             <div className="container flex flex-col pt-2.5 md:pt-0">
                 <h1 className="font-semibold text-xl md:text-3xl">Add Roms</h1>
-                <div
-                    onDragEnter={onDragEnter}
-                    onDragLeave={onDragLeave}
-                    onDragOver={onDragOver}
-                    onDrop={onDrop}
-                    className={`w-60 h-44 md:w-168 md:h-80 self-center rounded-2xl md:rounded-5xl border-4 border-dashed flex flex-col items-center justify-center my-12 ${
-                        dragging ? 'border-green-500 text-green-500' : 'border-gray-50'
-                    }`}
-                >
-                    <AddFileIcon className="mb-6 md:transform md:scale-150" />
-                    <span className="text-2xl md:hidden">Add Roms</span>
-                    <span className="text-2xl hidden md:inline-block">Drag &amp; Drop Your Roms</span>
-                </div>
-                {forms.length !== 0 && (
-                    <div className="flex mb-4 md:mb-8">
-                        <h1 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h1>
-                        <button
-                            onClick={submitAll}
-                            className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ring-2 md:ring-4 ring-inset ring-green-600"
-                        >
-                            Add All
-                        </button>
+                {mobile ? (
+                    <label htmlFor="dropper-input" className={classNames(dropperClassName, 'cursor-pointer')}>
+                        {dropperChilren}
+                        <input
+                            className="hidden"
+                            type="file"
+                            multiple
+                            id="dropper-input"
+                            name="dropper-input"
+                            onChange={onFileChange}
+                        ></input>
+                    </label>
+                ) : (
+                    <div
+                        onDragEnter={onDragEnter}
+                        onDragLeave={onDragLeave}
+                        onDragOver={onDragOver}
+                        onDrop={onDrop}
+                        className={dropperClassName}
+                    >
+                        {dropperChilren}
                     </div>
                 )}
+                <div className="flex mb-4 md:mb-8">
+                    <h1 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h1>
+                    <button
+                        onClick={submitAll}
+                        className={`btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ${
+                            forms.length === 0 ? 'disabled' : 'ring-2 md:ring-4 ring-inset ring-green-600'
+                        }`}
+                    >
+                        Add All
+                    </button>
+                </div>
                 <div id="form-container" className="add-roms__forms-container">
                     {forms.map(item => (
                         <AddRomForm
-                            className="flex-shrink-0 mb-4 md:mr-8 md:last:mr-0"
+                            className="flex-shrink-0 mb-4 md:mb-0 md:mr-8 md:last:mr-0"
                             id={item.id}
                             key={item.id}
                             initialName={item.initialName}
