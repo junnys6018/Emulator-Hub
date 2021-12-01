@@ -19,5 +19,5 @@ module.exports = {
         '\\.css$': '<rootDir>/tests/mocks/styleMock.js',
         '@/(.*)$': '<rootDir>/$1',
     },
-    setupFiles: ['fake-indexeddb/auto'],
+    setupFiles: ['fake-indexeddb/auto', './tests/setupJest.js'],
 };

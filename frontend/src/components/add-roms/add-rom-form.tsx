@@ -6,8 +6,8 @@ import getActiveUserUuid from '@/src/storage/get-active-user';
 import { v4 as uuidv4 } from 'uuid';
 import { useAlert } from '../util/alert';
 import { useMessage } from '../util/message';
-import { b64toBlob } from '@/src/util';
 import { useDatabase } from '@/src/storage/storage';
+import DefaultRomImage from '@/public/assets/default-rom-image.png';
 
 interface AddRomFormProps {
     id: number;
@@ -18,10 +18,7 @@ interface AddRomFormProps {
     onDelete: () => void;
 }
 
-const defaultImage = b64toBlob(
-    'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURSkpKSEhIW1WaZoAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAbSURBVBjTYwACRihGZwhCAW4VDEhqqGGOoCAAhAACORMqTggAAAAASUVORK5CYII=',
-    'image/png',
-);
+const defaultRomImage = fetch(DefaultRomImage).then(response => response.blob());
 
 export default function AddRomForm(props: AddRomFormProps) {
     const [name, setName] = useState(props.initialName);
@@ -60,11 +57,6 @@ export default function AddRomForm(props: AddRomFormProps) {
             // Validation
             const formData = new FormData(form.current as HTMLFormElement);
 
-            let image = formData.get(`image-${props.id}`) as Blob;
-            if (image.size === 0) {
-                image = defaultImage;
-            }
-
             const name = (formData.get(`name-${props.id}`) as string).trim();
             if (name === '') {
                 setNameError(true);
@@ -76,45 +68,53 @@ export default function AddRomForm(props: AddRomFormProps) {
                 setGameConsoleError(true);
                 return;
             }
-            const activeUser = getActiveUserUuid() as string;
 
-            // Add entry to the gameMetaData object store
-            const uuid = uuidv4();
-            putGameMetaData({
-                name,
-                image,
-                saveNames: ['Save 1'],
-                activeSaveIndex: 0,
-                console: gameConsole as Console,
-                user: activeUser,
-                age: 0,
-                uuid,
-            }).then(
-                () => message('Settings saved', { title: 'Success', severity: 'SUCCESS' }),
-                error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
-            );
+            defaultRomImage.then(defaultImage => {
+                let image = formData.get(`image-${props.id}`) as Blob;
+                if (image.size === 0) {
+                    image = defaultImage;
+                }
 
-            // Add entry to the gameData object store
-            const fileReader = new FileReader();
-            fileReader.readAsArrayBuffer(props.file);
+                const activeUser = getActiveUserUuid() as string;
 
-            fileReader.onload = () => {
-                putGameData(db, {
-                    rom: fileReader.result as ArrayBuffer,
-                    saves: [
-                        {
-                            data: new ArrayBuffer(0), // TODO: create a function that determines the required size of saves
-                            age: 0,
-                            uuid: uuidv4(),
-                        },
-                    ],
+                // Add entry to the gameMetaData object store
+                const uuid = uuidv4();
+                putGameMetaData({
+                    name,
+                    image,
+                    saveNames: ['Save 1'],
+                    activeSaveIndex: 0,
+                    console: gameConsole as Console,
                     user: activeUser,
                     age: 0,
                     uuid,
-                });
-            };
+                }).then(
+                    () => message('Settings saved', { title: 'Success', severity: 'SUCCESS' }),
+                    error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
+                );
 
-            onDelete();
+                // Add entry to the gameData object store
+                const fileReader = new FileReader();
+                fileReader.readAsArrayBuffer(props.file);
+
+                fileReader.onload = () => {
+                    putGameData(db, {
+                        rom: fileReader.result as ArrayBuffer,
+                        saves: [
+                            {
+                                data: new ArrayBuffer(0), // TODO: create a function that determines the required size of saves
+                                age: 0,
+                                uuid: uuidv4(),
+                            },
+                        ],
+                        user: activeUser,
+                        age: 0,
+                        uuid,
+                    });
+                };
+
+                onDelete();
+            });
         },
         [props.id, props.file, putGameMetaData, db, onDelete, message, alert],
     );

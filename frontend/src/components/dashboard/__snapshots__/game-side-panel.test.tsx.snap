@@ -66,7 +66,7 @@ Array [
         </button>
       </div>
       <img
-        className="rounded-2xl pixelated drop-shadow object-center object-cover w-full md:w-96 mx-auto"
+        className="rounded-2xl pixelated filter drop-shadow object-center object-cover w-full md:w-96 mx-auto"
         src="/image.png"
         style={
           Object {
