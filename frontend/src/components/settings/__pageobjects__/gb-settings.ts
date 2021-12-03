@@ -4,7 +4,7 @@ import { SettingsPanel } from './settings-page';
 
 export class GBSettingsPanel extends SettingsPanel {
     private static get buttonsLocator() {
-        return By.css('div.grid > *');
+        return By.css('div.settings__controller-grid > *');
     }
 
     static async keyboardButtons() {

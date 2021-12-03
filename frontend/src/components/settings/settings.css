@@ -26,6 +26,11 @@
         @apply text-gray-400 cursor-not-allowed;
     }
 
+    .settings__controller-grid {
+        display: grid;
+        grid-template-columns: 2fr 3fr 3fr;
+    }
+
     .settings__chip8-grid {
         display: grid;
         grid-template-rows: 112px 112px 112px 112px;

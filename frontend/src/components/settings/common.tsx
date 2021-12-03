@@ -213,7 +213,7 @@ function ControllerSettingsComponent(props: SettingsComponentProps<GamepadContro
 
     return (
         <Fragment>
-            <div className="grid grid-cols-3">
+            <div className="settings__controller-grid">
                 <h3 className="tracking-wider text-gray-400">ACTION</h3>
                 <h3 className="tracking-wider text-gray-400 ml-5">KEYBOARD</h3>
                 <h3 className="tracking-wider text-gray-400 ml-5">CONTROLLER</h3>

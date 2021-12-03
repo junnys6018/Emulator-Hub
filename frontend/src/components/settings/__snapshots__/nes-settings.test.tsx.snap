@@ -13,7 +13,7 @@ Array [
     Nintendo Entertainment System Controls
   </h1>,
   <div
-    className="grid grid-cols-3"
+    className="settings__controller-grid"
   >
     <h3
       className="tracking-wider text-gray-400"

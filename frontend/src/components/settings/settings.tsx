@@ -53,7 +53,7 @@ export default function Settings() {
             <Fragment>
                 <Navbar userName={userName} profileImage={profileImage} />
                 <div className="container flex">
-                    <div className="w-72 flex flex-col">
+                    <div className="flex flex-col flex-shrink-0" style={{ width: '280px' }}>
                         <ProfilePicture size="200px" profileImage={profileImage} className="mb-6" onEdit={onEdit} />
                         <h2 className="font-bold text-3xl mb-24 truncate">{userName}</h2>
                         <div className={`settings__button mb-6 ${currentPanel === 'GENERAL' ? 'active' : ''}`}>

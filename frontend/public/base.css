@@ -73,36 +73,41 @@
 }
 
 :root {
-    --container-margin: calc(0.5 * (100vw - var(--inner-container-size)));
+    --container-margin: calc(0.5 * (100% - var(--inner-container-size)));
 }
 
 @screen xs {
+    /**
+     * Taking the min of 100% and the breakpoint size accounts for the scrollbar
+     * if the scrollbar is present then the available width of the container may be less than 
+     * the breakpoint size, should this occur, the width of the container will be 100%
+     */
     :root {
-        --inner-container-size: calc(theme('screens.xs') - 2 * theme('container.padding.DEFAULT'));
+        --inner-container-size: calc(min(theme('screens.xs'), 100%) - 2 * theme('container.padding.DEFAULT'));
     }
 }
 @screen sm {
     :root {
-        --inner-container-size: calc(theme('screens.sm') - 2 * theme('container.padding.sm'));
+        --inner-container-size: calc(min(theme('screens.sm'), 100%) - 2 * theme('container.padding.sm'));
     }
 }
 @screen md {
     :root {
-        --inner-container-size: calc(theme('screens.md') - 2 * theme('container.padding.md'));
+        --inner-container-size: calc(min(theme('screens.md'), 100%) - 2 * theme('container.padding.md'));
     }
 }
 @screen lg {
     :root {
-        --inner-container-size: calc(theme('screens.lg') - 2 * theme('container.padding.lg'));
+        --inner-container-size: calc(min(theme('screens.lg'), 100%) - 2 * theme('container.padding.lg'));
     }
 }
 @screen xl {
     :root {
-        --inner-container-size: calc(theme('screens.xl') - 2 * theme('container.padding.xl'));
+        --inner-container-size: calc(min(theme('screens.xl'), 100%) - 2 * theme('container.padding.xl'));
     }
 }
 @screen 2xl {
     :root {
-        --inner-container-size: calc(theme('screens.2xl') - 2 * theme('container.padding.2xl'));
+        --inner-container-size: calc(min(theme('screens.2xl'), 100%) - 2 * theme('container.padding.2xl'));
     }
 }
