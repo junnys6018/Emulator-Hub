@@ -16,7 +16,7 @@ interface GameSidePanelProps {
 
 // TODO: swipe right to close
 // TODO: better integration with back button on android
-
+// FIXME: jerky behavour when adding save caused by re-rendering when calling putGameMetaData
 export default function GameSidePanel(props: GameSidePanelProps) {
     const [addingSave, setAddingSave] = useState(false);
     const [newSaveName, setNewSaveName] = useState('');
@@ -65,13 +65,12 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                     ${index === props.activeSaveIndex ? 'text-primary-500' : ''}
                 `}
             >
-                <div className="container h-12 flex items-center">
-                    <button
-                        className={`text-lg mr-auto ${
-                            index === props.activeSaveIndex ? 'game-side-panel__circle' : ''
-                        }`}
-                        onClick={() => setActiveSave(index)}
-                    >
+                <div
+                    className={`container h-12 flex items-center ${
+                        index === props.activeSaveIndex ? 'game-side-panel__circle' : ''
+                    }`}
+                >
+                    <button className="text-lg mr-auto truncate" onClick={() => setActiveSave(index)}>
                         {save}
                     </button>
                     {index === props.activeSaveIndex && <span className="text-lg">Active</span>}
@@ -114,9 +113,12 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                                 type="text"
                                 value={newSaveName}
                                 onChange={e => setNewSaveName(e.currentTarget.value)}
-                                className="appearance-none text-lg mr-auto bg-gray-900 rounded-lg h-9 transform -translate-x-3 px-3 focus:outline-none"
+                                className="appearance-none w-40 xs:w-52 text-lg mr-auto bg-gray-900 rounded-lg h-9 transform -translate-x-3 px-3 focus:outline-none"
                             ></input>
-                            <label htmlFor="new-save-submit" className="btn-primary h-9 w-20 mr-2">
+                            <label
+                                htmlFor="new-save-submit"
+                                className="font-medium text-green-500 md:hover:text-green-400 active:text-green-400 cursor-pointer mr-4"
+                            >
                                 <input
                                     id="new-save-submit"
                                     name="new-save-submit"

@@ -88,10 +88,10 @@ Array [
                 "
     >
       <div
-        className="container h-12 flex items-center"
+        className="container h-12 flex items-center "
       >
         <button
-          className="text-lg mr-auto "
+          className="text-lg mr-auto truncate"
           onClick={[Function]}
         >
           Save 1
@@ -105,10 +105,10 @@ Array [
                 "
     >
       <div
-        className="container h-12 flex items-center"
+        className="container h-12 flex items-center game-side-panel__circle"
       >
         <button
-          className="text-lg mr-auto game-side-panel__circle"
+          className="text-lg mr-auto truncate"
           onClick={[Function]}
         >
           Save 2
@@ -127,10 +127,10 @@ Array [
                 "
     >
       <div
-        className="container h-12 flex items-center"
+        className="container h-12 flex items-center "
       >
         <button
-          className="text-lg mr-auto "
+          className="text-lg mr-auto truncate"
           onClick={[Function]}
         >
           Save 3
