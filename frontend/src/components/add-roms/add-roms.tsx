@@ -132,10 +132,7 @@ export default function AddRoms() {
         }
     }, []);
 
-    const dropperClassName = `w-60 h-44 md:w-168 md:h-80 self-center rounded-2xl md:rounded-5xl border-4
-        border-dashed bg-gray-800 flex flex-col items-center justify-center mt-12 mb-8 md:mb-16 ${
-            dragging ? 'border-green-500 text-green-500' : 'border-gray-50'
-        }`;
+    const dropperClassName = `add-roms__dropper ${dragging ? 'border-green-500 text-green-500' : 'border-gray-50'}`;
 
     const dropperChilren = (
         <Fragment>
