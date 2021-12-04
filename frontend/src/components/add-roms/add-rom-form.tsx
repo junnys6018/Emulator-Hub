@@ -95,7 +95,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                     age: 0,
                     uuid,
                 }).then(
-                    () => message('Settings saved', { title: 'Success', severity: 'SUCCESS' }),
+                    () => message('Rom Added', { title: 'Success', severity: 'SUCCESS' }),
                     error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
                 );
 

@@ -73,6 +73,7 @@ export default function Dashboard() {
                         imageRendering={activeGame.settings.imageRendering}
                         name={activeGame.name}
                         saveNames={activeGame.saveNames}
+                        gameUuid={activeGame.uuid}
                         activeSaveIndex={activeGame.activeSaveIndex}
                         closePanel={closePanel}
                     />

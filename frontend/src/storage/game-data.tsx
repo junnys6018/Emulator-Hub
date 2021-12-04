@@ -80,29 +80,50 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
         });
     }, [db]);
 
-    const putGameMetaData = async (newGameMetaData: Partial<GameMetaData>): Promise<string> => {
-        const gameMetaData = await db.get('gameMetaData', newGameMetaData.uuid as string);
-        if (gameMetaData !== undefined) {
-            newGameMetaData = _.merge(gameMetaData, newGameMetaData);
-        }
+    // FIXME: Its unlikley, but possible that `putGameMetaData` is called before the effect hook finishes
+    // could leave application in inconsistent state
+    const putGameMetaData = async (newGameMetaData: Partial<GameMetaData> & { uuid: string }): Promise<string> => {
+        console.log('[INFO] updating/adding new gameMetaData');
 
-        // Clean up image url if we are updating an entry
-        const existingGameMetaDataView = gameMetaDataView.filter(item => item.uuid === newGameMetaData.uuid)[0];
-        if (existingGameMetaDataView !== undefined) {
+        const existingGameMetaDataView = gameMetaDataView.find(item => item.uuid === newGameMetaData.uuid);
+        const overrideImage = existingGameMetaDataView !== undefined && newGameMetaData.image !== undefined;
+        if (overrideImage) {
             URL.revokeObjectURL(existingGameMetaDataView.image);
         }
 
-        setGameMetaData(gameMetaDataView =>
-            gameMetaDataView.concat({
-                name: (newGameMetaData as GameMetaData).name,
-                image: URL.createObjectURL((newGameMetaData as GameMetaData).image),
-                saveNames: (newGameMetaData as GameMetaData).saveNames,
-                activeSaveIndex: (newGameMetaData as GameMetaData).activeSaveIndex,
-                console: (newGameMetaData as GameMetaData).console,
-                uuid: (newGameMetaData as GameMetaData).uuid,
-                settings: (newGameMetaData as GameMetaData).settings,
-            }),
-        );
+        const gameMetaData = await db.get('gameMetaData', newGameMetaData.uuid as string);
+        const isNew = gameMetaData === undefined;
+        if (!isNew) {
+            // Merge with existing item if it exists
+            newGameMetaData = _.merge(gameMetaData, newGameMetaData);
+        }
+
+        // Create the new view
+        const newGameMetaDataView = {
+            name: newGameMetaData.name,
+            image:
+                overrideImage || isNew ? URL.createObjectURL(newGameMetaData.image) : existingGameMetaDataView?.image,
+            saveNames: newGameMetaData.saveNames,
+            activeSaveIndex: newGameMetaData.activeSaveIndex,
+            console: newGameMetaData.console,
+            uuid: newGameMetaData.uuid,
+            settings: newGameMetaData.settings,
+        } as GameMetaDataView;
+
+        setGameMetaData(gameMetaDataView => {
+            if (isNew) {
+                return gameMetaDataView.concat(newGameMetaDataView);
+            } else {
+                const uuid = newGameMetaData.uuid as string;
+                // Make an in place merge with the existing item
+                _.merge(
+                    gameMetaDataView.find(item => item.uuid === uuid),
+                    newGameMetaDataView,
+                );
+                // Create new array to force re-render
+                return [...gameMetaDataView];
+            }
+        });
 
         return db.put('gameMetaData', newGameMetaData as GameMetaData);
     };

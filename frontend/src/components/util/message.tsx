@@ -89,7 +89,7 @@ export function MessageProvider(props: MessageProviderProps) {
     return (
         <MessageContext.Provider value={message}>
             {props.children}
-            <div className="fixed z-10 bottom-4 right-1/2 transform translate-x-1/2 md:right-4 md:translate-x-0 flex flex-col">
+            <div className="fixed z-40 bottom-4 right-1/2 transform translate-x-1/2 md:right-4 md:translate-x-0 flex flex-col">
                 {messages.map(({ title, message, severity, key }) => (
                     <Message
                         title={title}

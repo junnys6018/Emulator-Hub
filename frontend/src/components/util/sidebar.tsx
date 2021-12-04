@@ -32,7 +32,7 @@ export default function Sidebar(props: SidebarProps) {
         <Fragment>
             <div
                 className={classNames(
-                    `fixed z-50 right-0 top-0 transform transition-transform ${
+                    `fixed z-30 right-0 top-0 transform transition-transform ${
                         props.show ? 'translate-x-0' : 'translate-x-full'
                     }`,
                     props.className,
@@ -43,7 +43,7 @@ export default function Sidebar(props: SidebarProps) {
             </div>
             <div
                 onClick={props.hide}
-                className={`fixed z-40 top-0 left-0 w-screen h-screen bg-black hover:cursor-pointer transition-opacity ease-linear select-none ${
+                className={`fixed z-20 top-0 left-0 w-screen h-screen bg-black hover:cursor-pointer transition-opacity ease-linear select-none ${
                     props.show ? 'opacity-50' : 'opacity-0 pointer-events-none'
                 }`}
             ></div>

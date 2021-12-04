@@ -90,11 +90,12 @@ Array [
       <div
         className="container h-12 flex items-center"
       >
-        <span
+        <button
           className="text-lg mr-auto "
+          onClick={[Function]}
         >
           Save 1
-        </span>
+        </button>
       </div>
     </div>
     <div
@@ -106,11 +107,12 @@ Array [
       <div
         className="container h-12 flex items-center"
       >
-        <span
+        <button
           className="text-lg mr-auto game-side-panel__circle"
+          onClick={[Function]}
         >
           Save 2
-        </span>
+        </button>
         <span
           className="text-lg"
         >
@@ -127,18 +129,20 @@ Array [
       <div
         className="container h-12 flex items-center"
       >
-        <span
+        <button
           className="text-lg mr-auto "
+          onClick={[Function]}
         >
           Save 3
-        </span>
+        </button>
       </div>
     </div>
     <div
-      className="container flex flex-col mt-2"
+      className="container h-12 flex-shrink-0"
     >
       <button
-        className="text-gray-300 active:text-green-500 md:hover:text-green-500 flex items-center mb-9 w-max"
+        className="text-gray-300 active:text-green-500 md:hover:text-green-500 flex items-center w-max mt-1"
+        onClick={[Function]}
       >
         <span
           className="font-medium text-xs mr-1"
@@ -164,6 +168,10 @@ Array [
           />
         </svg>
       </button>
+    </div>
+    <div
+      className="container flex flex-col mt-2"
+    >
       <h2
         className="font-medium text-2xl mb-2"
       >

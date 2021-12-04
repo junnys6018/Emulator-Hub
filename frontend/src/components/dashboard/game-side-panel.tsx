@@ -1,5 +1,7 @@
-import React, { Fragment } from 'react';
+import { useGameMetaData } from '@/src/storage/game-data';
+import React, { Fragment, useCallback, useState } from 'react';
 import { FaArrowLeft, FaEdit, FaPlay, FaPlus } from 'react-icons/fa';
+import { useAlert } from '../util/alert';
 import './game-side-panel.css';
 
 interface GameSidePanelProps {
@@ -8,6 +10,7 @@ interface GameSidePanelProps {
     name: string;
     saveNames: string[];
     activeSaveIndex: number;
+    gameUuid: string;
     closePanel: () => void;
 }
 
@@ -15,6 +18,44 @@ interface GameSidePanelProps {
 // TODO: better integration with back button on android
 
 export default function GameSidePanel(props: GameSidePanelProps) {
+    const [addingSave, setAddingSave] = useState(false);
+    const [newSaveName, setNewSaveName] = useState('');
+    const [, putGameMetaData] = useGameMetaData();
+
+    const onAddSaveClick = useCallback(() => {
+        setAddingSave(true);
+        setNewSaveName(`Save ${props.saveNames.length + 1}`);
+    }, [props.saveNames.length]);
+
+    const alert = useAlert();
+
+    const onAddSaveDelete = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault(); // Prevent form submission
+        setAddingSave(false);
+    }, []);
+
+    const onAddSaveSubmit = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            putGameMetaData({
+                saveNames: props.saveNames.concat([newSaveName]),
+                uuid: props.gameUuid,
+            }).catch(error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }));
+            setAddingSave(false);
+        },
+        [alert, newSaveName, props.gameUuid, props.saveNames, putGameMetaData],
+    );
+
+    const setActiveSave = useCallback(
+        (index: number) => {
+            putGameMetaData({
+                activeSaveIndex: index,
+                uuid: props.gameUuid,
+            });
+        },
+        [props.gameUuid, putGameMetaData],
+    );
+
     const saves = props.saveNames?.map((save, index) => {
         return (
             <div
@@ -25,13 +66,14 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                 `}
             >
                 <div className="container h-12 flex items-center">
-                    <span
+                    <button
                         className={`text-lg mr-auto ${
                             index === props.activeSaveIndex ? 'game-side-panel__circle' : ''
                         }`}
+                        onClick={() => setActiveSave(index)}
                     >
                         {save}
-                    </span>
+                    </button>
                     {index === props.activeSaveIndex && <span className="text-lg">Active</span>}
                 </div>
             </div>
@@ -63,11 +105,47 @@ export default function GameSidePanel(props: GameSidePanelProps) {
                     <h2 className="font-medium text-2xl pt-6 pb-2 md:py-6">Saves</h2>
                 </div>
                 {saves}
+                {addingSave && (
+                    <div className={props.saveNames.length % 2 === 0 ? 'bg-gray-700' : 'bg-gray-800'}>
+                        <form onSubmit={onAddSaveSubmit} className="container h-12 flex items-center">
+                            <input
+                                id="new-save-name"
+                                name="new-save-name"
+                                type="text"
+                                value={newSaveName}
+                                onChange={e => setNewSaveName(e.currentTarget.value)}
+                                className="appearance-none text-lg mr-auto bg-gray-900 rounded-lg h-9 transform -translate-x-3 px-3 focus:outline-none"
+                            ></input>
+                            <label htmlFor="new-save-submit" className="btn-primary h-9 w-20 mr-2">
+                                <input
+                                    id="new-save-submit"
+                                    name="new-save-submit"
+                                    type="submit"
+                                    className="hidden"
+                                ></input>
+                                Add
+                            </label>
+                            <button
+                                onClick={onAddSaveDelete}
+                                className="font-medium md:hover:text-red-500 active:text-red-500"
+                            >
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                )}
+                {!addingSave && (
+                    <div className="container h-12 flex-shrink-0">
+                        <button
+                            onClick={onAddSaveClick}
+                            className="text-gray-300 active:text-green-500 md:hover:text-green-500 flex items-center w-max mt-1"
+                        >
+                            <span className="font-medium text-xs mr-1">Add Save</span>
+                            <FaPlus size="8px" />
+                        </button>
+                    </div>
+                )}
                 <div className="container flex flex-col mt-2">
-                    <button className="text-gray-300 active:text-green-500 md:hover:text-green-500 flex items-center mb-9 w-max">
-                        <span className="font-medium text-xs mr-1">Add Save</span>
-                        <FaPlus size="8px" />
-                    </button>
                     <h2 className="font-medium text-2xl mb-2">Settings</h2>
                     <form className="mb-10">
                         <input name="hidden" id="hidden" type="checkbox" className="mr-2"></input>
