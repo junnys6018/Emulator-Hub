@@ -120,6 +120,7 @@ exports[`<AddRomForm /> snapshot 1`] = `
     <button
       className="font-medium text-primary-100 md:hover:text-red-500 active:text-red-500"
       onClick={[Function]}
+      type="button"
     >
       Delete
     </button>

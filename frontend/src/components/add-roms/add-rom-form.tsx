@@ -194,11 +194,8 @@ export default function AddRomForm(props: AddRomFormProps) {
 
                 <button
                     className="font-medium text-primary-100 md:hover:text-red-500 active:text-red-500"
-                    onClick={e => {
-                        // We need to prevent default because this button is submitting the form for some reason
-                        e.preventDefault();
-                        props.onDelete();
-                    }}
+                    onClick={props.onDelete}
+                    type="button"
                 >
                     Delete
                 </button>
