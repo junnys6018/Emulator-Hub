@@ -15,7 +15,7 @@ Array [
         className="flex items-center py-5 md:py-8"
       >
         <button
-          className="mr-3 flex-shrink-0 active:text-green-500 md:hover:text-green-500"
+          className="mr-6 flex-shrink-0 active:text-green-500 md:hover:text-green-500"
           onClick={[Function]}
         >
           <svg
@@ -37,13 +37,14 @@ Array [
             />
           </svg>
         </button>
-        <h1
+        <h2
           className="mr-auto font-semibold text-2xl truncate"
         >
           Zelda
-        </h1>
+        </h2>
         <button
           className="flex-shrink-0 active:text-green-500 md:hover:text-green-500"
+          onClick={[Function]}
         >
           <svg
             fill="currentColor"
@@ -91,7 +92,7 @@ Array [
         className="container h-12 flex items-center "
       >
         <button
-          className="text-lg mr-auto truncate"
+          className="text-lg mr-auto truncate flex-grow text-left"
           onClick={[Function]}
         >
           Save 1
@@ -108,7 +109,7 @@ Array [
         className="container h-12 flex items-center game-side-panel__circle"
       >
         <button
-          className="text-lg mr-auto truncate"
+          className="text-lg mr-auto truncate flex-grow text-left"
           onClick={[Function]}
         >
           Save 2
@@ -130,7 +131,7 @@ Array [
         className="container h-12 flex items-center "
       >
         <button
-          className="text-lg mr-auto truncate"
+          className="text-lg mr-auto truncate flex-grow text-left"
           onClick={[Function]}
         >
           Save 3
@@ -177,22 +178,23 @@ Array [
       >
         Settings
       </h2>
-      <form
+      <div
         className="mb-10"
       >
         <input
           className="mr-2"
+          disabled={true}
           id="hidden"
           name="hidden"
           type="checkbox"
         />
         <label
-          className="text-sm font-medium"
+          className="text-sm font-medium align-text-top"
           htmlFor="hidden"
         >
           Hidden
         </label>
-      </form>
+      </div>
     </div>
     <div
       className="container mt-auto"

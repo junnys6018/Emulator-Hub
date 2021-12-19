@@ -3,13 +3,14 @@ import classNames from 'classnames';
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
 
 type Severity = 'SUCCESS' | 'INFO' | 'WARN' | 'ERROR';
-type Action = 'CLOSE' | 'REFRESH';
+type Action = 'CLOSE' | 'REFRESH' | 'CONFIRM';
 
 interface AlertProps {
     title: string;
     message: string;
     severity: Severity;
     action: Action;
+    callback?: (action: 'YES' | 'NO') => void;
 }
 
 const colorMap = {
@@ -33,23 +34,20 @@ export function Alert(props: AlertProps) {
     const buttonType = props.severity === 'INFO' ? 'btn-secondary' : 'btn-primary';
     const buttonClass = classNames(buttonType, color);
 
+    const container = useRef<HTMLDivElement>(null);
+    const backdrop = useRef<HTMLDivElement>(null);
+
     const close = () => {
-        const div = container.current as HTMLDivElement;
-        div.classList.add('hide');
+        (container.current as HTMLDivElement).classList.add('hide');
         (backdrop.current as HTMLDivElement).classList.add('opacity-0');
         (backdrop.current as HTMLDivElement).classList.remove('opacity-50');
 
-        div.addEventListener('transitionend', () => {
-            alert();
-        });
+        (container.current as HTMLDivElement).addEventListener('transitionend', () => alert(), { once: true });
     };
 
     const refresh = () => {
         location.reload();
     };
-
-    const container = useRef<HTMLDivElement>(null);
-    const backdrop = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         (container.current as HTMLDivElement).classList.remove('hide');
@@ -65,19 +63,52 @@ export function Alert(props: AlertProps) {
                 }`}
                 ref={container}
             >
-                <h1
+                <h2
                     className="text-2xl font-bold py-8 truncate"
                     style={{ maxWidth: '500px', overflowX: 'clip', overflowY: 'initial' }}
                 >
                     {props.title}
-                </h1>
+                </h2>
                 <p className="mx-14 text-center pb-8 flex-grow">{props.message}</p>
-                <button
-                    className={classNames('text-xl font-medium py-1.5 px-4 mb-8', buttonClass)}
-                    onClick={props.action === 'CLOSE' ? close : refresh}
-                >
-                    {props.action === 'CLOSE' ? 'Close' : 'Refresh'}
-                </button>
+                {props.action === 'CLOSE' && (
+                    <button className={classNames('text-xl font-medium py-1.5 px-4 mb-8', buttonClass)} onClick={close}>
+                        Close
+                    </button>
+                )}
+                {props.action === 'REFRESH' && (
+                    <button
+                        className={classNames('text-xl font-medium py-1.5 px-4 mb-8', buttonClass)}
+                        onClick={refresh}
+                    >
+                        Refresh
+                    </button>
+                )}
+                {props.action === 'CONFIRM' && (
+                    <div className="flex justify-center">
+                        <button
+                            className={classNames('text-xl font-medium py-1.5 w-20 sm:w-32 mb-8 mr-8', buttonClass)}
+                            onClick={() => {
+                                if (props.callback) {
+                                    props.callback('YES');
+                                }
+                                close();
+                            }}
+                        >
+                            Yes
+                        </button>
+                        <button
+                            className="text-xl font-medium py-1.5 w-20 sm:w-32 mb-8 btn-secondary muted"
+                            onClick={() => {
+                                if (props.callback) {
+                                    props.callback('NO');
+                                }
+                                close();
+                            }}
+                        >
+                            No
+                        </button>
+                    </div>
+                )}
             </div>
             <div
                 className="fixed z-40 top-0 left-0 w-screen h-screen bg-black transition-opacity ease-linear opacity-0 select-none"
@@ -95,6 +126,7 @@ interface AlertOptions {
     title: string;
     severity: Severity;
     action: Action;
+    callback?: (action: 'YES' | 'NO') => void;
 }
 
 export const AlertContext = React.createContext<((message?: string, options?: Partial<AlertOptions>) => void) | null>(

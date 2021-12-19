@@ -23,20 +23,27 @@ export function isMobile() {
     return check;
 }
 
+let bodyLockCounter = 0;
 export function lockBodyScrolling() {
-    const body = document.body;
-    document.body.style.overflow = 'hidden';
+    if (bodyLockCounter === 0) {
+        const body = document.body;
+        document.body.style.overflow = 'hidden';
 
-    // Add padding to account for scrollbar disappearing on desktop
-    if (body.scrollHeight > window.innerHeight && !isMobile()) {
-        document.body.style.paddingRight = '20px';
+        // Add padding to account for scrollbar disappearing on desktop
+        if (body.scrollHeight > window.innerHeight && !isMobile()) {
+            document.body.style.paddingRight = '20px';
+        }
     }
+    bodyLockCounter++;
 }
 
 export function unlockBodyScrolling() {
-    const body = document.body;
-    body.style.overflow = '';
-    body.style.paddingRight = '';
+    bodyLockCounter--;
+    if (bodyLockCounter === 0) {
+        const body = document.body;
+        body.style.overflow = '';
+        body.style.paddingRight = '';
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

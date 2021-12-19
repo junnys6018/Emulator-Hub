@@ -10,10 +10,10 @@ import { useBreakpoint } from '@/src/use-breakpoint';
 import { useGameMetaData, Console, GameMetaDataView } from '@/src/storage/game-data';
 import { useUserProfile } from '@/src/storage/user-data';
 
+// TODO: sort games
 export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [sidePanelOpen, setSidePanelOpen] = useState(false);
-    const [activeGame, setActiveGame] = useState<GameMetaDataView | null>(null);
+    const [sidePanelGame, setSidePanelGame] = useState<GameMetaDataView | null>(null);
     const [{ userName, profileImage }] = useUserProfile();
 
     let [gameMetaData] = useGameMetaData();
@@ -36,15 +36,14 @@ export default function Dashboard() {
                     name={game.name}
                     imageRendering={game.settings.imageRendering}
                     onActiveCallback={() => {
-                        setSidePanelOpen(true);
-                        setActiveGame(game);
+                        setSidePanelGame(game);
                     }}
                 ></GameItem>
             ));
     };
 
     const closePanel = () => {
-        setSidePanelOpen(false);
+        setSidePanelGame(null);
     };
 
     return (
@@ -66,19 +65,21 @@ export default function Dashboard() {
                     </p>
                 )}
             </div>
-            <Sidebar show={sidePanelOpen} hide={closePanel} className="w-screen lg:w-168 h-screen flex flex-col">
-                {activeGame && (
-                    <GameSidePanel
-                        image={activeGame.image}
-                        imageRendering={activeGame.settings.imageRendering}
-                        name={activeGame.name}
-                        saveNames={activeGame.saveNames}
-                        gameUuid={activeGame.uuid}
-                        activeSaveIndex={activeGame.activeSaveIndex}
-                        closePanel={closePanel}
-                    />
-                )}
-            </Sidebar>
+            {sidePanelGame && (
+                <Sidebar closePanel={closePanel} className="w-screen lg:w-168 h-screen flex flex-col">
+                    {(closePanel: () => void) => (
+                        <GameSidePanel
+                            image={sidePanelGame.image}
+                            imageRendering={sidePanelGame.settings.imageRendering}
+                            name={sidePanelGame.name}
+                            saveNames={sidePanelGame.saveNames}
+                            gameUuid={sidePanelGame.uuid}
+                            activeSaveIndex={sidePanelGame.activeSaveIndex}
+                            closePanel={closePanel}
+                        />
+                    )}
+                </Sidebar>
+            )}
         </Fragment>
     );
 }

@@ -5,7 +5,7 @@ Array [
   <div
     className="alert hide border-t-4 border-red-500"
   >
-    <h1
+    <h2
       className="text-2xl font-bold py-8 truncate"
       style={
         Object {
@@ -16,7 +16,7 @@ Array [
       }
     >
       Alert
-    </h1>
+    </h2>
     <p
       className="mx-14 text-center pb-8 flex-grow"
     >

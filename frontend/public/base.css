@@ -24,6 +24,11 @@
         background-repeat: no-repeat;
     }
 
+    input:disabled,
+    input:disabled + label {
+        @apply cursor-not-allowed text-gray-400;
+    }
+
     :focus-visible {
         outline-width: 1px;
         outline-style: solid;
@@ -56,6 +61,13 @@
             md:hover:ring-green-500
             active:text-green-500
             active:ring-green-500;
+    }
+
+    .btn-secondary.muted {
+        @apply md:hover:text-gray-300
+            md:hover:ring-gray-300
+            active:text-gray-300
+            active:ring-gray-300;
     }
 
     .btn-primary.disabled {

@@ -30,7 +30,7 @@ export default function AddRomForm(props: AddRomFormProps) {
 
     const backgroundImageDiv = useRef<HTMLDivElement>(null);
     const form = useRef<HTMLFormElement>(null);
-    const backgroundImageUrl: React.MutableRefObject<string | null> = useRef<string>(null);
+    const backgroundImageUrl: React.MutableRefObject<string | null> = useRef<string>(null); // TODO: revoke object url when component is destroyed
 
     const onImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files) {

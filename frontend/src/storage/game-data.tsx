@@ -1,6 +1,6 @@
 import { IDBPDatabase } from 'idb';
 import _ from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import getActiveUserUuid from './get-active-user';
 import { EmulatorHubDB, Record, useDatabase } from './storage';
 export type Console = 'NES' | 'GB' | 'GBC' | 'CHIP 8';
@@ -48,7 +48,12 @@ export interface GameData extends Record {
 }
 
 const GameMetaDataContext = React.createContext<
-    [GameMetaDataView[], (newGameMetaData: RecursivePartial<GameMetaData>) => Promise<string>] | null
+    | [
+          GameMetaDataView[],
+          (newGameMetaData: RecursivePartial<GameMetaData>) => Promise<string>,
+          (uuid: string) => Promise<void>,
+      ]
+    | null
 >(null);
 
 export function GameMetaDataProvider(props: { children: React.ReactNode }) {
@@ -80,56 +85,87 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
         });
     }, [db]);
 
-    // FIXME: Its unlikley, but possible that `putGameMetaData` is called before the effect hook finishes
-    // could leave application in inconsistent state
-    const putGameMetaData = async (newGameMetaData: Partial<GameMetaData> & { uuid: string }): Promise<string> => {
-        console.log('[INFO] updating/adding new gameMetaData');
+    /**
+     * Puts a `GameMetaData` record in the database
+     *
+     * If the record already exists, the new record is merged with the old one
+     *
+     * @FIXME its unlikley, but possible that `putGameMetaData` is called before the effect hook finishes,
+     * could leave application in inconsistent state
+     */
+    const putGameMetaData = useCallback(
+        async (newGameMetaData: Partial<GameMetaData> & { uuid: string }): Promise<string> => {
+            console.log('[INFO] updating/adding new gameMetaData');
 
-        const existingGameMetaDataView = gameMetaDataView.find(item => item.uuid === newGameMetaData.uuid);
-        const overrideImage = existingGameMetaDataView !== undefined && newGameMetaData.image !== undefined;
-        if (overrideImage) {
-            URL.revokeObjectURL(existingGameMetaDataView.image);
-        }
-
-        const gameMetaData = await db.get('gameMetaData', newGameMetaData.uuid as string);
-        const isNew = gameMetaData === undefined;
-        if (!isNew) {
-            // Merge with existing item if it exists
-            newGameMetaData = _.merge(gameMetaData, newGameMetaData);
-        }
-
-        // Create the new view
-        const newGameMetaDataView = {
-            name: newGameMetaData.name,
-            image:
-                overrideImage || isNew ? URL.createObjectURL(newGameMetaData.image) : existingGameMetaDataView?.image,
-            saveNames: newGameMetaData.saveNames,
-            activeSaveIndex: newGameMetaData.activeSaveIndex,
-            console: newGameMetaData.console,
-            uuid: newGameMetaData.uuid,
-            settings: newGameMetaData.settings,
-        } as GameMetaDataView;
-
-        setGameMetaData(gameMetaDataView => {
-            if (isNew) {
-                return gameMetaDataView.concat(newGameMetaDataView);
-            } else {
-                const uuid = newGameMetaData.uuid as string;
-                // Make an in place merge with the existing item
-                _.merge(
-                    gameMetaDataView.find(item => item.uuid === uuid),
-                    newGameMetaDataView,
-                );
-                // Create new array to force re-render
-                return [...gameMetaDataView];
+            const existingImageUrl = gameMetaDataView.find(item => item.uuid === newGameMetaData.uuid)?.image;
+            const overrideImage = existingImageUrl !== undefined && newGameMetaData.image !== undefined;
+            if (overrideImage) {
+                URL.revokeObjectURL(existingImageUrl);
             }
-        });
 
-        return db.put('gameMetaData', newGameMetaData as GameMetaData);
-    };
+            const gameMetaData = await db.get('gameMetaData', newGameMetaData.uuid as string);
+            const isNew = gameMetaData === undefined;
+            if (!isNew) {
+                const saveNames = newGameMetaData.saveNames;
+                // Merge with existing item if it exists
+                newGameMetaData = _.merge(gameMetaData, newGameMetaData);
+
+                if (saveNames !== undefined) {
+                    // If saveNames was specified, we dont want to merge the saves together, instead we overwrite the saveNames
+                    newGameMetaData.saveNames = saveNames;
+                }
+            }
+
+            // Create the new view
+            const newGameMetaDataView = {
+                name: newGameMetaData.name,
+                image: overrideImage || isNew ? URL.createObjectURL(newGameMetaData.image as Blob) : existingImageUrl,
+                saveNames: newGameMetaData.saveNames,
+                activeSaveIndex: newGameMetaData.activeSaveIndex,
+                console: newGameMetaData.console,
+                uuid: newGameMetaData.uuid,
+                settings: newGameMetaData.settings,
+            } as GameMetaDataView;
+
+            setGameMetaData(gameMetaDataView => {
+                if (isNew) {
+                    return gameMetaDataView.concat(newGameMetaDataView);
+                } else {
+                    const uuid = newGameMetaData.uuid as string;
+
+                    // Update the existing view, its important that we update the item instead of replacing it
+                    // because code might save a reference to the view, in which case it will be holding onto
+                    // a 'stale' reference of the view.
+                    const existingGameMetaDataView = gameMetaDataView.find(
+                        item => item.uuid === uuid,
+                    ) as GameMetaDataView;
+                    _.merge(existingGameMetaDataView, newGameMetaDataView);
+                    existingGameMetaDataView.saveNames = newGameMetaDataView.saveNames;
+
+                    // Create new array to force re-render
+                    return [...gameMetaDataView];
+                }
+            });
+
+            return db.put('gameMetaData', newGameMetaData as GameMetaData);
+        },
+        [db, gameMetaDataView],
+    );
+
+    const deleteGame = useCallback(
+        async (uuid: string) => {
+            // Delete the metadata
+            setGameMetaData(gameMetaDataView => gameMetaDataView.filter(value => value.uuid !== uuid));
+            await db.delete('gameMetaData', uuid);
+
+            // Delete the game data
+            await db.delete('gameData', uuid);
+        },
+        [db],
+    );
 
     return (
-        <GameMetaDataContext.Provider value={[gameMetaDataView, putGameMetaData]}>
+        <GameMetaDataContext.Provider value={[gameMetaDataView, putGameMetaData, deleteGame]}>
             {props.children}
         </GameMetaDataContext.Provider>
     );
