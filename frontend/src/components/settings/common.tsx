@@ -37,7 +37,7 @@ export interface SettingsComponentProps<T> {
 
 /**
  * Implements the props needed by a settings component
- * Handles saving and resettings settings, and manages state
+ * Handles saving and resetting settings, and manages state
  *
  * @param T The type of the underlying settings being managed
  */

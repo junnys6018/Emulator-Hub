@@ -154,7 +154,7 @@ export default function AddRoms() {
             >
                 <Navbar userName={userName} profileImage={profileImage} />
                 <div className="container flex flex-col pt-2.5 md:pt-0">
-                    <h1 className="font-semibold text-xl md:text-3xl">Add Roms</h1>
+                    <h2 className="font-semibold text-xl md:text-3xl">Add Roms</h2>
                     {mobile ? (
                         <label htmlFor="dropper-input" className={classNames(dropperClassName, 'cursor-pointer')}>
                             {dropperChilren}
@@ -182,7 +182,7 @@ export default function AddRoms() {
             </div>
             <div className="container flex flex-col pt-8 md:pt-16">
                 <div className="flex mb-4 md:mb-8">
-                    <h1 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h1>
+                    <h2 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h2>
                     <button
                         onClick={submitAll}
                         className={`btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ${

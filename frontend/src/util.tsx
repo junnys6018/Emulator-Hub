@@ -5,7 +5,10 @@ export function toKebabCase(string: string): string {
         .toLowerCase();
 }
 
-// https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+/**
+ * Detects if the client is on a mobile phone
+ * @link https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+ */
 export function isMobile() {
     let check = false;
     (function (a) {
@@ -51,8 +54,11 @@ export function isEmptyObject(obj: Object) {
     return Object.keys(obj).length === 0;
 }
 
-// returns a human readable version of a keycode
-// for a list of keycodes see: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
+/**
+ * Returns a human readable version of a keycode.
+ *
+ * For a list of keycodes see: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
+ */
 export function displayKeyCode(code: string) {
     if (code.startsWith('Arrow')) {
         const rest = code.replace(/^Arrow/, '');
@@ -69,8 +75,11 @@ export function displayKeyCode(code: string) {
     return code.toUpperCase();
 }
 
-// returns a human readable string corresponding to a controller index
-// assumes the standard index to button mapping: https://w3c.github.io/gamepad/#remapping
+/**
+ * Returns a human readable string corresponding to a controller index.
+ *
+ * Assumes the standard index to button mapping: https://w3c.github.io/gamepad/#remapping
+ */
 export function displayControllerIndex(index: number) {
     const mapping = [
         'A',
