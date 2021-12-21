@@ -47,7 +47,7 @@ export default function Navbar(props: NavbarProps) {
     };
 
     return (
-        <div className="flex flex-wrap">
+        <nav className="flex flex-wrap">
             <div className="container my-7 md:my-10 flex items-center">
                 <span className="font-bold text-2xl xs:text-3xl mr-auto xl:mr-20">Emulator Hub</span>
                 <a href="#nintendo-entertainment-system" className="nav__nav-item">
@@ -132,6 +132,6 @@ export default function Navbar(props: NavbarProps) {
                     <FaSearch size="16px" />
                 </div>
             </div>
-        </div>
+        </nav>
     );
 }

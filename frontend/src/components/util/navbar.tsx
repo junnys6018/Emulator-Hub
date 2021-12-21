@@ -12,7 +12,7 @@ export default function Navbar(props: NavbarProps) {
     const [dropdownActive, setDropDownActive] = useState(false);
 
     return (
-        <div className="flex flex-wrap">
+        <nav className="flex flex-wrap">
             <div className="container my-7 md:my-10 flex items-center">
                 <Link to="/dashboard" className="md:hidden font-bold text-2xl xs:text-3xl mr-auto">
                     Emulator Hub
@@ -36,6 +36,6 @@ export default function Navbar(props: NavbarProps) {
             >
                 <ProfileDropdown profileImage={props.profileImage} userName={props.userName} />
             </div>
-        </div>
+        </nav>
     );
 }

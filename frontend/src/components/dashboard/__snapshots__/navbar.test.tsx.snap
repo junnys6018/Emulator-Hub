@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Navbar /> snapshot 1`] = `
-<div
+<nav
   className="flex flex-wrap"
 >
   <div
@@ -475,5 +475,5 @@ exports[`<Navbar /> snapshot 1`] = `
       </svg>
     </div>
   </div>
-</div>
+</nav>
 `;
