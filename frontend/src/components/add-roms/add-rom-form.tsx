@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Console, putGameData, useGameMetaData } from '@/src/storage/game-data';
 import { FaPlus } from 'react-icons/fa';
 import classNames from 'classnames';
@@ -29,8 +29,17 @@ export default function AddRomForm(props: AddRomFormProps) {
     const [, putGameMetaData] = useGameMetaData();
 
     const backgroundImageDiv = useRef<HTMLDivElement>(null);
-    const form = useRef<HTMLFormElement>(null);
-    const backgroundImageUrl: React.MutableRefObject<string | null> = useRef<string>(null); // TODO: revoke object url when component is destroyed
+    const backgroundImageUrl: React.MutableRefObject<string | null> = useRef<string>(null);
+    const imageInput = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        return () => {
+            if (backgroundImageUrl.current !== null) {
+                // Free memory when component is destroyed
+                URL.revokeObjectURL(backgroundImageUrl.current);
+            }
+        };
+    }, []);
 
     const onImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files) {
@@ -54,26 +63,27 @@ export default function AddRomForm(props: AddRomFormProps) {
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            // Validation
-            const formData = new FormData(form.current as HTMLFormElement);
 
-            const name = (formData.get(`name-${props.id}`) as string).trim();
-            if (name === '') {
+            // Validate form
+            let error = false;
+            const sanitizedName = name.trim();
+            if (sanitizedName === '') {
                 setNameError(true);
-                return;
+                error = true;
             }
 
-            const gameConsole = formData.get(`console-${props.id}`) as string;
             if (gameConsole !== 'NES' && gameConsole !== 'GB' && gameConsole !== 'GBC' && gameConsole !== 'CHIP 8') {
                 setGameConsoleError(true);
+                error = true;
+            }
+
+            if (error) {
                 return;
             }
 
             defaultRomImage.then(defaultImage => {
-                let image = formData.get(`image-${props.id}`) as Blob;
-                if (image.size === 0) {
-                    image = defaultImage;
-                }
+                const image =
+                    imageInput.current?.files?.length !== 0 ? (imageInput.current?.files as FileList)[0] : defaultImage;
 
                 const activeUser = getActiveUserUuid() as string;
 
@@ -84,7 +94,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                     image,
                     saveNames: ['Save 1'],
                     activeSaveIndex: 0,
-                    console: gameConsole as Console,
+                    console: gameConsole,
                     user: activeUser,
                     settings: {
                         hidden: false,
@@ -122,12 +132,11 @@ export default function AddRomForm(props: AddRomFormProps) {
                 onDelete();
             });
         },
-        [props.id, props.file, putGameMetaData, db, onDelete, message, alert],
+        [name, gameConsole, putGameMetaData, props.file, onDelete, message, alert, db],
     );
 
     return (
         <form
-            ref={form}
             onSubmit={onSubmit}
             className={classNames('flex flex-col self-center rounded-4xl w-80 bg-primary-800 p-5', props.className)}
         >
@@ -137,6 +146,7 @@ export default function AddRomForm(props: AddRomFormProps) {
             >
                 <label htmlFor={`image-${props.id}`} className="btn-secondary h-10 px-2.5 text-primary-100">
                     <input
+                        ref={imageInput}
                         className="hidden"
                         type="file"
                         id={`image-${props.id}`}
@@ -151,7 +161,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                 <label htmlFor={`name-${props.id}`} className="font-semibold mr-auto">
                     Name*
                 </label>
-                {nameError && <span className="text-sm text-red-500">This Field is Required</span>}
+                {nameError && <span className="text-sm text-red-500">This Field Is Required</span>}
             </div>
             <input
                 className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
@@ -166,7 +176,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                 <label htmlFor={`console-${props.id}`} className="font-semibold mr-auto">
                     Console*
                 </label>
-                {gameConsoleError && <span className="text-sm text-red-500">This Field is Required</span>}
+                {gameConsoleError && <span className="text-sm text-red-500">This Field Is Required</span>}
             </div>
             <select
                 className="appearance-none w-full h-11 px-2 mb-5 flex-grow bg-primary-800 ring-2 ring-primary-900 rounded focus:outline-none"
