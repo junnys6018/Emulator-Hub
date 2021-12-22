@@ -63,12 +63,12 @@ export default function Navbar(props: NavbarProps) {
                     CHIP 8
                 </a>
                 <Link to="/add-roms" className="hidden md:flex btn-secondary tracking-wider h-10 px-4 mr-10">
-                    <FaPlus className="inline-block mr-2.5" size="12px" />
+                    <FaPlus className="inline-block mr-2.5" size="0.75rem" />
                     ADD ROMS
                 </Link>
                 <Profile className="hidden md:block" {...props} />
                 <button className="md:hidden mr-5 active:text-green-500" onClick={onSearchButtonClick}>
-                    <FaSearch size="24px" />
+                    <FaSearch size="1.5rem" />
                 </button>
                 <button className="select-none md:hidden" onClick={() => setDropDownActive(!dropdownActive)}>
                     <img className="rounded-full w-10 h-10 object-cover object-center" src={props.profileImage}></img>
@@ -115,7 +115,7 @@ export default function Navbar(props: NavbarProps) {
                             props.setSearchQuery('');
                         }}
                     >
-                        <FaArrowLeft size="16px" />
+                        <FaArrowLeft size="1rem" />
                     </button>
                     <input
                         // On mobile, for some reason the input overflows if the width is not set, so we set it to 4px here
@@ -129,7 +129,7 @@ export default function Navbar(props: NavbarProps) {
                         value={props.searchQuery}
                         onChange={e => props.setSearchQuery(e.currentTarget.value)}
                     ></input>
-                    <FaSearch size="16px" />
+                    <FaSearch size="1rem" />
                 </div>
             </div>
         </nav>

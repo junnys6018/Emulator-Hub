@@ -36,7 +36,7 @@ export function Message(props: MessageProps) {
                 <span className="text-sm ml-3 pb-3">{props.message}</span>
             </div>
             <button className="hover:text-red-500 ml-4 self-start mt-3 mr-3" onClick={props.close}>
-                <FaTimes size="20px" />
+                <FaTimes size="1.25rem" />
             </button>
         </div>
     );

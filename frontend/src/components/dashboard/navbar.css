@@ -8,10 +8,10 @@
     }
 
     .nav__dropdown-container-height {
-        max-height: 532px;
+        max-height: 34rem;
     }
 
     .nav__search-container-height {
-        max-height: 64px;
+        max-height: 4rem;
     }
 }

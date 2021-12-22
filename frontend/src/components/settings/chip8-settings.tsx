@@ -68,7 +68,7 @@ function CHIP8SettingsComponent(props: SettingsComponentProps<string[]>) {
                                 className="absolute top-2 right-2 focus-visible:outline-none"
                                 onClick={() => props.onChange(index, null)}
                             >
-                                <FaRedo size="12px" className="text-primary-500" />
+                                <FaRedo size="0.75rem" className="text-primary-500" />
                             </button>
                         )}
                         {props.editingButton === index && (
@@ -76,7 +76,7 @@ function CHIP8SettingsComponent(props: SettingsComponentProps<string[]>) {
                                 className="absolute top-2 right-2 focus-visible:outline-none"
                                 onClick={props.clearEditingButton}
                             >
-                                <FaTimes size="14px" className="text-red-500" />
+                                <FaTimes size="0.875rem" className="text-red-500" />
                             </button>
                         )}
                     </div>

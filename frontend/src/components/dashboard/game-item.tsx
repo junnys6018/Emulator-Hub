@@ -27,10 +27,10 @@ export function GameCard(props: GameItemInnerProps) {
             <div className="flex items-center mx-3 pt-1">
                 <span className="text-sm mr-auto">{props.name}</span>
                 <button className="mr-2 hover:text-green-500 p-1">
-                    <FaPlay size="12px" />
+                    <FaPlay size="0.75rem" />
                 </button>
                 <button className="hover:text-green-500 p-1" onClick={props.onActiveCallback}>
-                    <FaEllipsisH size="12px" />
+                    <FaEllipsisH size="0.75rem" />
                 </button>
             </div>
         </div>

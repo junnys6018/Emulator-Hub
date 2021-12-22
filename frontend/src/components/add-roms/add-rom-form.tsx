@@ -198,7 +198,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                         id={`submit-${props.id}`}
                         className="hidden"
                     ></input>
-                    <FaPlus className="inline-block mr-1.5" size="10px" />
+                    <FaPlus className="inline-block mr-1.5" size="0.625rem" />
                     <span className="font-medium">Add</span>
                 </label>
 

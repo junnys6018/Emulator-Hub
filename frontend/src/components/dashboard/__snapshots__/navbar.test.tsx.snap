@@ -44,7 +44,7 @@ exports[`<Navbar /> snapshot 1`] = `
       <svg
         className="inline-block mr-2.5"
         fill="currentColor"
-        height="12px"
+        height="0.75rem"
         stroke="currentColor"
         strokeWidth="0"
         style={
@@ -53,7 +53,7 @@ exports[`<Navbar /> snapshot 1`] = `
           }
         }
         viewBox="0 0 448 512"
-        width="12px"
+        width="0.75rem"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -226,7 +226,7 @@ exports[`<Navbar /> snapshot 1`] = `
     >
       <svg
         fill="currentColor"
-        height="24px"
+        height="1.5rem"
         stroke="currentColor"
         strokeWidth="0"
         style={
@@ -235,7 +235,7 @@ exports[`<Navbar /> snapshot 1`] = `
           }
         }
         viewBox="0 0 512 512"
-        width="24px"
+        width="1.5rem"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -429,7 +429,7 @@ exports[`<Navbar /> snapshot 1`] = `
       >
         <svg
           fill="currentColor"
-          height="16px"
+          height="1rem"
           stroke="currentColor"
           strokeWidth="0"
           style={
@@ -438,7 +438,7 @@ exports[`<Navbar /> snapshot 1`] = `
             }
           }
           viewBox="0 0 448 512"
-          width="16px"
+          width="1rem"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -457,7 +457,7 @@ exports[`<Navbar /> snapshot 1`] = `
       />
       <svg
         fill="currentColor"
-        height="16px"
+        height="1rem"
         stroke="currentColor"
         strokeWidth="0"
         style={
@@ -466,7 +466,7 @@ exports[`<Navbar /> snapshot 1`] = `
           }
         }
         viewBox="0 0 512 512"
-        width="16px"
+        width="1rem"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

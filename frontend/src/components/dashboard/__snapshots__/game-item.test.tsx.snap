@@ -27,7 +27,7 @@ exports[`<GameCard /> snapshot 1`] = `
     >
       <svg
         fill="currentColor"
-        height="12px"
+        height="0.75rem"
         stroke="currentColor"
         strokeWidth="0"
         style={
@@ -36,7 +36,7 @@ exports[`<GameCard /> snapshot 1`] = `
           }
         }
         viewBox="0 0 448 512"
-        width="12px"
+        width="0.75rem"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -50,7 +50,7 @@ exports[`<GameCard /> snapshot 1`] = `
     >
       <svg
         fill="currentColor"
-        height="12px"
+        height="0.75rem"
         stroke="currentColor"
         strokeWidth="0"
         style={
@@ -59,7 +59,7 @@ exports[`<GameCard /> snapshot 1`] = `
           }
         }
         viewBox="0 0 512 512"
-        width="12px"
+        width="0.75rem"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -142,7 +142,7 @@ Array [
       >
         <svg
           fill="currentColor"
-          height="12px"
+          height="0.75rem"
           stroke="currentColor"
           strokeWidth="0"
           style={
@@ -151,7 +151,7 @@ Array [
             }
           }
           viewBox="0 0 448 512"
-          width="12px"
+          width="0.75rem"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -165,7 +165,7 @@ Array [
       >
         <svg
           fill="currentColor"
-          height="12px"
+          height="0.75rem"
           stroke="currentColor"
           strokeWidth="0"
           style={
@@ -174,7 +174,7 @@ Array [
             }
           }
           viewBox="0 0 512 512"
-          width="12px"
+          width="0.75rem"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path

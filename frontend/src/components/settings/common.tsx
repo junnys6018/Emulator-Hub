@@ -175,12 +175,12 @@ function ControllerSettingsComponent(props: SettingsComponentProps<GamepadContro
                 </button>
                 {!disabled && hoveredButton === action && editingButton === null && (
                     <button className="px-1 focus-visible:outline-none" onClick={() => onChange(action, null)}>
-                        <FaRedo size="12px" />
+                        <FaRedo size="0.75rem" />
                     </button>
                 )}
                 {!disabled && editingButton === action && (
                     <button className="px-1 focus-visible:outline-none" onClick={clearEditingButton}>
-                        <FaTimes size="14px" className="text-red-500" />
+                        <FaTimes size="0.875rem" className="text-red-500" />
                     </button>
                 )}
             </div>

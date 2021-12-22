@@ -229,7 +229,7 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                             onClick={props.closePanel}
                             type="button"
                         >
-                            <FaArrowLeft size="20px" />
+                            <FaArrowLeft size="1.25rem" />
                         </button>
                         <input
                             id="rom-name"
@@ -257,7 +257,7 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                                     })
                                 }
                             >
-                                <FaTrashAlt size="26px" />
+                                <FaTrashAlt size="1.625rem" />
                             </button>
                         )}
                     </div>
@@ -343,7 +343,7 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                 </div>
                 <div className="container mb-10 mt-auto flex">
                     <button className="btn-primary flex-grow h-12 mr-7" type="submit">
-                        <FaSave className="mr-4" size="18px" />
+                        <FaSave className="mr-4" size="1.125rem" />
                         <span className="font-medium text-2xl">Save</span>
                     </button>
                     <button
@@ -444,14 +444,14 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
                         className="mr-6 flex-shrink-0 active:text-green-500 md:hover:text-green-500"
                         onClick={props.closePanel}
                     >
-                        <FaArrowLeft size="20px" />
+                        <FaArrowLeft size="1.25rem" />
                     </button>
                     <h2 className="mr-auto font-semibold text-2xl truncate">{props.name}</h2>
                     <button
                         onClick={props.toggleEdit}
                         className="flex-shrink-0 active:text-green-500 md:hover:text-green-500"
                     >
-                        <FaEdit size="20px" />
+                        <FaEdit size="1.25rem" />
                     </button>
                 </div>
                 <img
@@ -498,7 +498,7 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
                         className="text-gray-300 active:text-green-500 md:hover:text-green-500 flex items-center w-max mt-1"
                     >
                         <span className="font-medium text-xs mr-1">Add Save</span>
-                        <FaPlus size="8px" />
+                        <FaPlus size="0.5rem" />
                     </button>
                 </div>
             )}
@@ -557,7 +557,7 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
             </div>
             <div className="container mt-auto">
                 <button className="btn-primary mb-10 h-12 w-full">
-                    <FaPlay className="mr-4" size="12px" />
+                    <FaPlay className="mr-4" size="0.75rem" />
                     <span className="font-medium text-2xl">Play</span>
                 </button>
             </div>
