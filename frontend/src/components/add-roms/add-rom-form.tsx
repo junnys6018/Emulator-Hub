@@ -98,7 +98,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                     user: activeUser,
                     settings: {
                         hidden: false,
-                        deletable: false,
+                        deletable: true,
                         imageRendering: 'unset',
                         captureImage: true,
                     },

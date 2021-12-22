@@ -5,6 +5,14 @@ import getActiveUserUuid from './get-active-user';
 import { EmulatorHubDB, Record, useDatabase } from './storage';
 export type Console = 'NES' | 'GB' | 'GBC' | 'CHIP 8';
 
+export interface GameSettings {
+    hidden: boolean;
+    deletable: boolean;
+    imageRendering: 'pixelated' | 'unset';
+    // If true, a screenshot of the game will be taken next time it is played and will be used as the image for this rom
+    captureImage: boolean;
+}
+
 export interface GameMetaData extends Record {
     name: string;
     image: Blob;
@@ -12,13 +20,7 @@ export interface GameMetaData extends Record {
     activeSaveIndex: number;
     console: Console;
     user: string; // UUID of the user to which this record belongs to
-    settings: {
-        hidden: boolean;
-        deletable: boolean;
-        imageRendering: 'pixelated' | 'unset';
-        // If true, a screenshot of the game will be taken next time it is played and will be used as the image for this rom
-        captureImage: boolean;
-    };
+    settings: GameSettings;
 }
 
 export interface GameMetaDataView {
@@ -27,13 +29,7 @@ export interface GameMetaDataView {
     saveNames: string[];
     activeSaveIndex: number;
     console: Console;
-    settings: {
-        hidden: boolean;
-        deletable: boolean;
-        imageRendering: 'pixelated' | 'unset';
-        // If true, a screenshot of the game will be taken next time it is played and will be used as the image for this rom
-        captureImage: boolean;
-    };
+    settings: GameSettings;
     uuid: string;
 }
 

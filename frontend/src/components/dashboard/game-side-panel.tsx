@@ -1,7 +1,7 @@
 import { useGameMetaData } from '@/src/storage/game-data';
 import _ from 'lodash';
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { FaArrowLeft, FaEdit, FaPlay, FaPlus, FaTrashAlt, FaSave, FaRedo } from 'react-icons/fa';
+import { FaArrowLeft, FaEdit, FaPlay, FaPlus, FaTrashAlt, FaSave, FaRedo, FaInfoCircle } from 'react-icons/fa';
 import { useAlert } from '../util/alert';
 import { useMessage } from '../util/message';
 import './game-side-panel.css';
@@ -9,6 +9,8 @@ import './game-side-panel.css';
 interface GameSidePanelProps {
     image: string;
     imageRendering: 'pixelated' | 'unset';
+    hidden: boolean;
+    deletable: boolean;
     name: string;
     saveNames: string[];
     activeSaveIndex: number;
@@ -43,6 +45,8 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
 
     const [romName, setRomName] = useState(props.name);
     const [saveNames, setSaveNames] = useState(_.cloneDeep(props.saveNames));
+    const [hidden, setHidden] = useState(props.hidden);
+    const [imageRendering, setImageRendering] = useState(props.imageRendering);
     const [romNameError, setRomNameError] = useState(false);
     const [saveNameErrors, setSaveNameErrors] = useState(new Set<number>());
 
@@ -117,8 +121,12 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                     name: sanitizedRomName,
                     image,
                     saveNames: sanitizedSaveNames.filter((_, index) => !deleteSaveIndices.has(index)),
-                    uuid: props.gameUuid,
                     activeSaveIndex: newSaveIndex(deleteSaveIndices, props.activeSaveIndex),
+                    settings: {
+                        imageRendering,
+                        hidden: hidden,
+                    },
+                    uuid: props.gameUuid,
                 }).then(
                     () => props.toggleEdit(),
                     error => alert(`${error}`, { severity: 'ERROR' }),
@@ -145,7 +153,7 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                 );
             }
         },
-        [alert, deleteSaveIndices, props, putGameMetaData, romName, saveNames],
+        [alert, deleteSaveIndices, hidden, imageRendering, props, putGameMetaData, romName, saveNames],
     );
 
     const saves = saveNames.map((save, index) => {
@@ -230,26 +238,28 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                             onChange={e => setRomName(e.currentTarget.value)}
                             className="appearance-none bg-gray-900 rounded-lg transform -translate-x-3 px-3 h-14 focus:outline-none mr-auto font-semibold text-2xl truncate"
                         ></input>
-                        <button
-                            type="button"
-                            className="flex-shrink-0 text-red-500 active:text-red-400 md:hover:text-red-400"
-                            onClick={() =>
-                                alert('Are you sure that you want to permanently delete this game?', {
-                                    severity: 'ERROR',
-                                    action: 'CONFIRM',
-                                    callback: action => {
-                                        if (action === 'YES') {
-                                            props.closePanel();
-                                            deleteGame(props.gameUuid).catch(error =>
-                                                alert(error, { severity: 'ERROR' }),
-                                            );
-                                        }
-                                    },
-                                })
-                            }
-                        >
-                            <FaTrashAlt size="26px" />
-                        </button>
+                        {props.deletable && (
+                            <button
+                                type="button"
+                                className="flex-shrink-0 text-red-500 active:text-red-400 md:hover:text-red-400"
+                                onClick={() =>
+                                    alert('Are you sure that you want to permanently delete this game?', {
+                                        severity: 'ERROR',
+                                        action: 'CONFIRM',
+                                        callback: action => {
+                                            if (action === 'YES') {
+                                                props.closePanel();
+                                                deleteGame(props.gameUuid).catch(error =>
+                                                    alert(error, { severity: 'ERROR' }),
+                                                );
+                                            }
+                                        },
+                                    })
+                                }
+                            >
+                                <FaTrashAlt size="26px" />
+                            </button>
+                        )}
                     </div>
                     <div
                         ref={backgroundImageDiv}
@@ -279,11 +289,55 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                 {saves}
                 <div className="container flex flex-col mt-14">
                     <h2 className="font-medium text-2xl mb-2">Settings</h2>
-                    <div className="mb-10">
-                        <input name="hidden" id="hidden" type="checkbox" className="mr-2"></input>
+                    <div className="mb-2">
+                        <input
+                            name="hidden"
+                            id="hidden"
+                            type="checkbox"
+                            className="mr-2"
+                            checked={hidden}
+                            onChange={e => setHidden(e.currentTarget.checked)}
+                        ></input>
                         <label htmlFor="hidden" className="text-sm font-medium align-text-top">
                             Hidden
                         </label>
+                    </div>
+                    <div className="flex items-center mb-8">
+                        <span className="text-sm font-medium mr-3">Image Rendering</span>
+                        <input
+                            type="radio"
+                            id="nearest-neighbour"
+                            value="pixelated"
+                            name="image-rendering"
+                            checked={imageRendering === 'pixelated'}
+                            onChange={() => setImageRendering('pixelated')}
+                        ></input>
+                        <label htmlFor="nearest-neighbour" className="mr-4 text-sm">
+                            Nearest Neighbour
+                        </label>
+                        <input
+                            type="radio"
+                            id="bilinear"
+                            value="unset"
+                            name="image-rendering"
+                            checked={imageRendering === 'unset'}
+                            onChange={() => setImageRendering('unset')}
+                        ></input>
+                        <label htmlFor="bilinear" className="text-sm mr-auto">
+                            Bilinear
+                        </label>
+                        <button
+                            type="button"
+                            className="md:hover:text-green-400 active:text-green-400"
+                            onClick={() =>
+                                alert(
+                                    'Determines how the rom image is rendered. Use nearest neighbour for low resolution pixelated images (such as pixel art), and use bilinear for other images.',
+                                    { title: 'Information', severity: 'SUCCESS' },
+                                )
+                            }
+                        >
+                            <FaInfoCircle size="1.25rem" />
+                        </button>
                     </div>
                     {romNameError && <span className="text-red-500 mb-2">Missing Rom Name</span>}
                 </div>
@@ -450,11 +504,55 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
             )}
             <div className="container flex flex-col mt-2">
                 <h2 className="font-medium text-2xl mb-2">Settings</h2>
-                <div className="mb-10">
-                    <input disabled name="hidden" id="hidden" type="checkbox" className="mr-2"></input>
+                <div className="mb-2">
+                    <input
+                        disabled
+                        name="hidden"
+                        id="hidden"
+                        type="checkbox"
+                        className="mr-2"
+                        checked={props.hidden}
+                    ></input>
                     <label htmlFor="hidden" className="text-sm font-medium align-text-top">
                         Hidden
                     </label>
+                </div>
+                <div className="flex items-center mb-8">
+                    <span className="text-sm font-medium text-gray-400 cursor-not-allowed mr-3">Image Rendering</span>
+                    <input
+                        disabled
+                        type="radio"
+                        id="nearest-neighbour"
+                        value="pixelated"
+                        name="image-rendering"
+                        checked={props.imageRendering === 'pixelated'}
+                    ></input>
+                    <label htmlFor="nearest-neighbour" className="mr-4 text-sm">
+                        Nearest Neighbour
+                    </label>
+                    <input
+                        disabled
+                        type="radio"
+                        id="bilinear"
+                        value="unset"
+                        name="image-rendering"
+                        checked={props.imageRendering === 'unset'}
+                    ></input>
+                    <label htmlFor="bilinear" className="text-sm mr-auto">
+                        Bilinear
+                    </label>
+                    <button
+                        type="button"
+                        className="md:hover:text-green-400 active:text-green-400"
+                        onClick={() =>
+                            alert(
+                                'Determines how the rom image is rendered. Use nearest neighbour for low resolution pixelated images (such as pixel art), and use bilinear for other images.',
+                                { title: 'Information', severity: 'SUCCESS' },
+                            )
+                        }
+                    >
+                        <FaInfoCircle size="1.25rem" />
+                    </button>
                 </div>
             </div>
             <div className="container mt-auto">

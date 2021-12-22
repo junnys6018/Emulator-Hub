@@ -179,7 +179,7 @@ Array [
         Settings
       </h2>
       <div
-        className="mb-10"
+        className="mb-2"
       >
         <input
           className="mr-2"
@@ -194,6 +194,67 @@ Array [
         >
           Hidden
         </label>
+      </div>
+      <div
+        className="flex items-center mb-8"
+      >
+        <span
+          className="text-sm font-medium text-gray-400 cursor-not-allowed mr-3"
+        >
+          Image Rendering
+        </span>
+        <input
+          checked={true}
+          disabled={true}
+          id="nearest-neighbour"
+          name="image-rendering"
+          type="radio"
+          value="pixelated"
+        />
+        <label
+          className="mr-4 text-sm"
+          htmlFor="nearest-neighbour"
+        >
+          Nearest Neighbour
+        </label>
+        <input
+          checked={false}
+          disabled={true}
+          id="bilinear"
+          name="image-rendering"
+          type="radio"
+          value="unset"
+        />
+        <label
+          className="text-sm mr-auto"
+          htmlFor="bilinear"
+        >
+          Bilinear
+        </label>
+        <button
+          className="md:hover:text-green-400 active:text-green-400"
+          onClick={[Function]}
+          type="button"
+        >
+          <svg
+            fill="currentColor"
+            height="1.25rem"
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 512 512"
+            width="1.25rem"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </button>
       </div>
     </div>
     <div

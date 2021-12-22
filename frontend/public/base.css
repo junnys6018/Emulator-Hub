@@ -29,6 +29,10 @@
         @apply cursor-not-allowed text-gray-400;
     }
 
+    input[type='radio'] {
+        @apply mr-1.5;
+    }
+
     :focus-visible {
         outline-width: 1px;
         outline-style: solid;

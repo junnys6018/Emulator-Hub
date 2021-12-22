@@ -12,6 +12,8 @@ test('<GameSidePanel /> snapshot', () => {
     const props = {
         image: '/image.png',
         imageRendering: 'pixelated' as const,
+        hidden: false,
+        deletable: false,
         name: 'Zelda',
         gameUuid: 'mock',
         saveNames: ['Save 1', 'Save 2', 'Save 3'],

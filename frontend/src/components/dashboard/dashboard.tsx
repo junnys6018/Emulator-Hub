@@ -14,7 +14,15 @@ import { useUserProfile } from '@/src/storage/user-data';
 export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sidePanelGame, setSidePanelGame] = useState<GameMetaDataView | null>(null);
-    const [{ userName, profileImage }] = useUserProfile();
+    const [
+        {
+            userName,
+            profileImage,
+            settings: {
+                general: { showHiddenGames },
+            },
+        },
+    ] = useUserProfile();
 
     let [gameMetaData] = useGameMetaData();
     const breakpoint = useBreakpoint();
@@ -28,7 +36,7 @@ export default function Dashboard() {
 
     const filterForConsole = (console: Console) => {
         return gameMetaData
-            .filter(game => game.console == console)
+            .filter(game => game.console == console && (showHiddenGames || !game.settings.hidden))
             .map(game => (
                 <GameItem
                     key={game.uuid}
@@ -71,6 +79,8 @@ export default function Dashboard() {
                         <GameSidePanel
                             image={sidePanelGame.image}
                             imageRendering={sidePanelGame.settings.imageRendering}
+                            hidden={sidePanelGame.settings.hidden}
+                            deletable={sidePanelGame.settings.deletable}
                             name={sidePanelGame.name}
                             saveNames={sidePanelGame.saveNames}
                             gameUuid={sidePanelGame.uuid}
