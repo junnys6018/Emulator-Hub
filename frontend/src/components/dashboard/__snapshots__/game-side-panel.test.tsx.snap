@@ -197,41 +197,47 @@ Array [
         </label>
       </div>
       <div
-        className="flex items-center mb-8"
+        className="flex flex-wrap items-center mb-8"
       >
         <span
-          className="text-sm font-medium text-gray-400 cursor-not-allowed mr-3"
+          className="flex-shrink-0 text-sm font-medium cursor-not-allowed mr-auto sm:mr-3 mb-2 sm:mb-0 text-gray-400"
         >
           Image Rendering
         </span>
-        <input
-          checked={true}
-          disabled={true}
-          id="nearest-neighbour"
-          name="image-rendering"
-          type="radio"
-          value="pixelated"
-        />
-        <label
-          className="mr-4 text-sm"
-          htmlFor="nearest-neighbour"
+        <div
+          className="mr-auto flex-shrink-0 order-last sm:order-none flex items-center"
         >
-          Nearest Neighbour
-        </label>
-        <input
-          checked={false}
-          disabled={true}
-          id="bilinear"
-          name="image-rendering"
-          type="radio"
-          value="unset"
-        />
-        <label
-          className="text-sm mr-auto"
-          htmlFor="bilinear"
-        >
-          Bilinear
-        </label>
+          <input
+            checked={true}
+            disabled={true}
+            id="nearest-neighbour"
+            name="image-rendering"
+            onChange={[Function]}
+            type="radio"
+            value="pixelated"
+          />
+          <label
+            className="mr-4 text-sm"
+            htmlFor="nearest-neighbour"
+          >
+            Nearest Neighbour
+          </label>
+          <input
+            checked={false}
+            disabled={true}
+            id="bilinear"
+            name="image-rendering"
+            onChange={[Function]}
+            type="radio"
+            value="unset"
+          />
+          <label
+            className="text-sm"
+            htmlFor="bilinear"
+          >
+            Bilinear
+          </label>
+        </div>
         <button
           className="md:hover:text-green-400 active:text-green-400"
           onClick={[Function]}

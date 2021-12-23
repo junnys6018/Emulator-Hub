@@ -40,6 +40,74 @@ export function newSaveIndex(deleteSaveIndices: Set<number>, activeSaveIndex: nu
     return activeSaveIndex - count;
 }
 
+interface ImageRenderingSettingsProps {
+    imageRendering: 'pixelated' | 'unset';
+    setImageRendering?: (value: React.SetStateAction<'pixelated' | 'unset'>) => void;
+    disabled: boolean;
+}
+
+function ImageRenderingSettings(props: ImageRenderingSettingsProps) {
+    const alert = useAlert();
+
+    return (
+        <div className="flex flex-wrap items-center mb-8">
+            <span
+                className={`flex-shrink-0 text-sm font-medium cursor-not-allowed mr-auto sm:mr-3 mb-2 sm:mb-0 ${
+                    props.disabled ? 'text-gray-400' : ''
+                }`}
+            >
+                Image Rendering
+            </span>
+            <div className="mr-auto flex-shrink-0 order-last sm:order-none flex items-center">
+                <input
+                    disabled={props.disabled}
+                    type="radio"
+                    id="nearest-neighbour"
+                    value="pixelated"
+                    name="image-rendering"
+                    checked={props.imageRendering === 'pixelated'}
+                    onChange={() => {
+                        if (props.setImageRendering) {
+                            props.setImageRendering('pixelated');
+                        }
+                    }}
+                ></input>
+                <label htmlFor="nearest-neighbour" className="mr-4 text-sm">
+                    Nearest Neighbour
+                </label>
+                <input
+                    disabled={props.disabled}
+                    type="radio"
+                    id="bilinear"
+                    value="unset"
+                    name="image-rendering"
+                    checked={props.imageRendering === 'unset'}
+                    onChange={() => {
+                        if (props.setImageRendering) {
+                            props.setImageRendering('unset');
+                        }
+                    }}
+                ></input>
+                <label htmlFor="bilinear" className="text-sm">
+                    Bilinear
+                </label>
+            </div>
+            <button
+                type="button"
+                className="md:hover:text-green-400 active:text-green-400"
+                onClick={() =>
+                    alert(
+                        'Determines how the rom image is rendered. Use nearest neighbour for low resolution pixelated images (such as pixel art), and use bilinear for other images.',
+                        { title: 'Information', severity: 'SUCCESS' },
+                    )
+                }
+            >
+                <FaInfoCircle size="1.25rem" />
+            </button>
+        </div>
+    );
+}
+
 function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void }) {
     const [, putGameMetaData, deleteGame] = useGameMetaData();
 
@@ -302,43 +370,11 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                             Hidden
                         </label>
                     </div>
-                    <div className="flex items-center mb-8">
-                        <span className="text-sm font-medium mr-3">Image Rendering</span>
-                        <input
-                            type="radio"
-                            id="nearest-neighbour"
-                            value="pixelated"
-                            name="image-rendering"
-                            checked={imageRendering === 'pixelated'}
-                            onChange={() => setImageRendering('pixelated')}
-                        ></input>
-                        <label htmlFor="nearest-neighbour" className="mr-4 text-sm">
-                            Nearest Neighbour
-                        </label>
-                        <input
-                            type="radio"
-                            id="bilinear"
-                            value="unset"
-                            name="image-rendering"
-                            checked={imageRendering === 'unset'}
-                            onChange={() => setImageRendering('unset')}
-                        ></input>
-                        <label htmlFor="bilinear" className="text-sm mr-auto">
-                            Bilinear
-                        </label>
-                        <button
-                            type="button"
-                            className="md:hover:text-green-400 active:text-green-400"
-                            onClick={() =>
-                                alert(
-                                    'Determines how the rom image is rendered. Use nearest neighbour for low resolution pixelated images (such as pixel art), and use bilinear for other images.',
-                                    { title: 'Information', severity: 'SUCCESS' },
-                                )
-                            }
-                        >
-                            <FaInfoCircle size="1.25rem" />
-                        </button>
-                    </div>
+                    <ImageRenderingSettings
+                        imageRendering={imageRendering}
+                        setImageRendering={setImageRendering}
+                        disabled={false}
+                    />
                     {romNameError && <span className="text-red-500 mb-2">Missing Rom Name</span>}
                 </div>
                 <div className="container mb-10 mt-auto flex">
@@ -517,43 +553,7 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
                         Hidden
                     </label>
                 </div>
-                <div className="flex items-center mb-8">
-                    <span className="text-sm font-medium text-gray-400 cursor-not-allowed mr-3">Image Rendering</span>
-                    <input
-                        disabled
-                        type="radio"
-                        id="nearest-neighbour"
-                        value="pixelated"
-                        name="image-rendering"
-                        checked={props.imageRendering === 'pixelated'}
-                    ></input>
-                    <label htmlFor="nearest-neighbour" className="mr-4 text-sm">
-                        Nearest Neighbour
-                    </label>
-                    <input
-                        disabled
-                        type="radio"
-                        id="bilinear"
-                        value="unset"
-                        name="image-rendering"
-                        checked={props.imageRendering === 'unset'}
-                    ></input>
-                    <label htmlFor="bilinear" className="text-sm mr-auto">
-                        Bilinear
-                    </label>
-                    <button
-                        type="button"
-                        className="md:hover:text-green-400 active:text-green-400"
-                        onClick={() =>
-                            alert(
-                                'Determines how the rom image is rendered. Use nearest neighbour for low resolution pixelated images (such as pixel art), and use bilinear for other images.',
-                                { title: 'Information', severity: 'SUCCESS' },
-                            )
-                        }
-                    >
-                        <FaInfoCircle size="1.25rem" />
-                    </button>
-                </div>
+                <ImageRenderingSettings disabled imageRendering={props.imageRendering} />
             </div>
             <div className="container mt-auto">
                 <button className="btn-primary mb-10 h-12 w-full">

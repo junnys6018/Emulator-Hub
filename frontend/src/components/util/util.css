@@ -52,7 +52,7 @@
             opacity-100
             transition;
         width: 280px;
-        height: 500px;
+        max-height: 300px;
     }
 
     .alert.hide {
@@ -63,20 +63,20 @@
     @screen xs {
         .alert {
             width: 340px;
-            height: 500px;
+            max-height: 300px;
         }
     }
 
     @screen sm {
         .alert {
             width: 500px;
-            height: 400px;
+            max-height: 300px;
         }
     }
     @screen md {
         .alert {
             width: 600px;
-            height: 300px;
+            max-height: 400px;
         }
     }
 }

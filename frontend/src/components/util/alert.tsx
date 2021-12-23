@@ -64,29 +64,29 @@ export function Alert(props: AlertProps) {
                 ref={container}
             >
                 <h2
-                    className="text-2xl font-bold py-8 truncate"
+                    className="text-2xl font-bold py-5 md:py-8 truncate"
                     style={{ maxWidth: '500px', overflowX: 'clip', overflowY: 'initial' }}
                 >
                     {props.title}
                 </h2>
-                <p className="mx-14 text-center pb-8 flex-grow">{props.message}</p>
+                <p className="mx-3 md:mx-14 text-center">{props.message}</p>
                 {props.action === 'CLOSE' && (
-                    <button className={classNames('text-xl font-medium py-1.5 px-4 mb-8', buttonClass)} onClick={close}>
+                    <button className={classNames('text-xl font-medium py-1.5 px-4 my-8', buttonClass)} onClick={close}>
                         Close
                     </button>
                 )}
                 {props.action === 'REFRESH' && (
                     <button
-                        className={classNames('text-xl font-medium py-1.5 px-4 mb-8', buttonClass)}
+                        className={classNames('text-xl font-medium py-1.5 px-4 my-8', buttonClass)}
                         onClick={refresh}
                     >
                         Refresh
                     </button>
                 )}
                 {props.action === 'CONFIRM' && (
-                    <div className="flex justify-center">
+                    <div className="flex justify-center my-8">
                         <button
-                            className={classNames('text-xl font-medium py-1.5 w-20 sm:w-32 mb-8 mr-8', buttonClass)}
+                            className={classNames('text-xl font-medium py-1.5 w-20 sm:w-32 mr-8', buttonClass)}
                             onClick={() => {
                                 if (props.callback) {
                                     props.callback('YES');
@@ -97,7 +97,7 @@ export function Alert(props: AlertProps) {
                             Yes
                         </button>
                         <button
-                            className="text-xl font-medium py-1.5 w-20 sm:w-32 mb-8 btn-secondary muted"
+                            className="text-xl font-medium py-1.5 w-20 sm:w-32 btn-secondary muted"
                             onClick={() => {
                                 if (props.callback) {
                                     props.callback('NO');
