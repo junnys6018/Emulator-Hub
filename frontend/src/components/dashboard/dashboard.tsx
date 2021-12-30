@@ -41,6 +41,7 @@ export default function Dashboard() {
                 <GameItem
                     key={game.uuid}
                     gameUuid={game.uuid}
+                    console={game.console}
                     image={game.image}
                     name={game.name}
                     imageRendering={game.settings.imageRendering}
@@ -85,6 +86,7 @@ export default function Dashboard() {
                             name={sidePanelGame.name}
                             saveNames={sidePanelGame.saveNames}
                             gameUuid={sidePanelGame.uuid}
+                            console={sidePanelGame.console}
                             activeSaveIndex={sidePanelGame.activeSaveIndex}
                             closePanel={closePanel}
                         />

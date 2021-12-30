@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import GameItem, { GameCard, GameListItem } from './game-item';
+import GameItem, { GameCard, GameItemProps, GameListItem } from './game-item';
 import { MemoryRouter } from 'react-router';
 
-const props = {
+const props: GameItemProps = {
     image: '/image.png',
     gameUuid: 'mock',
+    console: 'CHIP 8',
     imageRendering: 'pixelated' as const,
     name: 'Zelda',
     onActiveCallback() {},

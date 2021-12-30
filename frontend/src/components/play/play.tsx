@@ -20,7 +20,7 @@ export default function Play() {
         <Fragment>
             <Navbar userName={userName} profileImage={profileImage} />
             <Switch>
-                <Route path={`${path}/chip8`}>
+                <Route path={`${path}/CHIP 8`}>
                     <Chip8Interface gameUuid={query.get('game') as string} />
                 </Route>
                 <Route path="*">

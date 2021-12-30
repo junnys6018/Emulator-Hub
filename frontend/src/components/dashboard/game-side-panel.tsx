@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom';
 import { useAlert } from '../util/alert';
 import { useMessage } from '../util/message';
 import './game-side-panel.css';
+import { Console } from '@/src/storage/game-data';
 
-interface GameSidePanelProps {
+export interface GameSidePanelProps {
     image: string;
     imageRendering: 'pixelated' | 'unset';
     hidden: boolean;
@@ -16,6 +17,7 @@ interface GameSidePanelProps {
     saveNames: string[];
     activeSaveIndex: number;
     gameUuid: string;
+    console: Console;
     closePanel: () => void;
 }
 
@@ -557,7 +559,7 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
                 <ImageRenderingSettings disabled imageRendering={props.imageRendering} />
             </div>
             <div className="container mt-auto">
-                <Link to={`/play/chip8?game=${props.gameUuid}`} className="btn-primary mb-10 h-12 w-full">
+                <Link to={`/play/${props.console}?game=${props.gameUuid}`} className="btn-primary mb-10 h-12 w-full">
                     <FaPlay className="mr-4" size="0.75rem" />
                     <span className="font-medium text-2xl">Play</span>
                 </Link>

@@ -269,7 +269,7 @@ Array [
     >
       <a
         className="btn-primary mb-10 h-12 w-full"
-        href="/play/chip8?game=mock"
+        href="/play/CHIP 8?game=mock"
         onClick={[Function]}
       >
         <svg

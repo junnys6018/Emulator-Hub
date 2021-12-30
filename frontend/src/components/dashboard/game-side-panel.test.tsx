@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import GameSidePanel, { newSaveIndex } from './game-side-panel';
+import GameSidePanel, { GameSidePanelProps, newSaveIndex } from './game-side-panel';
 import { useGameMetaData } from '@/src/storage/game-data';
 import { MemoryRouter } from 'react-router';
 
@@ -10,13 +10,14 @@ jest.mock('@/src/storage/game-data');
 jest.mock('../util/alert');
 
 test('<GameSidePanel /> snapshot', () => {
-    const props = {
+    const props: GameSidePanelProps = {
         image: '/image.png',
         imageRendering: 'pixelated' as const,
         hidden: false,
         deletable: false,
         name: 'Zelda',
         gameUuid: 'mock',
+        console: 'CHIP 8',
         saveNames: ['Save 1', 'Save 2', 'Save 3'],
         activeSaveIndex: 1,
         closePanel: () => {},

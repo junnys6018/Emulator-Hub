@@ -6,6 +6,7 @@ exports[`<GameCard /> snapshot 1`] = `
 >
   <button
     className="select-none flex-grow rounded-2xl bg-cover bg-center filter drop-shadow hover:ring-2 hover:ring-green-500"
+    onDoubleClick={[Function]}
     style={
       Object {
         "aspectRatio": "1",
@@ -24,7 +25,7 @@ exports[`<GameCard /> snapshot 1`] = `
     </span>
     <a
       className="mr-2 hover:text-green-500 p-1"
-      href="/play/chip8?game=mock"
+      href="/play/CHIP 8?game=mock"
       onClick={[Function]}
     >
       <svg
@@ -80,6 +81,7 @@ Array [
   >
     <button
       className="flex-shrink-0 rounded bg-cover bg-center mr-4"
+      onClick={[Function]}
       style={
         Object {
           "backgroundImage": "url(/image.png)",
@@ -89,11 +91,13 @@ Array [
         }
       }
     />
-    <span
+    <a
       className="mr-auto truncate"
+      href="/play/CHIP 8?game=mock"
+      onClick={[Function]}
     >
       Zelda
-    </span>
+    </a>
     <button
       className="ml-2 active:text-green-500"
       onClick={[Function]}
@@ -123,6 +127,7 @@ Array [
   >
     <button
       className="select-none flex-grow rounded-2xl bg-cover bg-center filter drop-shadow hover:ring-2 hover:ring-green-500"
+      onDoubleClick={[Function]}
       style={
         Object {
           "aspectRatio": "1",
@@ -141,7 +146,7 @@ Array [
       </span>
       <a
         className="mr-2 hover:text-green-500 p-1"
-        href="/play/chip8?game=mock"
+        href="/play/CHIP 8?game=mock"
         onClick={[Function]}
       >
         <svg
@@ -197,6 +202,7 @@ exports[`<GameListItem /> snapshot 1`] = `
 >
   <button
     className="flex-shrink-0 rounded bg-cover bg-center mr-4"
+    onClick={[Function]}
     style={
       Object {
         "backgroundImage": "url(/image.png)",
@@ -206,11 +212,13 @@ exports[`<GameListItem /> snapshot 1`] = `
       }
     }
   />
-  <span
+  <a
     className="mr-auto truncate"
+    href="/play/CHIP 8?game=mock"
+    onClick={[Function]}
   >
     Zelda
-  </span>
+  </a>
   <button
     className="ml-2 active:text-green-500"
     onClick={[Function]}
