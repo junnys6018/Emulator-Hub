@@ -1,5 +1,6 @@
 declare module '*.png';
 declare module '*.svg';
+declare module '*.wasm';
 declare module '*.svg?react';
 
 // credit to https://stackoverflow.com/questions/41980195/recursive-partialt-in-typescript

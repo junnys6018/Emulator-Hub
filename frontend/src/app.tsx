@@ -7,6 +7,7 @@ import AddRoms from './components/add-roms/add-roms';
 import Dashboard from './components/dashboard/dashboard';
 import Footer from './components/footer/footer';
 import Settings from './components/settings/settings';
+import Play from './components/play/play';
 
 import { BreakpointProvider } from '@/src/use-breakpoint';
 import { UserProfileProvider } from './storage/user-data';
@@ -37,6 +38,9 @@ function App() {
                                             </Route>
                                             <Route exact path="/settings">
                                                 <Settings />
+                                            </Route>
+                                            <Route path="/play">
+                                                <Play />
                                             </Route>
                                             <Route path="*">
                                                 <NotFound />

@@ -22,8 +22,10 @@ exports[`<GameCard /> snapshot 1`] = `
     >
       Zelda
     </span>
-    <button
+    <a
       className="mr-2 hover:text-green-500 p-1"
+      href="/play/chip8?game=mock"
+      onClick={[Function]}
     >
       <svg
         fill="currentColor"
@@ -43,7 +45,7 @@ exports[`<GameCard /> snapshot 1`] = `
           d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"
         />
       </svg>
-    </button>
+    </a>
     <button
       className="hover:text-green-500 p-1"
       onClick={[Function]}
@@ -137,8 +139,10 @@ Array [
       >
         Zelda
       </span>
-      <button
+      <a
         className="mr-2 hover:text-green-500 p-1"
+        href="/play/chip8?game=mock"
+        onClick={[Function]}
       >
         <svg
           fill="currentColor"
@@ -158,7 +162,7 @@ Array [
             d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"
           />
         </svg>
-      </button>
+      </a>
       <button
         className="hover:text-green-500 p-1"
         onClick={[Function]}

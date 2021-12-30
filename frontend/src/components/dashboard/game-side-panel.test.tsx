@@ -4,6 +4,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import GameSidePanel, { newSaveIndex } from './game-side-panel';
 import { useGameMetaData } from '@/src/storage/game-data';
+import { MemoryRouter } from 'react-router';
 
 jest.mock('@/src/storage/game-data');
 jest.mock('../util/alert');
@@ -23,7 +24,13 @@ test('<GameSidePanel /> snapshot', () => {
 
     (useGameMetaData as jest.Mock<any, any>).mockReturnValueOnce([, jest.fn()]);
 
-    const tree = renderer.create(<GameSidePanel {...props} />).toJSON();
+    const tree = renderer
+        .create(
+            <MemoryRouter>
+                <GameSidePanel {...props} />
+            </MemoryRouter>,
+        )
+        .toJSON();
     expect(tree).toMatchSnapshot();
 });
 

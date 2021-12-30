@@ -1,2 +1,4 @@
 /node_modules
 /coverage
+
+/src/emulators/chip8/wasm-exec.js

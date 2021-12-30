@@ -1,11 +1,13 @@
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
 import { FaPlay, FaEllipsisH, FaEllipsisV } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface GameItemProps {
     image: string;
     imageRendering: 'pixelated' | 'unset';
     name: string;
+    gameUuid: string;
     onActiveCallback: () => void;
 }
 
@@ -26,9 +28,9 @@ export function GameCard(props: GameItemInnerProps) {
             ></button>
             <div className="flex items-center mx-3 pt-1">
                 <span className="text-sm mr-auto">{props.name}</span>
-                <button className="mr-2 hover:text-green-500 p-1">
+                <Link to={`/play/chip8?game=${props.gameUuid}`} className="mr-2 hover:text-green-500 p-1">
                     <FaPlay size="0.75rem" />
-                </button>
+                </Link>
                 <button className="hover:text-green-500 p-1" onClick={props.onActiveCallback}>
                     <FaEllipsisH size="0.75rem" />
                 </button>

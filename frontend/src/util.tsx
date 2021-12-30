@@ -1,3 +1,6 @@
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+
 export function toKebabCase(string: string): string {
     return string
         .replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -113,4 +116,10 @@ export function getExtension(filename: string): string | null {
         return null;
     }
     return a.pop()?.toLowerCase() as string;
+}
+
+export function useQuery() {
+    const { search } = useLocation();
+
+    return React.useMemo(() => new URLSearchParams(search), [search]);
 }

@@ -2,6 +2,7 @@ import { useGameMetaData } from '@/src/storage/game-data';
 import _ from 'lodash';
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { FaArrowLeft, FaEdit, FaPlay, FaPlus, FaTrashAlt, FaSave, FaRedo, FaInfoCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { useAlert } from '../util/alert';
 import { useMessage } from '../util/message';
 import './game-side-panel.css';
@@ -556,10 +557,10 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
                 <ImageRenderingSettings disabled imageRendering={props.imageRendering} />
             </div>
             <div className="container mt-auto">
-                <button className="btn-primary mb-10 h-12 w-full">
+                <Link to={`/play/chip8?game=${props.gameUuid}`} className="btn-primary mb-10 h-12 w-full">
                     <FaPlay className="mr-4" size="0.75rem" />
                     <span className="font-medium text-2xl">Play</span>
-                </button>
+                </Link>
             </div>
         </Fragment>
     );

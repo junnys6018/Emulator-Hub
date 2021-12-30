@@ -40,6 +40,7 @@ export default function Dashboard() {
             .map(game => (
                 <GameItem
                     key={game.uuid}
+                    gameUuid={game.uuid}
                     image={game.image}
                     name={game.name}
                     imageRendering={game.settings.imageRendering}

@@ -12,7 +12,7 @@ import classNames from 'classnames';
 
 import './add-roms.css';
 
-function consoleForExtension(extension: string | null) {
+function consoleForExtension(extension: string | null): Console {
     switch (extension) {
         case 'gb':
             return 'GB';
@@ -20,6 +20,9 @@ function consoleForExtension(extension: string | null) {
             return 'GBC';
         case 'nes':
             return 'NES';
+        case 'ch8':
+        case 'c8':
+            return 'CHIP 8';
 
         default:
             return 'NES';

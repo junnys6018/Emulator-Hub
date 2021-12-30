@@ -267,8 +267,10 @@ Array [
     <div
       className="container mt-auto"
     >
-      <button
+      <a
         className="btn-primary mb-10 h-12 w-full"
+        href="/play/chip8?game=mock"
+        onClick={[Function]}
       >
         <svg
           className="mr-4"
@@ -294,7 +296,7 @@ Array [
         >
           Play
         </span>
-      </button>
+      </a>
     </div>
   </div>,
 ]
