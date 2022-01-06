@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NotFound /> snapshot 1`] = `
+<div
+  className="text-center"
+  style={
+    Object {
+      "marginBottom": "20vh",
+      "marginTop": "20vh",
+    }
+  }
+>
+  <p
+    className="font-semibold text-6xl md:text-7xl mb-8 md:mb-11"
+  >
+    Oops
+  </p>
+  <p
+    className="font-medium text-3xl md:text-4xl mb-4 md:mb-5"
+  >
+    Something Went Wrong
+  </p>
+  <p
+    className="font-normal text-xl md:text-2xl"
+  >
+    Error 404 Page Not Found
+  </p>
+</div>
+`;
