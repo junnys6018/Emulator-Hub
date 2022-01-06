@@ -88,6 +88,14 @@ export default class Chip8 {
         }
     }
 
+    setKeyup(key: number) {
+        this._keys &= ~(1 << key);
+    }
+
+    setKeyDown(key: number) {
+        this._keys |= 1 << key;
+    }
+
     _onKeyUp(e: KeyboardEvent) {
         if (this._controls.includes(e.code)) {
             const key = this._controls.indexOf(e.code);

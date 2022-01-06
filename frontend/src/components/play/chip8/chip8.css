@@ -1,0 +1,11 @@
+@layer components {
+    .chip8__button-grid {
+        @apply grid grid-cols-4 grid-rows-4 gap-2 my-7 mx-auto text-3xl;
+        max-width: 20rem;
+    }
+
+    .chip8__button-grid > * {
+        @apply bg-gray-700 rounded-xl select-none;
+        aspect-ratio: 1;
+    }
+}

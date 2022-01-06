@@ -1,16 +1,18 @@
-.dropdown-container:focus-within .dropdown {
-    opacity: 1;
-    pointer-events: auto;
-}
+@layer components {
+    .dropdown-container:focus-within .dropdown {
+        opacity: 1;
+        pointer-events: auto;
+    }
 
-.dropdown::after {
-    position: absolute;
-    right: 26px;
-    top: -9px;
-    width: 0;
-    height: 0;
-    content: '';
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 9px solid theme('colors.gray.700');
+    .dropdown::after {
+        position: absolute;
+        right: 26px;
+        top: -9px;
+        width: 0;
+        height: 0;
+        content: '';
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 9px solid theme('colors.gray.700');
+    }
 }
