@@ -1,4 +1,4 @@
-import getModule from './load-module';
+import chip8Module from './chip8-module';
 import Go from './wasm-exec';
 
 export interface Chip8Export {
@@ -33,7 +33,7 @@ export default class Chip8 {
 
         const go = new Go();
 
-        getModule().then(module => {
+        chip8Module.then(module => {
             WebAssembly.instantiate(module, go.importObject).then(instance => {
                 go.run(instance);
 
@@ -99,14 +99,14 @@ export default class Chip8 {
     _onKeyUp(e: KeyboardEvent) {
         if (this._controls.includes(e.code)) {
             const key = this._controls.indexOf(e.code);
-            this._keys &= ~(1 << key);
+            this.setKeyup(key);
         }
     }
 
     _onKeyDown(e: KeyboardEvent) {
         if (this._controls.includes(e.code)) {
             const key = this._controls.indexOf(e.code);
-            this._keys |= 1 << key;
+            this.setKeyDown(key);
         }
     }
 
