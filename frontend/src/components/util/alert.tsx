@@ -136,6 +136,7 @@ export const AlertContext = React.createContext<((message?: string, options?: Pa
 export function AlertProvider(props: AlertProviderProps) {
     const [currentAlert, setCurrentAlert] = useState<JSX.Element | null>(null);
 
+    // FIXME: if multiple called are made to `alert`, the body lock count will be out of sync causing the page to be unscrollable
     const alert = useCallback((message?: string, options?: Partial<AlertOptions>) => {
         if (message !== undefined) {
             const defaults: AlertOptions = {

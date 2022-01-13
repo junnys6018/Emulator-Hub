@@ -23,6 +23,10 @@ export interface NESExport {
     flushAudioSamples: (nes: number) => number;
 }
 
+export function getMapperNumber(rom: Uint8Array): number {
+    return (rom[6] >> 4) | (rom[7] & 0xf0) | ((rom[8] & 0xf) << 8);
+}
+
 export function validateNesRom(rom: Uint8Array): RomError {
     if (
         rom[0] !== 'N'.charCodeAt(0) ||
@@ -33,7 +37,7 @@ export function validateNesRom(rom: Uint8Array): RomError {
         return new RomError('Invalid header');
     }
 
-    const mapperNumber = (rom[6] >> 4) | (rom[7] & 0xf0) | ((rom[8] & 0xf) << 8);
+    const mapperNumber = getMapperNumber(rom);
     if (!(mapperNumber >= 0 && mapperNumber <= 4)) {
         return new RomError(`Emulator cannot handle mapper number ${mapperNumber}`);
     }

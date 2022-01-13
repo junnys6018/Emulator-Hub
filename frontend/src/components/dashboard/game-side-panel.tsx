@@ -1,4 +1,4 @@
-import { useGameMetaData } from '@/src/storage/game-data';
+import { addSaveGame, deleteSaveGames, useGameMetaData } from '@/src/storage/game-data';
 import _ from 'lodash';
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { FaArrowLeft, FaEdit, FaPlay, FaPlus, FaTrashAlt, FaSave, FaRedo, FaInfoCircle } from 'react-icons/fa';
@@ -7,6 +7,7 @@ import { useAlert } from '../util/alert';
 import { useMessage } from '../util/message';
 import './game-side-panel.css';
 import { Console } from '@/src/storage/game-data';
+import { useDatabase } from '@/src/storage/storage';
 
 export interface GameSidePanelProps {
     image: string;
@@ -128,6 +129,8 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
     const backgroundImageUrl: React.MutableRefObject<string | null> = useRef<string>(null);
     const imageInput = useRef<HTMLInputElement>(null);
 
+    const db = useDatabase();
+
     const message = useMessage();
     const alert = useAlert();
 
@@ -188,23 +191,24 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
             }
 
             const commit = () => {
-                putGameMetaData({
-                    name: sanitizedRomName,
-                    image,
-                    saveNames: sanitizedSaveNames.filter((_, index) => !deleteSaveIndices.has(index)),
-                    activeSaveIndex: newSaveIndex(deleteSaveIndices, props.activeSaveIndex),
-                    settings: {
-                        imageRendering,
-                        hidden: hidden,
-                    },
-                    uuid: props.gameUuid,
-                }).then(
+                // TODO: putGameMetaData and deleteSaveGames should be a single transaction
+                Promise.all([
+                    putGameMetaData({
+                        name: sanitizedRomName,
+                        image,
+                        saveNames: sanitizedSaveNames.filter((_, index) => !deleteSaveIndices.has(index)),
+                        activeSaveIndex: newSaveIndex(deleteSaveIndices, props.activeSaveIndex),
+                        settings: {
+                            imageRendering,
+                            hidden: hidden,
+                        },
+                        uuid: props.gameUuid,
+                    }),
+                    deleteSaveGames(db, props.gameUuid, deleteSaveIndices),
+                ]).then(
                     () => props.toggleEdit(),
                     error => alert(`${error}`, { severity: 'ERROR' }),
                 );
-                // for (const index of deleteSaveIndices) {
-                //     // TODO: delete save from GameData
-                // }
             };
 
             if (deleteSaveIndices.size === 0) {
@@ -224,7 +228,7 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                 );
             }
         },
-        [alert, deleteSaveIndices, hidden, imageRendering, props, putGameMetaData, romName, saveNames],
+        [alert, db, deleteSaveIndices, hidden, imageRendering, props, putGameMetaData, romName, saveNames],
     );
 
     const saves = saveNames.map((save, index) => {
@@ -405,6 +409,7 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
     const [, putGameMetaData] = useGameMetaData();
 
     const addSaveInput = useRef<HTMLInputElement>(null);
+    const db = useDatabase();
 
     const onAddSaveClick = useCallback(() => {
         setAddingSave(true);
@@ -430,13 +435,19 @@ function GameSidePanelView(props: GameSidePanelProps & { toggleEdit: () => void 
     const onAddSaveSubmit = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            putGameMetaData({
-                saveNames: props.saveNames.concat([newSaveName]),
-                uuid: props.gameUuid,
-            }).catch(error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }));
+
+            // TODO: putGameMetaData and addSaveGame should be a single transaction
+            Promise.all([
+                putGameMetaData({
+                    saveNames: props.saveNames.concat([newSaveName]),
+                    uuid: props.gameUuid,
+                }),
+                addSaveGame(db, props.gameUuid),
+            ]).catch(error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }));
+
             setAddingSave(false);
         },
-        [alert, newSaveName, props.gameUuid, props.saveNames, putGameMetaData],
+        [alert, db, newSaveName, props.gameUuid, props.saveNames, putGameMetaData],
     );
 
     const setActiveSave = useCallback(

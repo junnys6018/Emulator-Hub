@@ -3,6 +3,9 @@ import _ from 'lodash';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import getActiveUserUuid from './get-active-user';
 import { EmulatorHubDB, Record, useDatabase } from './storage';
+import { v4 as uuidv4 } from 'uuid';
+import createSave from '../emulators/create-save';
+
 export type Console = 'NES' | 'GB' | 'GBC' | 'CHIP 8';
 
 export interface GameSettings {
@@ -34,7 +37,7 @@ export interface GameMetaDataView {
 }
 
 interface Save extends Record {
-    data: ArrayBuffer;
+    data: ArrayBuffer | null;
 }
 
 export interface GameData extends Record {
@@ -186,4 +189,34 @@ export async function putGameData(db: IDBPDatabase<EmulatorHubDB>, newGameData: 
     }
 
     return db.put('gameData', newGameData as GameData);
+}
+
+export async function addSaveGame(db: IDBPDatabase<EmulatorHubDB>, uuid: string) {
+    const gameData = await db.get('gameData', uuid);
+    const gameMetaData = await db.get('gameMetaData', uuid);
+
+    if (gameData === undefined || gameMetaData === undefined) {
+        throw new Error('Invalid uuid');
+    }
+
+    gameData.saves.push({
+        data: createSave(new Uint8Array(gameData.rom), gameMetaData.console),
+        age: 0,
+        uuid: uuidv4(),
+    });
+
+    return db.put('gameData', gameData);
+}
+
+export async function deleteSaveGames(db: IDBPDatabase<EmulatorHubDB>, uuid: string, indices: Set<number>) {
+    const gameData = await db.get('gameData', uuid);
+
+    if (gameData === undefined) {
+        throw new Error('Invalid uuid');
+    }
+
+    const newSaves = gameData.saves.filter((_, index) => !indices.has(index));
+    gameData.saves = newSaves;
+
+    return db.put('gameData', gameData);
 }

@@ -10,6 +10,7 @@ import { useDatabase } from '@/src/storage/storage';
 import DefaultRomImage from '@/public/assets/default-rom-image.png';
 import { validateNesRom } from '@/src/emulators/nes/nes';
 import { validateChip8Rom } from '@/src/emulators/chip8/chip8';
+import createSave from '@/src/emulators/create-save';
 
 interface AddRomFormProps {
     id: number;
@@ -147,10 +148,10 @@ export default function AddRomForm(props: AddRomFormProps) {
 
             // Add entry to the gameData object store
             putGameData(db, {
-                rom: fileReader.result as ArrayBuffer,
+                rom,
                 saves: [
                     {
-                        data: new ArrayBuffer(0), // TODO: create a function that determines the required size of saves
+                        data: createSave(new Uint8Array(rom), gameConsole),
                         age: 0,
                         uuid: uuidv4(),
                     },
