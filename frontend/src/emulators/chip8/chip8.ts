@@ -1,3 +1,4 @@
+import RomError from '../rom-error';
 import chip8Module from './chip8-module';
 import Go from './wasm-exec';
 
@@ -11,6 +12,14 @@ export interface Chip8Export {
     GetFrame(): number;
 
     memory: WebAssembly.Memory;
+}
+
+export function validateChip8Rom(rom: Uint8Array): RomError {
+    if (rom.byteLength > 3584) {
+        return new RomError('File too large');
+    }
+
+    return new RomError({ ok: true });
 }
 
 export default class Chip8 {

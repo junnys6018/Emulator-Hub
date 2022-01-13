@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useDatabase } from '@/src/storage/storage';
 import { getGameData } from '@/src/storage/game-data';
-import Chip8 from '@/src/emulators/chip8/chip8';
+import Chip8, { validateChip8Rom } from '@/src/emulators/chip8/chip8';
 import { useUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
 import { useBreakpoint } from '@/src/use-breakpoint';
 import { Breakpoints } from '@/breakpoints';
 import { isMobile } from '@/src/util';
 import './chip8.css';
+import { useAlert } from '../../util/alert';
 
 interface Chip8InterfaceProps {
     gameUuid: string;
@@ -31,21 +32,29 @@ export default function Chip8Interface(props: Chip8InterfaceProps) {
     const canvasElement = useRef<HTMLCanvasElement>(null);
     const emu = useRef<Chip8 | null>(null);
 
+    const alert = useAlert();
+
     useEffect(() => {
         getGameData(db, props.gameUuid).then(gameData => {
             if (gameData) {
-                emu.current = new Chip8(
-                    gameData.rom,
-                    canvasElement.current as HTMLCanvasElement,
-                    settings.chip8Controls,
-                );
-                emu.current.start();
+                const romError = validateChip8Rom(new Uint8Array(gameData.rom));
+
+                if (romError.ok) {
+                    emu.current = new Chip8(
+                        gameData.rom,
+                        canvasElement.current as HTMLCanvasElement,
+                        settings.chip8Controls,
+                    );
+                    emu.current.start();
+                } else {
+                    alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                }
             }
         });
         return () => {
             emu.current?.shutdown();
         };
-    }, [db, props.gameUuid, settings.chip8Controls]);
+    }, [alert, db, props.gameUuid, settings.chip8Controls]);
 
     const breakpoint = useBreakpoint();
     const mobile = isMobile();

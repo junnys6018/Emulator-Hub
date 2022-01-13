@@ -18,7 +18,7 @@ module.exports = {
             '<rootDir>/tests/mocks/fileMock.js',
         '\\.css$': '<rootDir>/tests/mocks/styleMock.js',
         '\\.svg\\?react$': '<rootDir>/tests/mocks/svgr.js',
-        '\\./emu$': '<rootDir>/tests/mocks/emuMock.js',
+        '\\./(emu|wasm-exec|chip8-module)$': '<rootDir>/tests/mocks/emuMock.js',
         '@/(.*)$': '<rootDir>/$1',
     },
     setupFiles: ['fake-indexeddb/auto', './tests/setupJest.js'],

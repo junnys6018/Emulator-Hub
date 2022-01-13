@@ -9,6 +9,7 @@ import { useMessage } from '../util/message';
 import { useDatabase } from '@/src/storage/storage';
 import DefaultRomImage from '@/public/assets/default-rom-image.png';
 import { validateNesRom } from '@/src/emulators/nes/nes';
+import { validateChip8Rom } from '@/src/emulators/chip8/chip8';
 
 interface AddRomFormProps {
     id: number;
@@ -93,15 +94,22 @@ export default function AddRomForm(props: AddRomFormProps) {
             });
 
             switch (gameConsole) {
-                case 'NES':
+                case 'NES': {
                     const romError = validateNesRom(new Uint8Array(rom));
                     if (!romError.ok) {
                         alert(romError.message, { severity: 'ERROR', title: 'Error' });
                         return;
                     }
                     break;
-                case 'CHIP 8':
+                }
+                case 'CHIP 8': {
+                    const romError = validateChip8Rom(new Uint8Array(rom));
+                    if (!romError.ok) {
+                        alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                        return;
+                    }
                     break;
+                }
                 case 'GB':
                     break;
                 case 'GBC':
