@@ -201,7 +201,6 @@ export async function addSaveGame(db: IDBPDatabase<EmulatorHubDB>, uuid: string)
 
     gameData.saves.push({
         data: createSave(new Uint8Array(gameData.rom), gameMetaData.console),
-        age: 0,
         uuid: uuidv4(),
     });
 

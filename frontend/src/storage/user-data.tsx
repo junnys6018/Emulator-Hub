@@ -122,7 +122,6 @@ export async function generateGuestAccount(): Promise<UserData> {
 
     return {
         uuid: uuidv4(),
-        age: 0,
         userName: 'Guest',
         profileImage: profileImage,
         settings: _.cloneDeep(defaultSettings),

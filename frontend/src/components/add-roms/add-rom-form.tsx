@@ -139,7 +139,6 @@ export default function AddRomForm(props: AddRomFormProps) {
                     imageRendering: 'unset',
                     captureImage: true,
                 },
-                age: 0,
                 uuid,
             }).then(
                 () => message('Rom Added', { title: 'Success', severity: 'SUCCESS' }),
@@ -152,12 +151,10 @@ export default function AddRomForm(props: AddRomFormProps) {
                 saves: [
                     {
                         data: createSave(new Uint8Array(rom), gameConsole),
-                        age: 0,
                         uuid: uuidv4(),
                     },
                 ],
                 user: activeUser,
-                age: 0,
                 uuid,
             });
 

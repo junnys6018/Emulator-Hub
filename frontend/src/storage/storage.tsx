@@ -7,7 +7,6 @@ import { GameData, GameMetaData } from './game-data';
 
 export interface Record {
     uuid: string;
-    age: number;
 }
 
 export interface EmulatorHubDB extends DBSchema {

@@ -26,7 +26,6 @@ beforeEach(() => {
 test('<DatabaseProvider /> setups up correct initial state', async () => {
     (generateGuestAccount as jest.Mock<any, any>).mockReturnValueOnce({
         uuid: 'mock',
-        age: 0,
         userName: 'Guest',
         profileImage: '/image.png',
     });
@@ -37,7 +36,6 @@ test('<DatabaseProvider /> setups up correct initial state', async () => {
     expect(users).toEqual([
         {
             uuid: 'mock',
-            age: 0,
             userName: 'Guest',
             profileImage: '/image.png',
         },
@@ -57,13 +55,11 @@ test('createGuestAccount() with uuid collision', async () => {
     (generateGuestAccount as jest.Mock<any, any>)
         .mockReturnValueOnce({
             uuid: 'mock',
-            age: 0,
             userName: 'Guest',
             profileImage: '/image.png',
         })
         .mockReturnValueOnce({
             uuid: 'mock',
-            age: 0,
             userName: 'Another Guest',
             profileImage: '/image.png',
         });
@@ -77,13 +73,11 @@ test('createGuestAccount() with uuid collision', async () => {
     expect(users.length).toBe(2);
     expect(users).toContainEqual({
         uuid: 'mock',
-        age: 0,
         userName: 'Guest',
         profileImage: '/image.png',
     });
     const otherUser = users.find(user => user.uuid != 'mock');
     expect(otherUser).toMatchObject({
-        age: 0,
         userName: 'Another Guest',
         profileImage: '/image.png',
     });

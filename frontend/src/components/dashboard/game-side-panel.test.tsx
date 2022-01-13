@@ -7,6 +7,7 @@ import { useGameMetaData } from '@/src/storage/game-data';
 import { MemoryRouter } from 'react-router';
 
 jest.mock('@/src/storage/game-data');
+jest.mock('@/src/storage/storage');
 jest.mock('../util/alert');
 
 test('<GameSidePanel /> snapshot', () => {
