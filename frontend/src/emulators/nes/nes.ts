@@ -1,3 +1,4 @@
+import { controllerIndex } from '@/src/gamepad';
 import { GamepadControls } from '@/src/storage/user-data';
 import { NESModule } from './emu';
 import nesModule from './nes-module';
@@ -23,7 +24,8 @@ export interface NESExport {
 
 export default class NES {
     _keys: number;
-    _controls: { [key: string]: number };
+    _keyboardControls: { [key: string]: number };
+    _gamepadControls: number[];
     _previousTimestamp: number | null;
     _RAFRequestID: number | null;
     _api: NESExport | null;
@@ -36,7 +38,7 @@ export default class NES {
     constructor(rom: ArrayBuffer, mount: HTMLCanvasElement, controls: GamepadControls) {
         this._keys = 0;
 
-        this._controls = {
+        this._keyboardControls = {
             [controls.a[0]]: 0,
             [controls.b[0]]: 1,
             [controls.start[0]]: 2,
@@ -46,6 +48,17 @@ export default class NES {
             [controls.left[0]]: 6,
             [controls.right[0]]: 7,
         };
+
+        this._gamepadControls = [
+            controls.a[1],
+            controls.b[1],
+            controls.start[1],
+            controls.select[1],
+            controls.up[1],
+            controls.down[1],
+            controls.left[1],
+            controls.right[1],
+        ];
 
         this._previousTimestamp = null;
         this._RAFRequestID = null;
@@ -125,10 +138,10 @@ export default class NES {
     }
 
     _onKeyUp(e: KeyboardEvent) {
-        if (e.code in this._controls) {
+        if (e.code in this._keyboardControls) {
             e.preventDefault();
 
-            const key = this._controls[e.code];
+            const key = this._keyboardControls[e.code];
             this.setKeyup(key);
         }
     }
@@ -139,10 +152,10 @@ export default class NES {
             this._audioContext.resume();
         }
 
-        if (e.code in this._controls) {
+        if (e.code in this._keyboardControls) {
             e.preventDefault();
 
-            const key = this._controls[e.code];
+            const key = this._keyboardControls[e.code];
             this.setKeyDown(key);
         }
     }
@@ -193,7 +206,20 @@ export default class NES {
     _RAFCallback(timestamp: number) {
         this._RAFRequestID = requestAnimationFrame(this._RAFCallback);
         if (this._api !== null && this._nes !== null) {
-            this._api.setKeys(this._nes, this._keys);
+            let gamepadKeys = 0;
+
+            if (controllerIndex !== null) {
+                const gamepad = navigator.getGamepads()[controllerIndex];
+                if (gamepad !== null) {
+                    for (let i = 0; i < 8; i++) {
+                        if (gamepad.buttons[this._gamepadControls[i]].pressed) {
+                            gamepadKeys |= 1 << i;
+                        }
+                    }
+                }
+            }
+
+            this._api.setKeys(this._nes, this._keys | gamepadKeys);
 
             const deltaTime = timestamp - (this._previousTimestamp ?? timestamp);
             const cycles = (Math.min(deltaTime, 100) * PPU_CLOCK_FREQENCY) / 1000;
