@@ -2,3 +2,4 @@
 /coverage
 
 /src/emulators/chip8/wasm-exec.js
+/src/emulators/nes/emu.js

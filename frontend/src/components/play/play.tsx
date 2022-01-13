@@ -4,7 +4,9 @@ import React, { Fragment } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import NotFound from '../not-found/not-found';
 import Navbar from '../util/navbar';
+
 import Chip8Interface from './chip8/chip8';
+import NesInterface from './nes/nes';
 
 export default function Play() {
     const { path } = useRouteMatch();
@@ -22,6 +24,9 @@ export default function Play() {
             <Switch>
                 <Route path={`${path}/CHIP 8`}>
                     <Chip8Interface gameUuid={query.get('game') as string} />
+                </Route>
+                <Route path={`${path}/NES`}>
+                    <NesInterface gameUuid={query.get('game') as string} />
                 </Route>
                 <Route path="*">
                     <NotFound />

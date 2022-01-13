@@ -23,7 +23,7 @@ export default function Canvas(props: CanvasProps) {
 
     return (
         <div
-            className={classNames('relative', props.className)}
+            className={classNames('relative bg-black', props.className)}
             style={props.style}
             onMouseEnter={() => setShowBar(true)}
             onMouseLeave={() => setShowBar(false)}
