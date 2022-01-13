@@ -8,6 +8,7 @@ import { defaultSettings } from '@/src/storage/user-data';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import GBCSettings from './gbc-settings';
+import { HasGamepadProvider } from '@/src/gamepad';
 
 beforeEach(async () => {
     await driver.navigate().to('http://localhost:8000/settings');
@@ -120,7 +121,13 @@ describe('GBC Settings', () => {
     });
 
     test('Snapshot', () => {
-        const tree = renderer.create(<GBCSettings />).toJSON();
+        const tree = renderer
+            .create(
+                <HasGamepadProvider>
+                    <GBCSettings />
+                </HasGamepadProvider>,
+            )
+            .toJSON();
         expect(tree).toMatchSnapshot();
     });
 });

@@ -8,6 +8,7 @@ import { defaultSettings } from '@/src/storage/user-data';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import NESSettings from './nes-settings';
+import { HasGamepadProvider } from '@/src/gamepad';
 
 beforeEach(async () => {
     await driver.navigate().to('http://localhost:8000/settings');
@@ -119,7 +120,13 @@ describe('NES Settings', () => {
     });
 
     test('Snapshot', () => {
-        const tree = renderer.create(<NESSettings />).toJSON();
+        const tree = renderer
+            .create(
+                <HasGamepadProvider>
+                    <NESSettings />
+                </HasGamepadProvider>,
+            )
+            .toJSON();
         expect(tree).toMatchSnapshot();
     });
 });

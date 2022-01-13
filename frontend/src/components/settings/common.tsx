@@ -6,6 +6,7 @@ import { defaultGamepadControls, useUserProfile, GamepadControls, defaultSetting
 import { FaRedo, FaTimes } from 'react-icons/fa';
 import { useMessage } from '../util/message';
 import { useAlert } from '../util/alert';
+import { controllerIndex, useHasGamepad } from '@/src/gamepad';
 
 interface SettingsTitleProps {
     title: string;
@@ -101,9 +102,15 @@ export function installSettingCallbacks<T>(
             [currentSettings],
         );
 
+        // Attach event listener for keyboard events
         useEffect(() => {
             const listener = (e: KeyboardEvent) => {
                 if (editingButton !== null) {
+                    if (typeof editingButton === 'string' && editingButton.endsWith('controller')) {
+                        // If the editing button was for the controller settings, return
+                        return;
+                    }
+
                     onChangeWrapper(editingButton, e.code);
                     setEditingButton(null);
                 }
@@ -113,6 +120,36 @@ export function installSettingCallbacks<T>(
 
             return () => {
                 window.removeEventListener('keydown', listener);
+            };
+        }, [editingButton, onChangeWrapper]);
+
+        // Attach event listener for controller events
+        useEffect(() => {
+            const pollGamepad = () => {
+                id = requestAnimationFrame(pollGamepad);
+
+                if (controllerIndex === null) {
+                    return;
+                }
+
+                const gamepad = navigator.getGamepads()[controllerIndex];
+                if (gamepad !== null) {
+                    if (typeof editingButton === 'string' && editingButton.endsWith('controller')) {
+                        for (let i = 0; i < gamepad.buttons.length; i++) {
+                            if (gamepad.buttons[i].pressed) {
+                                onChangeWrapper(editingButton, i);
+                                setEditingButton(null);
+                                return;
+                            }
+                        }
+                    }
+                }
+            };
+
+            let id = requestAnimationFrame(pollGamepad);
+
+            return () => {
+                cancelAnimationFrame(id);
             };
         }, [editingButton, onChangeWrapper]);
 
@@ -134,9 +171,8 @@ export function installSettingCallbacks<T>(
     };
 }
 
-// TODO: game controller settings
 function ControllerSettingsComponent(props: SettingsComponentProps<GamepadControls>) {
-    const controller = false;
+    const controller = useHasGamepad();
 
     const {
         editingButton,
@@ -147,6 +183,7 @@ function ControllerSettingsComponent(props: SettingsComponentProps<GamepadContro
         setHoveredButton,
         onChange,
     } = props;
+
     const ControlButton = ({ action, display, disabled }: { action: string; display: string; disabled?: boolean }) => {
         return (
             <div
@@ -238,13 +275,29 @@ export function makeControllerSettingsComponent(path: string) {
     return installSettingCallbacks(
         ControllerSettingsComponent,
         path,
-        (key: string, value: string | null, currentSettings: GamepadControls) => {
+        (key: string, value: string | number | null, currentSettings: GamepadControls) => {
             if (key.endsWith('keyboard')) {
                 key = key.replace(/-keyboard$/, '');
                 if (value === null) {
                     value = defaultGamepadControls[key as keyof typeof defaultGamepadControls][0];
                 }
-                currentSettings[key as keyof GamepadControls][0] = value;
+
+                if (typeof value === 'string') {
+                    currentSettings[key as keyof GamepadControls][0] = value;
+                }
+
+                return currentSettings;
+            } else if (key.endsWith('controller')) {
+                key = key.replace(/-controller$/, '');
+
+                if (value === null) {
+                    value = defaultGamepadControls[key as keyof typeof defaultGamepadControls][1];
+                }
+
+                if (typeof value === 'number') {
+                    currentSettings[key as keyof GamepadControls][1] = value;
+                }
+
                 return currentSettings;
             }
         },

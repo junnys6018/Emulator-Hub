@@ -103,7 +103,10 @@ export function displayControllerIndex(index: number) {
         'DPAD RIGHT',
         'HOME',
     ];
-    return mapping[index];
+    if (index < mapping.length) {
+        return mapping[index];
+    }
+    return 'Unknown';
 }
 
 export function stripExtension(filename: string) {

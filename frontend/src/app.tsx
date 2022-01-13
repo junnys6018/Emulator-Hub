@@ -15,6 +15,7 @@ import { AlertProvider } from './components/util/alert';
 import { DatabaseProvider } from './storage/storage';
 import { MessageProvider } from './components/util/message';
 import { GameMetaDataProvider } from './storage/game-data';
+import { HasGamepadProvider } from './gamepad';
 
 function App() {
     return (
@@ -25,29 +26,31 @@ function App() {
                         <DatabaseProvider>
                             <UserProfileProvider>
                                 <GameMetaDataProvider>
-                                    <div className="flex-grow relative">
-                                        <Switch>
-                                            <Route exact path="/">
-                                                <Index />
-                                            </Route>
-                                            <Route exact path="/dashboard">
-                                                <Dashboard />
-                                            </Route>
-                                            <Route exact path="/add-roms">
-                                                <AddRoms />
-                                            </Route>
-                                            <Route exact path="/settings">
-                                                <Settings />
-                                            </Route>
-                                            <Route path="/play">
-                                                <Play />
-                                            </Route>
-                                            <Route path="*">
-                                                <NotFound />
-                                            </Route>
-                                        </Switch>
-                                    </div>
-                                    <Footer />
+                                    <HasGamepadProvider>
+                                        <div className="flex-grow relative">
+                                            <Switch>
+                                                <Route exact path="/">
+                                                    <Index />
+                                                </Route>
+                                                <Route exact path="/dashboard">
+                                                    <Dashboard />
+                                                </Route>
+                                                <Route exact path="/add-roms">
+                                                    <AddRoms />
+                                                </Route>
+                                                <Route exact path="/settings">
+                                                    <Settings />
+                                                </Route>
+                                                <Route path="/play">
+                                                    <Play />
+                                                </Route>
+                                                <Route path="*">
+                                                    <NotFound />
+                                                </Route>
+                                            </Switch>
+                                        </div>
+                                        <Footer />
+                                    </HasGamepadProvider>
                                 </GameMetaDataProvider>
                             </UserProfileProvider>
                         </DatabaseProvider>
