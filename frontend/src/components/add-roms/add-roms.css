@@ -1,6 +1,7 @@
 @layer components {
     .add-roms__forms-container {
         @apply flex flex-col md:flex-row overflow-x-scroll md:mb-10;
+        min-height: 300px;
     }
 
     .add-roms__dropper {

@@ -207,6 +207,9 @@ export default function AddRoms() {
                             onDelete={() => onDelete(item.id)}
                         />
                     ))}
+                    {forms.length === 0 && (
+                        <p className="font-semibold text-gray-300 text-3xl sm:text-4xl m-auto">No Roms Added</p>
+                    )}
                 </div>
             </div>
         </Fragment>

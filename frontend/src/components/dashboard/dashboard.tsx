@@ -9,6 +9,8 @@ import Sidebar from '../util/sidebar';
 import { useBreakpoint } from '@/src/use-breakpoint';
 import { useGameMetaData, Console, GameMetaDataView } from '@/src/storage/game-data';
 import { useUserProfile } from '@/src/storage/user-data';
+import { FaPlus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 // TODO: sort games
 export default function Dashboard() {
@@ -25,6 +27,7 @@ export default function Dashboard() {
     ] = useUserProfile();
 
     let [gameMetaData] = useGameMetaData();
+    const noGames = gameMetaData.length === 0;
     const breakpoint = useBreakpoint();
 
     let noneFound = false;
@@ -73,6 +76,17 @@ export default function Dashboard() {
                     <p className="text-lg font-medium mt-10 mb-32 break-words text-center">
                         Couldn&apos;t find &quot;{searchQuery}&quot;
                     </p>
+                )}
+
+                {noGames && searchQuery === '' && (
+                    <div className="flex flex-col items-center" style={{ marginTop: '20vh', marginBottom: '20vh' }}>
+                        <p className="font-semibold text-3xl sm:text-4xl">No Roms In Library</p>
+                        <p className="text-lg sm:text-xl text-gray-300 mt-3 mb-6">Begin By Adding Roms</p>
+                        <Link to="/add-roms" className="btn-primary text-lg sm:text-xl py-3 px-10">
+                            <FaPlus className="mr-2" />
+                            ADD ROMS
+                        </Link>
+                    </div>
                 )}
             </div>
             {sidePanelGame && (

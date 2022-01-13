@@ -384,7 +384,13 @@ Array [
     <div
       className="add-roms__forms-container"
       id="form-container"
-    />
+    >
+      <p
+        className="font-semibold text-gray-300 text-3xl sm:text-4xl m-auto"
+      >
+        No Roms Added
+      </p>
+    </div>
   </div>,
 ]
 `;
