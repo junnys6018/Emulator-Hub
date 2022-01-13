@@ -97,7 +97,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                 case 'NES': {
                     const romError = validateNesRom(new Uint8Array(rom));
                     if (!romError.ok) {
-                        alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                        message(romError.message, { severity: 'ERROR', title: 'Error' });
                         return;
                     }
                     break;
@@ -105,7 +105,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                 case 'CHIP 8': {
                     const romError = validateChip8Rom(new Uint8Array(rom));
                     if (!romError.ok) {
-                        alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                        message(romError.message, { severity: 'ERROR', title: 'Error' });
                         return;
                     }
                     break;

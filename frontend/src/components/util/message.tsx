@@ -67,24 +67,27 @@ export function MessageProvider(props: MessageProviderProps) {
         setMessages(messages => messages.filter(value => value.key !== key));
     }, []);
 
-    const message = (message: string, options?: Partial<MessageOptions>) => {
-        const defaults: MessageOptions = {
-            title: 'Message',
-            severity: 'INFO',
-        };
+    const message = useCallback(
+        (message: string, options?: Partial<MessageOptions>) => {
+            const defaults: MessageOptions = {
+                title: 'Message',
+                severity: 'INFO',
+            };
 
-        options = { ...defaults, ...options };
-        const currentKey = key.current++;
-        setMessages(messages => messages.concat({ key: currentKey, message, ...(options as MessageOptions) }));
-        const timerId = setTimeout(() => {
-            close(currentKey);
-            delete timeouts.current[currentKey];
+            options = { ...defaults, ...options };
+            const currentKey = key.current++;
+            setMessages(messages => messages.concat({ key: currentKey, message, ...(options as MessageOptions) }));
+            const timerId = setTimeout(() => {
+                close(currentKey);
+                delete timeouts.current[currentKey];
 
-            // We need to do this annoying cast becuse typescript is using the function signature of the nodejs version of setTimeout
-            // instead of the browsers version
-        }, 5000) as unknown as number;
-        timeouts.current[currentKey] = timerId;
-    };
+                // We need to do this annoying cast becuse typescript is using the function signature of the nodejs version of setTimeout
+                // instead of the browsers version
+            }, 5000) as unknown as number;
+            timeouts.current[currentKey] = timerId;
+        },
+        [close],
+    );
 
     return (
         <MessageContext.Provider value={message}>

@@ -8,7 +8,7 @@ import { useBreakpoint } from '@/src/use-breakpoint';
 import { Breakpoints } from '@/breakpoints';
 import { isMobile } from '@/src/util';
 import './chip8.css';
-import { useAlert } from '../../util/alert';
+import { useMessage } from '../../util/message';
 
 interface Chip8InterfaceProps {
     gameUuid: string;
@@ -32,7 +32,7 @@ export default function Chip8Interface(props: Chip8InterfaceProps) {
     const canvasElement = useRef<HTMLCanvasElement>(null);
     const emu = useRef<Chip8 | null>(null);
 
-    const alert = useAlert();
+    const message = useMessage();
 
     useEffect(() => {
         getGameData(db, props.gameUuid).then(gameData => {
@@ -47,14 +47,14 @@ export default function Chip8Interface(props: Chip8InterfaceProps) {
                     );
                     emu.current.start();
                 } else {
-                    alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                    message(romError.message, { severity: 'ERROR', title: 'Error' });
                 }
             }
         });
         return () => {
             emu.current?.shutdown();
         };
-    }, [alert, db, props.gameUuid, settings.chip8Controls]);
+    }, [message, db, props.gameUuid, settings.chip8Controls]);
 
     const breakpoint = useBreakpoint();
     const mobile = isMobile();

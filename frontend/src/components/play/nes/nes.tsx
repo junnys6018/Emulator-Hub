@@ -6,7 +6,7 @@ import { useUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
 import { useBreakpoint } from '@/src/use-breakpoint';
 import { Breakpoints } from '@/breakpoints';
-import { useAlert } from '../../util/alert';
+import { useMessage } from '../../util/message';
 
 interface NESInterfaceProps {
     gameUuid: string;
@@ -30,7 +30,7 @@ export default function NesInterface(props: NESInterfaceProps) {
     const canvasElement = useRef<HTMLCanvasElement>(null);
     const emu = useRef<NES | null>(null);
 
-    const alert = useAlert();
+    const message = useMessage();
 
     useEffect(() => {
         getGameData(db, props.gameUuid).then(gameData => {
@@ -45,14 +45,14 @@ export default function NesInterface(props: NESInterfaceProps) {
                     );
                     emu.current.start();
                 } else {
-                    alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                    message(romError.message, { severity: 'ERROR', title: 'Error' });
                 }
             }
         });
         return () => {
             emu.current?.shutdown();
         };
-    }, [alert, db, props.gameUuid, settings.nesControls]);
+    }, [message, db, props.gameUuid, settings.nesControls]);
 
     const breakpoint = useBreakpoint();
 
