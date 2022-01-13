@@ -2,6 +2,7 @@ import { controllerIndex } from '@/src/gamepad';
 import { GamepadControls } from '@/src/storage/user-data';
 import { NESModule } from './emu';
 import nesModule from './nes-module';
+import RomError from '../rom-error';
 
 const PPU_CLOCK_FREQENCY = 5369318;
 const EVENT_NEW_FRAME = 1;
@@ -20,6 +21,38 @@ export interface NESExport {
     setKeys: (nes: number, keys: number) => null;
     getAudioBuffer: () => number;
     flushAudioSamples: (nes: number) => number;
+}
+
+export function validateNesRom(rom: Uint8Array): RomError {
+    if (
+        rom[0] !== 'N'.charCodeAt(0) ||
+        rom[1] !== 'E'.charCodeAt(0) ||
+        rom[2] !== 'S'.charCodeAt(0) ||
+        rom[3] !== 0x1a
+    ) {
+        return new RomError('Invalid header');
+    }
+
+    const mapperNumber = (rom[6] >> 4) | (rom[7] & 0xf0) | ((rom[8] & 0xf) << 8);
+    if (!(mapperNumber >= 0 && mapperNumber <= 4)) {
+        return new RomError(`Emulator cannot handle mapper number ${mapperNumber}`);
+    }
+
+    const trainer = (rom[6] & 4) !== 0;
+
+    const prgRomBanks = rom[4] | ((rom[9] & 0xf) << 8);
+    const chrRomBanks = rom[5] | ((rom[9] & 0xf0) << 4);
+
+    if ((rom[9] & 0xf) === 0xf || (rom[9] & 0xf0) === 0xf0) {
+        return new RomError('Exponential rom header size, emulator cannot handle file');
+    }
+
+    const expectedSize = 16 + (trainer ? 512 : 0) + prgRomBanks * 16 * 1024 + chrRomBanks * 8 * 1024;
+    if (rom.byteLength != expectedSize) {
+        return new RomError('Bad filesize');
+    }
+
+    return new RomError({ ok: true });
 }
 
 export default class NES {

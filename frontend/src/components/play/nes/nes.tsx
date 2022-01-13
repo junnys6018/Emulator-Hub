@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useDatabase } from '@/src/storage/storage';
 import { getGameData } from '@/src/storage/game-data';
-import NES from '@/src/emulators/nes/nes';
+import NES, { validateNesRom } from '@/src/emulators/nes/nes';
 import { useUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
 import { useBreakpoint } from '@/src/use-breakpoint';
 import { Breakpoints } from '@/breakpoints';
+import { useAlert } from '../../util/alert';
 
 interface NESInterfaceProps {
     gameUuid: string;
@@ -29,17 +30,29 @@ export default function NesInterface(props: NESInterfaceProps) {
     const canvasElement = useRef<HTMLCanvasElement>(null);
     const emu = useRef<NES | null>(null);
 
+    const alert = useAlert();
+
     useEffect(() => {
         getGameData(db, props.gameUuid).then(gameData => {
             if (gameData) {
-                emu.current = new NES(gameData.rom, canvasElement.current as HTMLCanvasElement, settings.nesControls);
-                emu.current.start();
+                const romError = validateNesRom(new Uint8Array(gameData.rom));
+
+                if (romError.ok) {
+                    emu.current = new NES(
+                        gameData.rom,
+                        canvasElement.current as HTMLCanvasElement,
+                        settings.nesControls,
+                    );
+                    emu.current.start();
+                } else {
+                    alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                }
             }
         });
         return () => {
             emu.current?.shutdown();
         };
-    }, [db, props.gameUuid, settings.nesControls]);
+    }, [alert, db, props.gameUuid, settings.nesControls]);
 
     const breakpoint = useBreakpoint();
 

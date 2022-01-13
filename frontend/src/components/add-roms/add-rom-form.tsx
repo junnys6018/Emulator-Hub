@@ -8,6 +8,7 @@ import { useAlert } from '../util/alert';
 import { useMessage } from '../util/message';
 import { useDatabase } from '@/src/storage/storage';
 import DefaultRomImage from '@/public/assets/default-rom-image.png';
+import { validateNesRom } from '@/src/emulators/nes/nes';
 
 interface AddRomFormProps {
     id: number;
@@ -61,7 +62,7 @@ export default function AddRomForm(props: AddRomFormProps) {
 
     const { onDelete } = props;
     const onSubmit = useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
+        async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
 
             // Validate form
@@ -81,56 +82,77 @@ export default function AddRomForm(props: AddRomFormProps) {
                 return;
             }
 
-            defaultRomImage.then(defaultImage => {
-                const image =
-                    imageInput.current?.files?.length !== 0 ? (imageInput.current?.files as FileList)[0] : defaultImage;
+            // Validate rom
+            const fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(props.file);
 
-                const activeUser = getActiveUserUuid() as string;
-
-                // Add entry to the gameMetaData object store
-                const uuid = uuidv4();
-                putGameMetaData({
-                    name,
-                    image,
-                    saveNames: ['Save 1'],
-                    activeSaveIndex: 0,
-                    console: gameConsole,
-                    user: activeUser,
-                    settings: {
-                        hidden: false,
-                        deletable: true,
-                        imageRendering: 'unset',
-                        captureImage: true,
-                    },
-                    age: 0,
-                    uuid,
-                }).then(
-                    () => message('Rom Added', { title: 'Success', severity: 'SUCCESS' }),
-                    error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
-                );
-
-                // Add entry to the gameData object store
-                const fileReader = new FileReader();
-                fileReader.readAsArrayBuffer(props.file);
-
+            const rom = await new Promise<ArrayBuffer>(resolve => {
                 fileReader.onload = () => {
-                    putGameData(db, {
-                        rom: fileReader.result as ArrayBuffer,
-                        saves: [
-                            {
-                                data: new ArrayBuffer(0), // TODO: create a function that determines the required size of saves
-                                age: 0,
-                                uuid: uuidv4(),
-                            },
-                        ],
-                        user: activeUser,
-                        age: 0,
-                        uuid,
-                    });
+                    resolve(fileReader.result as ArrayBuffer);
                 };
-
-                onDelete();
             });
+
+            switch (gameConsole) {
+                case 'NES':
+                    const romError = validateNesRom(new Uint8Array(rom));
+                    if (!romError.ok) {
+                        alert(romError.message, { severity: 'ERROR', title: 'Error' });
+                        return;
+                    }
+                    break;
+                case 'CHIP 8':
+                    break;
+                case 'GB':
+                    break;
+                case 'GBC':
+                    break;
+            }
+
+            const defaultImage = await defaultRomImage;
+
+            const image =
+                imageInput.current?.files?.length !== 0 ? (imageInput.current?.files as FileList)[0] : defaultImage;
+
+            const activeUser = getActiveUserUuid() as string;
+
+            // Add entry to the gameMetaData object store
+            const uuid = uuidv4();
+            putGameMetaData({
+                name,
+                image,
+                saveNames: ['Save 1'],
+                activeSaveIndex: 0,
+                console: gameConsole,
+                user: activeUser,
+                settings: {
+                    hidden: false,
+                    deletable: true,
+                    imageRendering: 'unset',
+                    captureImage: true,
+                },
+                age: 0,
+                uuid,
+            }).then(
+                () => message('Rom Added', { title: 'Success', severity: 'SUCCESS' }),
+                error => alert(`${error}`, { title: 'Error', severity: 'ERROR' }),
+            );
+
+            // Add entry to the gameData object store
+            putGameData(db, {
+                rom: fileReader.result as ArrayBuffer,
+                saves: [
+                    {
+                        data: new ArrayBuffer(0), // TODO: create a function that determines the required size of saves
+                        age: 0,
+                        uuid: uuidv4(),
+                    },
+                ],
+                user: activeUser,
+                age: 0,
+                uuid,
+            });
+
+            onDelete();
         },
         [name, gameConsole, putGameMetaData, props.file, onDelete, message, alert, db],
     );

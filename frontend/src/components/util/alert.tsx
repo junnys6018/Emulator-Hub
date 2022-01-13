@@ -1,6 +1,6 @@
 import { lockBodyScrolling, unlockBodyScrolling } from '@/src/util';
 import classNames from 'classnames';
-import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 type Severity = 'SUCCESS' | 'INFO' | 'WARN' | 'ERROR';
 type Action = 'CLOSE' | 'REFRESH' | 'CONFIRM';
@@ -136,7 +136,7 @@ export const AlertContext = React.createContext<((message?: string, options?: Pa
 export function AlertProvider(props: AlertProviderProps) {
     const [currentAlert, setCurrentAlert] = useState<JSX.Element | null>(null);
 
-    const alert = (message?: string, options?: Partial<AlertOptions>) => {
+    const alert = useCallback((message?: string, options?: Partial<AlertOptions>) => {
         if (message !== undefined) {
             const defaults: AlertOptions = {
                 title: 'Alert',
@@ -151,7 +151,7 @@ export function AlertProvider(props: AlertProviderProps) {
             unlockBodyScrolling();
             setCurrentAlert(null);
         }
-    };
+    }, []);
 
     return (
         <AlertContext.Provider value={alert}>
