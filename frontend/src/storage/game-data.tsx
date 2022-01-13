@@ -219,3 +219,13 @@ export async function deleteSaveGames(db: IDBPDatabase<EmulatorHubDB>, uuid: str
 
     return db.put('gameData', gameData);
 }
+
+export async function updateSave(db: IDBPDatabase<EmulatorHubDB>, uuid: string, index: number, save: ArrayBuffer) {
+    const gameData = await db.get('gameData', uuid);
+    if (gameData === undefined) {
+        throw new Error('Invalid uuid');
+    }
+
+    gameData.saves[index].data = save;
+    return db.put('gameData', gameData);
+}

@@ -13,6 +13,7 @@ export interface NESExport {
     initialize: () => null;
     createNes: (rom: number, romsize: number, save: number, savesize: number) => number;
     freeNes: (nes: number) => null;
+    write_save: (nes: number) => number;
     createBuffer: (size: number) => number;
     freeBuffer: (buffer: number) => null;
     emulateUntil: (nes: number, clock: bigint) => number;
@@ -71,8 +72,9 @@ export default class NES {
     _canvasContext: CanvasRenderingContext2D;
     _audioContext: AudioContext;
     _startTime: number;
+    _saveSize: number | null;
 
-    constructor(rom: ArrayBuffer, mount: HTMLCanvasElement, controls: GamepadControls) {
+    constructor(rom: ArrayBuffer, save: ArrayBuffer | null, mount: HTMLCanvasElement, controls: GamepadControls) {
         this._keys = 0;
 
         this._keyboardControls = {
@@ -106,6 +108,11 @@ export default class NES {
         this._audioContext = new AudioContext();
         this._startTime = this._audioContext.currentTime;
 
+        this._saveSize = null;
+        if (save !== null) {
+            this._saveSize = save.byteLength;
+        }
+
         nesModule.then(instance => {
             this._instance = instance;
 
@@ -113,6 +120,7 @@ export default class NES {
                 initialize: instance.cwrap('initialize', null, []),
                 createNes: instance.cwrap('create_nes', 'number', ['number', 'number', 'number', 'number']),
                 freeNes: instance.cwrap('free_nes', null, ['number']),
+                write_save: instance.cwrap('write_save', 'number', ['number']),
                 createBuffer: instance.cwrap('create_buffer', 'number', ['number']),
                 freeBuffer: instance.cwrap('free_buffer', null, ['number']),
                 emulateUntil: instance.cwrap('emulate_until', 'number', ['number', 'number']) as unknown as (
@@ -130,14 +138,25 @@ export default class NES {
 
             this._api.initialize();
 
-            const romsize = rom.byteLength;
-            const buffer = this._api.createBuffer(romsize);
-            const view = new Uint8Array(instance.HEAPU8.buffer, buffer, romsize);
-            view.set(new Uint8Array(rom));
+            const romSize = rom.byteLength;
+            const romBuffer = this._api.createBuffer(romSize);
+            const romView = new Uint8Array(instance.HEAPU8.buffer, romBuffer, romSize);
+            romView.set(new Uint8Array(rom));
 
-            this._nes = this._api.createNes(buffer, romsize, 0, 0);
+            if (save === null) {
+                this._nes = this._api.createNes(romBuffer, romSize, 0, 0);
+            } else {
+                const saveSize = save.byteLength;
+                const saveBuffer = this._api.createBuffer(saveSize);
+                const saveView = new Uint8Array(instance.HEAPU8.buffer, saveBuffer, saveSize);
+                saveView.set(new Uint8Array(save));
 
-            this._api.freeBuffer(buffer);
+                this._nes = this._api.createNes(romBuffer, romSize, saveBuffer, saveSize);
+
+                this._api.freeBuffer(saveBuffer);
+            }
+
+            this._api.freeBuffer(romBuffer);
         });
 
         // Attach Event Listeners
@@ -172,6 +191,18 @@ export default class NES {
 
     setKeyDown(key: number) {
         this._keys |= 1 << key;
+    }
+
+    getSave(): ArrayBuffer | null {
+        if (this._api !== null && this._nes !== null && this._saveSize !== null) {
+            const saveBuffer = this._api.write_save(this._nes);
+            const save = new ArrayBuffer(this._saveSize);
+
+            new Uint8Array(save).set(new Uint8Array(this._instance.HEAPU8.buffer, saveBuffer, this._saveSize));
+
+            return save;
+        }
+        return null;
     }
 
     _onKeyUp(e: KeyboardEvent) {
