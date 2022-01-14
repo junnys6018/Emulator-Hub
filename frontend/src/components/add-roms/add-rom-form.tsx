@@ -118,9 +118,8 @@ export default function AddRomForm(props: AddRomFormProps) {
             }
 
             const defaultImage = await defaultRomImage;
-
-            const image =
-                imageInput.current?.files?.length !== 0 ? (imageInput.current?.files as FileList)[0] : defaultImage;
+            const imageProvided = imageInput.current?.files?.length !== 0;
+            const image = imageProvided ? (imageInput.current?.files as FileList)[0] : defaultImage;
 
             const activeUser = getActiveUserUuid() as string;
 
@@ -137,7 +136,7 @@ export default function AddRomForm(props: AddRomFormProps) {
                     hidden: false,
                     deletable: true,
                     imageRendering: 'unset',
-                    captureImage: true,
+                    captureImage: !imageProvided, // Dont capture an image if one is provided
                 },
                 uuid,
             }).then(

@@ -113,7 +113,7 @@ function ImageRenderingSettings(props: ImageRenderingSettingsProps) {
 }
 
 function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void }) {
-    const [, putGameMetaData, deleteGame] = useGameMetaData();
+    const [gameMetaData, putGameMetaData, deleteGame] = useGameMetaData();
 
     const [romName, setRomName] = useState(props.name);
     const [saveNames, setSaveNames] = useState(_.cloneDeep(props.saveNames));
@@ -191,6 +191,7 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
             }
 
             const commit = () => {
+                const oldGameMetaData = gameMetaData.find(item => item.uuid === props.gameUuid);
                 // TODO: putGameMetaData and deleteSaveGames should be a single transaction
                 Promise.all([
                     putGameMetaData({
@@ -201,6 +202,7 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                         settings: {
                             imageRendering,
                             hidden: hidden,
+                            captureImage: oldGameMetaData?.settings.captureImage && image === undefined,
                         },
                         uuid: props.gameUuid,
                     }),
@@ -228,7 +230,18 @@ function GameSidePanelForm(props: GameSidePanelProps & { toggleEdit: () => void 
                 );
             }
         },
-        [alert, db, deleteSaveIndices, hidden, imageRendering, props, putGameMetaData, romName, saveNames],
+        [
+            alert,
+            db,
+            deleteSaveIndices,
+            gameMetaData,
+            hidden,
+            imageRendering,
+            props,
+            putGameMetaData,
+            romName,
+            saveNames,
+        ],
     );
 
     const saves = saveNames.map((save, index) => {

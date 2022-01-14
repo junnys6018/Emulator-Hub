@@ -126,3 +126,15 @@ export function useQuery() {
 
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
+
+export function imageDataToBlob(image: ImageData): Promise<Blob | null> {
+    const w = image.width;
+    const h = image.height;
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    ctx.putImageData(image, 0, 0);
+
+    return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+}

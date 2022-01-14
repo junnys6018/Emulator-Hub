@@ -1,3 +1,4 @@
+import { Emulator } from '../emulator';
 import RomError from '../rom-error';
 import chip8Module from './chip8-module';
 import Go from './wasm-exec';
@@ -22,7 +23,7 @@ export function validateChip8Rom(rom: Uint8Array): RomError {
     return new RomError({ ok: true });
 }
 
-export default class Chip8 {
+export default class Chip8 extends Emulator {
     _keys: number;
     _controls: string[];
     _previousTimestamp: number | null;
@@ -32,6 +33,8 @@ export default class Chip8 {
     _chip8: Chip8Export | null;
 
     constructor(rom: ArrayBuffer, mount: HTMLCanvasElement, controls: string[]) {
+        super();
+
         this._keys = 0;
         this._controls = controls;
         this._previousTimestamp = null;
@@ -97,7 +100,7 @@ export default class Chip8 {
         }
     }
 
-    setKeyup(key: number) {
+    setKeyUp(key: number) {
         this._keys &= ~(1 << key);
     }
 
@@ -108,7 +111,7 @@ export default class Chip8 {
     _onKeyUp(e: KeyboardEvent) {
         if (this._controls.includes(e.code)) {
             const key = this._controls.indexOf(e.code);
-            this.setKeyup(key);
+            this.setKeyUp(key);
         }
     }
 
@@ -135,10 +138,22 @@ export default class Chip8 {
             }
 
             // Render to screen
-            const imagePointer = this._chip8.GetFrame();
-            const image = new Uint8ClampedArray(this._chip8.memory.buffer, imagePointer, 64 * 32 * 4);
-            const imageData = new ImageData(image, 64, 32);
+            const imageData = this.screenshot() as ImageData;
             this._context.putImageData(imageData, 0, 0);
         }
+    }
+
+    screenshot(): ImageData | null {
+        if (this._chip8 !== null) {
+            const imagePointer = this._chip8.GetFrame();
+            const image = new Uint8ClampedArray(this._chip8.memory.buffer, imagePointer, 64 * 32 * 4);
+            return new ImageData(image, 64, 32);
+        }
+
+        return null;
+    }
+
+    getSave(): ArrayBuffer | null {
+        return null;
     }
 }

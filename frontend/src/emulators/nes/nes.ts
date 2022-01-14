@@ -3,6 +3,7 @@ import { GamepadControls } from '@/src/storage/user-data';
 import { NESModule } from './emu';
 import nesModule from './nes-module';
 import RomError from '../rom-error';
+import { Emulator } from '../emulator';
 
 const PPU_CLOCK_FREQENCY = 5369318;
 const EVENT_NEW_FRAME = 1;
@@ -60,7 +61,7 @@ export function validateNesRom(rom: Uint8Array): RomError {
     return new RomError({ ok: true });
 }
 
-export default class NES {
+export default class NES extends Emulator {
     _keys: number;
     _keyboardControls: { [key: string]: number };
     _gamepadControls: number[];
@@ -75,6 +76,8 @@ export default class NES {
     _saveSize: number | null;
 
     constructor(rom: ArrayBuffer, save: ArrayBuffer | null, mount: HTMLCanvasElement, controls: GamepadControls) {
+        super();
+
         this._keys = 0;
 
         this._keyboardControls = {
@@ -185,7 +188,7 @@ export default class NES {
         }
     }
 
-    setKeyup(key: number) {
+    setKeyUp(key: number) {
         this._keys &= ~(1 << key);
     }
 
@@ -193,24 +196,12 @@ export default class NES {
         this._keys |= 1 << key;
     }
 
-    getSave(): ArrayBuffer | null {
-        if (this._api !== null && this._nes !== null && this._saveSize !== null) {
-            const saveBuffer = this._api.write_save(this._nes);
-            const save = new ArrayBuffer(this._saveSize);
-
-            new Uint8Array(save).set(new Uint8Array(this._instance.HEAPU8.buffer, saveBuffer, this._saveSize));
-
-            return save;
-        }
-        return null;
-    }
-
     _onKeyUp(e: KeyboardEvent) {
         if (e.code in this._keyboardControls) {
             e.preventDefault();
 
             const key = this._keyboardControls[e.code];
-            this.setKeyup(key);
+            this.setKeyUp(key);
         }
     }
 
@@ -237,9 +228,7 @@ export default class NES {
             const event = this._api.emulateUntil(this._nes, cycle);
 
             if (event & EVENT_NEW_FRAME) {
-                const pixelPtr = this._api.getFrameBuffer(this._nes);
-                const pixelView = new Uint8ClampedArray(this._instance.HEAPU8.buffer, pixelPtr, 240 * 256 * 4);
-                const pixelData = new ImageData(pixelView, 256, 240);
+                const pixelData = this.screenshot() as ImageData;
                 this._canvasContext.putImageData(pixelData, 0, 0);
             }
 
@@ -296,5 +285,27 @@ export default class NES {
             }
             this._previousTimestamp = timestamp;
         }
+    }
+
+    screenshot(): ImageData | null {
+        if (this._api !== null && this._nes !== null) {
+            const pixelPtr = this._api.getFrameBuffer(this._nes);
+            const pixelView = new Uint8ClampedArray(this._instance.HEAPU8.buffer, pixelPtr, 240 * 256 * 4);
+            return new ImageData(pixelView, 256, 240);
+        }
+
+        return null;
+    }
+
+    getSave(): ArrayBuffer | null {
+        if (this._api !== null && this._nes !== null && this._saveSize !== null) {
+            const saveBuffer = this._api.write_save(this._nes);
+            const save = new ArrayBuffer(this._saveSize);
+
+            new Uint8Array(save).set(new Uint8Array(this._instance.HEAPU8.buffer, saveBuffer, this._saveSize));
+
+            return save;
+        }
+        return null;
     }
 }

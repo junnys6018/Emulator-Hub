@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useDatabase } from '@/src/storage/storage';
-import { getGameData } from '@/src/storage/game-data';
+import { getGameData, useGameMetaData } from '@/src/storage/game-data';
 import Chip8, { validateChip8Rom } from '@/src/emulators/chip8/chip8';
 import { useUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
@@ -9,6 +9,7 @@ import { Breakpoints } from '@/breakpoints';
 import { isMobile } from '@/src/util';
 import './chip8.css';
 import { useMessage } from '../../util/message';
+import useCaptureImageEffect from '@/src/emulators/capture-image';
 
 interface Chip8InterfaceProps {
     gameUuid: string;
@@ -33,6 +34,9 @@ export default function Chip8Interface(props: Chip8InterfaceProps) {
     const emu = useRef<Chip8 | null>(null);
 
     const message = useMessage();
+    const [gameMetaData] = useGameMetaData();
+
+    const gameMetaDataView = gameMetaData.find(item => item.uuid === props.gameUuid);
 
     useEffect(() => {
         getGameData(db, props.gameUuid).then(gameData => {
@@ -55,6 +59,9 @@ export default function Chip8Interface(props: Chip8InterfaceProps) {
             emu.current?.shutdown();
         };
     }, [message, db, props.gameUuid, settings.chip8Controls]);
+
+    // Screenshot effect
+    useCaptureImageEffect(gameMetaDataView, emu);
 
     const breakpoint = useBreakpoint();
     const mobile = isMobile();
@@ -87,7 +94,7 @@ export default function Chip8Interface(props: Chip8InterfaceProps) {
                             target.classList.remove('bg-gray-600');
                             target.classList.add('bg-gray-700');
                             if (emu.current !== null) {
-                                emu.current.setKeyup(parseInt(target.dataset.button as string));
+                                emu.current.setKeyUp(parseInt(target.dataset.button as string));
                             }
                         }
                     }}
