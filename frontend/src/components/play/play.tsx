@@ -1,3 +1,4 @@
+import { useGameMetaData } from '@/src/storage/game-data';
 import { useUserProfile } from '@/src/storage/user-data';
 import { useQuery } from '@/src/util';
 import React, { Fragment } from 'react';
@@ -13,8 +14,16 @@ export default function Play() {
     const [{ userName, profileImage }] = useUserProfile();
 
     const query = useQuery();
+    const uuid = query.get('game');
 
-    if (query.get('game') === null) {
+    const [gameMetaData] = useGameMetaData();
+
+    if (uuid === null) {
+        return <NotFound />;
+    }
+
+    // TODO: check for correct console aswell
+    if (gameMetaData.find(item => item.uuid === uuid) === undefined) {
         return <NotFound />;
     }
 
