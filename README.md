@@ -1,56 +1,42 @@
-# Base repository for React + Django project
+# Emulator Hub
+
+A fullstack web application for playing NES and CHIP 8 roms.
 
 ## Prerequisites
 - docker
 - python
 - nodejs
 
-## Configuring and Setup
-1. In `.env.dev` set a project name
-```
-COMPOSE_PROJECT_NAME="sample-project"
-```
-
-2. Open `package.json` and set the following fields
-```json
-{
-    "name": "<name>",
-    "description": "<description>",
-    "author": "<author>",
-    "license": "<license>",
-}
-```
-
-3. Run `npm install` in the `frontend` directory
-
-4. Create a virtual environment with `python -m venv .venv` and activate it with `source .venv/bin/activate`
-
-5. Install python packages by running `pip install -r requirements.txt` in the `backend` directory
-
 ## Running in development
+
+To simplify commands, I recommend making the following alias
+
+```bash
+alias docker-dev="docker-compose -f docker-compose.yml -f development.yml --env-file .env.dev"
+```
 
 1. Build images with
 
 ```bash
-docker-compose -f docker-compose.yml -f development.yml --env-file .env.dev build
+docker-dev build
 ```
 
 2. Bring up the application stack with
 
 ```bash
-docker-compose -f docker-compose.yml -f development.yml --env-file .env.dev up
+docker-dev up
 ```
 
-3. If setting up a dev environment for the first time, create a superuser
+3. Make migrations with
 
 ```bash
-docker-compose -f docker-compose.yml -f development.yml --env-file .env.dev exec django python manage.py createsuperuser --username admin --email test@test.com
+docker-dev exec django python manage.py migrate
 ```
 
-4. Make migrations 
+4. If setting up a dev environment for the first time, create a superuser
 
 ```bash
-docker-compose -f docker-compose.yml -f development.yml --env-file .env.dev exec django python manage.py migrate
+docker-dev exec django python manage.py createsuperuser --username admin --email test@test.com
 ```
 
 ## Testing, Linting and Formatting
