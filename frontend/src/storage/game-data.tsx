@@ -49,14 +49,15 @@ export interface GameData extends Record {
 const GameMetaDataContext = React.createContext<
     | [
           GameMetaDataView[],
-          (newGameMetaData: RecursivePartial<GameMetaData>) => Promise<string>,
+          (newGameMetaData: RecursivePartial<GameMetaData>) => Promise<void>,
           (uuid: string) => Promise<void>,
       ]
-    | null
->(null);
+    | null // Used to indicate gameMetaData is still loading
+    | undefined // Default value, used to indicate context is being used without a provider
+>(undefined);
 
 export function GameMetaDataProvider(props: { children: React.ReactNode }) {
-    const [gameMetaDataView, setGameMetaData] = useState<GameMetaDataView[]>([]);
+    const [gameMetaDataView, setGameMetaData] = useState<GameMetaDataView[] | null>(null);
 
     const db = useDatabase();
 
@@ -88,12 +89,13 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
      * Puts a `GameMetaData` record in the database
      *
      * If the record already exists, the new record is merged with the old one
-     *
-     * @FIXME its unlikley, but possible that `putGameMetaData` is called before the effect hook finishes,
-     * could leave application in inconsistent state
      */
     const putGameMetaData = useCallback(
-        async (newGameMetaData: Partial<GameMetaData> & { uuid: string }): Promise<string> => {
+        async (newGameMetaData: Partial<GameMetaData> & { uuid: string }): Promise<void> => {
+            if (gameMetaDataView === null) {
+                return;
+            }
+
             console.log('[INFO] updating/adding new gameMetaData');
 
             const existingImageUrl = gameMetaDataView.find(item => item.uuid === newGameMetaData.uuid)?.image;
@@ -127,6 +129,10 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
             } as GameMetaDataView;
 
             setGameMetaData(gameMetaDataView => {
+                if (gameMetaDataView === null) {
+                    return null;
+                }
+
                 if (isNew) {
                     return gameMetaDataView.concat(newGameMetaDataView);
                 } else {
@@ -146,7 +152,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                 }
             });
 
-            return db.put('gameMetaData', newGameMetaData as GameMetaData);
+            await db.put('gameMetaData', newGameMetaData as GameMetaData);
         },
         [db, gameMetaDataView],
     );
@@ -154,7 +160,13 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
     const deleteGame = useCallback(
         async (uuid: string) => {
             // Delete the metadata
-            setGameMetaData(gameMetaDataView => gameMetaDataView.filter(value => value.uuid !== uuid));
+            setGameMetaData(gameMetaDataView => {
+                if (gameMetaDataView === null) {
+                    return null;
+                }
+                return gameMetaDataView.filter(value => value.uuid !== uuid);
+            });
+
             await db.delete('gameMetaData', uuid);
 
             // Delete the game data
@@ -164,17 +176,22 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
     );
 
     return (
-        <GameMetaDataContext.Provider value={[gameMetaDataView, putGameMetaData, deleteGame]}>
-            {props.children}
+        <GameMetaDataContext.Provider
+            value={gameMetaDataView === null ? null : [gameMetaDataView, putGameMetaData, deleteGame]}
+        >
+            {gameMetaDataView !== null && props.children}
         </GameMetaDataContext.Provider>
     );
 }
 
 export function useGameMetaData() {
     const context = useContext(GameMetaDataContext);
-    if (!context) {
+    if (context === undefined) {
         throw new Error('useGameMetaData() must be called with a GameMetaDataProvider');
+    } else if (context === null) {
+        throw new Error('[BUG] useGameMetaData() called before data is loaded');
     }
+
     return context;
 }
 

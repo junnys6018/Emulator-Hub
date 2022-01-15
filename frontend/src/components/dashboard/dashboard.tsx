@@ -82,7 +82,7 @@ export default function Dashboard() {
                     <div className="flex flex-col items-center" style={{ marginTop: '20vh', marginBottom: '20vh' }}>
                         <p className="font-semibold text-3xl sm:text-4xl">No Roms In Library</p>
                         <p className="text-lg sm:text-xl text-gray-300 mt-3 mb-6">Begin By Adding Roms</p>
-                        <Link to="/add-roms" className="btn-primary text-lg sm:text-xl py-3 px-10">
+                        <Link to="/add-roms" className="btn-primary text-lg sm:text-xl tracking-wider py-3 px-10">
                             <FaPlus className="mr-2" />
                             ADD ROMS
                         </Link>
