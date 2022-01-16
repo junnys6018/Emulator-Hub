@@ -2,7 +2,8 @@ FROM node:14
 
 WORKDIR /code/frontend
 
-COPY package* ./
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
 
 COPY ./ ./

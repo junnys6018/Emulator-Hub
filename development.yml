@@ -28,6 +28,12 @@ services:
         source: ./frontend
         target: /code/frontend
 
+      # Create a data volume to prevent node_modules from being overwritten
+      - node_modules:/code/frontend/node_modules
+
       - type: bind
         source: ./build/development
         target: /code/build/development
+
+volumes:
+  node_modules:
