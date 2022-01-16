@@ -12,7 +12,6 @@ import { useUserProfile } from '@/src/storage/user-data';
 import { FaPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-// TODO: sort games
 export default function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sidePanelGame, setSidePanelGame] = useState<GameMetaDataView | null>(null);

@@ -56,6 +56,18 @@ const GameMetaDataContext = React.createContext<
     | undefined // Default value, used to indicate context is being used without a provider
 >(undefined);
 
+function sortGameMetaData(g1: GameMetaDataView, g2: GameMetaDataView): number {
+    const name1 = g1.name.toLowerCase();
+    const name2 = g2.name.toLowerCase();
+
+    if (name1 === name2) {
+        return 0;
+    } else if (name1 < name2) {
+        return -1;
+    }
+    return 1;
+}
+
 export function GameMetaDataProvider(props: { children: React.ReactNode }) {
     const [gameMetaDataView, setGameMetaData] = useState<GameMetaDataView[] | null>(null);
 
@@ -81,6 +93,9 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                     settings: game.settings,
                 });
             }
+
+            gameMetaDataView.sort(sortGameMetaData);
+
             setGameMetaData(gameMetaDataView);
         });
     }, [db]);
@@ -134,7 +149,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                 }
 
                 if (isNew) {
-                    return gameMetaDataView.concat(newGameMetaDataView);
+                    return gameMetaDataView.concat(newGameMetaDataView).sort(sortGameMetaData);
                 } else {
                     const uuid = newGameMetaData.uuid as string;
 
@@ -148,7 +163,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                     existingGameMetaDataView.saveNames = newGameMetaDataView.saveNames;
 
                     // Create new array to force re-render
-                    return [...gameMetaDataView];
+                    return [...gameMetaDataView].sort(sortGameMetaData);
                 }
             });
 
