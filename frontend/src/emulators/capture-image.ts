@@ -1,18 +1,16 @@
 import { useEffect } from 'react';
-import { useMessage } from '../components/util/message';
 import { GameMetaDataView, useGameMetaData } from '../storage/game-data';
 import { imageDataToBlob } from '../util';
 import { Emulator } from './emulator';
 
 export default function useCaptureImageEffect(
-    gameMetaDataView: GameMetaDataView | undefined,
+    gameMetaDataView: GameMetaDataView,
     emu: React.MutableRefObject<Emulator | null>,
 ) {
     const [, putGameMetaData] = useGameMetaData();
-    const message = useMessage();
 
     useEffect(() => {
-        if (gameMetaDataView === undefined || !gameMetaDataView.settings.captureImage) {
+        if (!gameMetaDataView.settings.captureImage) {
             return;
         }
 
@@ -41,5 +39,5 @@ export default function useCaptureImageEffect(
         return () => {
             clearTimeout(timeoutID);
         };
-    }, [gameMetaDataView, message, gameMetaDataView?.uuid, putGameMetaData, emu]);
+    }, [emu, gameMetaDataView.settings.captureImage, gameMetaDataView.uuid, putGameMetaData]);
 }

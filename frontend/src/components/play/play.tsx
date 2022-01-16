@@ -1,7 +1,8 @@
-import { useGameMetaData } from '@/src/storage/game-data';
+import { GameData, getGameData, useGameMetaData } from '@/src/storage/game-data';
+import { useDatabase } from '@/src/storage/storage';
 import { useUserProfile } from '@/src/storage/user-data';
 import { useQuery } from '@/src/util';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import NotFound from '../not-found/not-found';
 import Navbar from '../util/navbar';
@@ -18,29 +19,52 @@ export default function Play() {
 
     const [gameMetaData] = useGameMetaData();
 
+    const db = useDatabase();
+    const [gameData, setGameData] = useState<GameData | null>(null);
+
+    useEffect(() => {
+        if (uuid === null) {
+            return;
+        }
+
+        getGameData(db, uuid).then(gameData => {
+            if (gameData !== undefined) {
+                setGameData(gameData);
+            }
+        });
+    }, [db, uuid]);
+
     if (uuid === null) {
         return <NotFound />;
     }
 
     // TODO: check for correct console aswell
-    if (gameMetaData.find(item => item.uuid === uuid) === undefined) {
+    const gameMetaDataView = gameMetaData.find(item => item.uuid === uuid);
+    if (gameMetaDataView === undefined) {
         return <NotFound />;
     }
 
     return (
         <Fragment>
             <Navbar userName={userName} profileImage={profileImage} />
-            <Switch>
-                <Route path={`${path}/CHIP 8`}>
-                    <Chip8Interface gameUuid={query.get('game') as string} />
-                </Route>
-                <Route path={`${path}/NES`}>
-                    <NesInterface gameUuid={query.get('game') as string} />
-                </Route>
-                <Route path="*">
-                    <NotFound />
-                </Route>
-            </Switch>
+            {gameData !== null && (
+                <Switch>
+                    <Route path={`${path}/CHIP 8`}>
+                        <Chip8Interface gameUuid={uuid} gameMetaDataView={gameMetaDataView} rom={gameData.rom} />
+                    </Route>
+                    <Route path={`${path}/NES`}>
+                        <NesInterface
+                            gameUuid={uuid}
+                            gameMetaDataView={gameMetaDataView}
+                            rom={gameData.rom}
+                            save={gameData.saves[gameMetaDataView.activeSaveIndex].data}
+                        />
+                    </Route>
+                    <Route path="*">
+                        <NotFound />
+                    </Route>
+                </Switch>
+            )}
         </Fragment>
     );
 }

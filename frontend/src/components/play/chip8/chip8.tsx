@@ -1,10 +1,8 @@
 import React, { Fragment, useEffect, useRef } from 'react';
-import { useDatabase } from '@/src/storage/storage';
-import { getGameData, useGameMetaData } from '@/src/storage/game-data';
+import { GameMetaDataView } from '@/src/storage/game-data';
 import Chip8, { validateChip8Rom } from '@/src/emulators/chip8/chip8';
 import { useUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
-import { useBreakpoint } from '@/src/use-breakpoint';
 import { isMobile } from '@/src/util';
 import './chip8.css';
 import { useMessage } from '../../util/message';
@@ -12,43 +10,35 @@ import useCaptureImageEffect from '@/src/emulators/capture-image';
 
 interface Chip8InterfaceProps {
     gameUuid: string;
+    rom: ArrayBuffer;
+    gameMetaDataView: GameMetaDataView;
 }
 
 export default function Chip8Interface(props: Chip8InterfaceProps) {
-    const db = useDatabase();
     const [{ settings }] = useUserProfile();
     const canvasElement = useRef<HTMLCanvasElement>(null);
     const emu = useRef<Chip8 | null>(null);
 
     const message = useMessage();
-    const [gameMetaData] = useGameMetaData();
-
-    const gameMetaDataView = gameMetaData.find(item => item.uuid === props.gameUuid);
 
     useEffect(() => {
-        getGameData(db, props.gameUuid).then(gameData => {
-            if (gameData) {
-                const romError = validateChip8Rom(new Uint8Array(gameData.rom));
+        const romError = validateChip8Rom(new Uint8Array(props.rom));
 
-                if (romError.ok) {
-                    emu.current = new Chip8(
-                        gameData.rom,
-                        canvasElement.current as HTMLCanvasElement,
-                        settings.chip8Controls,
-                    );
-                    emu.current.start();
-                } else {
-                    message(romError.message, { severity: 'ERROR', title: 'Error' });
-                }
-            }
-        });
+        if (!romError.ok) {
+            message(romError.message, { severity: 'ERROR', title: 'Error' });
+            return;
+        }
+
+        emu.current = new Chip8(props.rom, canvasElement.current as HTMLCanvasElement, settings.chip8Controls);
+        emu.current.start();
+
         return () => {
             emu.current?.shutdown();
         };
-    }, [message, db, props.gameUuid, settings.chip8Controls]);
+    }, [message, props.rom, settings.chip8Controls]);
 
     // Screenshot effect
-    useCaptureImageEffect(gameMetaDataView, emu);
+    useCaptureImageEffect(props.gameMetaDataView, emu);
 
     const mobile = isMobile();
 
