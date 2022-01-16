@@ -1,0 +1,22 @@
+@layer components {
+    .nes__canvas {
+        @apply mx-auto md:mb-6 w-full;
+        aspect-ratio: 256 / 240;
+    }
+
+    @screen md {
+        .nes__canvas {
+            width: 500px;
+        }
+    }
+    @screen lg {
+        .nes__canvas {
+            width: 600px;
+        }
+    }
+    @screen xl {
+        .nes__canvas {
+            width: 700px;
+        }
+    }
+}

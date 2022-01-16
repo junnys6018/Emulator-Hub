@@ -5,7 +5,7 @@ import { FaExpand } from 'react-icons/fa';
 
 export interface CanvasProps {
     className: string;
-    style: React.CSSProperties;
+    style?: React.CSSProperties;
     width: number;
     height: number;
     jsxRef: React.RefObject<HTMLCanvasElement>;

@@ -8,4 +8,25 @@
         @apply bg-gray-700 rounded-xl select-none;
         aspect-ratio: 1;
     }
+
+    .chip8__canvas {
+        @apply mx-auto md:my-12 w-full;
+        aspect-ratio: 2 / 1;
+    }
+
+    @screen md {
+        .chip8__canvas {
+            width: 768px;
+        }
+    }
+    @screen lg {
+        .chip8__canvas {
+            width: 992px;
+        }
+    }
+    @screen xl {
+        .chip8__canvas {
+            width: 1000px;
+        }
+    }
 }

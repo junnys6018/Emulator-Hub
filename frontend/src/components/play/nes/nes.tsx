@@ -4,26 +4,13 @@ import { getGameData, useGameMetaData } from '@/src/storage/game-data';
 import NES, { validateNesRom } from '@/src/emulators/nes/nes';
 import { useUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
-import { useBreakpoint } from '@/src/use-breakpoint';
-import { Breakpoints } from '@/breakpoints';
 import { useMessage } from '../../util/message';
 import useCaptureImageEffect from '@/src/emulators/capture-image';
 import useAutoSaveEffect from '@/src/emulators/auto-save';
+import './nes.css';
 
 interface NESInterfaceProps {
     gameUuid: string;
-}
-
-function getWidth(breakpoint: Breakpoints<boolean>) {
-    if (breakpoint.xl) {
-        return 700;
-    } else if (breakpoint.lg) {
-        return 600;
-    } else if (breakpoint.md) {
-        return 500;
-    } else {
-        return '100%';
-    }
 }
 
 export default function NesInterface(props: NESInterfaceProps) {
@@ -37,6 +24,13 @@ export default function NesInterface(props: NESInterfaceProps) {
 
     const gameMetaDataView = gameMetaData.find(item => item.uuid === props.gameUuid);
 
+    /**
+     * FIXME: If this page is refreshed, the settings from useUserProfile will be changed when it is loaded, causing
+     * this component to re-render and this effect hook to be run. Due to a race condition in the .then, the first
+     * emulator is not properly shutdown before the new instance is started, causing 2 instances of the emulator to be
+     * running. As a result when this component is torn down, only the 'fresh' instance of the emulator is shutdown
+     * resulting in the old instance of the emulator running in the background
+     */
     useEffect(() => {
         if (gameMetaDataView === undefined) {
             return;
@@ -71,17 +65,9 @@ export default function NesInterface(props: NESInterfaceProps) {
     // Auto Save
     useAutoSaveEffect(emu, props.gameUuid, gameMetaDataView?.activeSaveIndex);
 
-    const breakpoint = useBreakpoint();
-
     return (
         <Fragment>
-            <Canvas
-                className="mx-auto md:mb-6"
-                jsxRef={canvasElement}
-                width={256}
-                height={240}
-                style={{ width: getWidth(breakpoint), aspectRatio: '256/240' }}
-            />
+            <Canvas className="nes__canvas" jsxRef={canvasElement} width={256} height={240} />
         </Fragment>
     );
 }
