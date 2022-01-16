@@ -3,89 +3,233 @@
 exports[`<AddRoms /> snapshot 1`] = `
 Array [
   <div
-    className="bg-gray-800"
-    style={
-      Object {
-        "backgroundBlendMode": "multiply",
-        "backgroundImage": "url(test-file-stub)",
-        "backgroundSize": "128px",
-      }
-    }
+    className="flex-grow relative"
   >
-    <nav
-      className="flex flex-wrap"
+    <div
+      className="bg-gray-800"
+      style={
+        Object {
+          "backgroundBlendMode": "multiply",
+          "backgroundImage": "url(test-file-stub)",
+          "backgroundSize": "128px",
+        }
+      }
     >
-      <div
-        className="container my-7 md:my-10 flex items-center"
+      <nav
+        className="flex flex-wrap"
       >
-        <a
-          className="md:hidden font-bold text-2xl xs:text-3xl mr-auto"
-          href="/dashboard"
-          onClick={[Function]}
-        >
-          Emulator Hub
-        </a>
-        <a
-          className="hidden md:inline-block font-medium text-xl text-primary-500 hover:underline mr-auto"
-          href="/dashboard"
-          onClick={[Function]}
-        >
-          Dashboard
-        </a>
         <div
-          className="relative dropdown-container hidden md:block"
+          className="container my-7 md:my-10 flex items-center"
         >
-          <button
-            className="select-none h-10 pr-5 rounded-full bg-gray-700 hover:text-green-500"
+          <a
+            className="md:hidden font-bold text-2xl xs:text-3xl mr-auto"
+            href="/dashboard"
+            onClick={[Function]}
           >
-            <img
-              className="inline-block rounded-full mr-2 w-10 h-10 object-cover object-center"
-              src="/image.png"
-            />
-            <span
-              className="text-xl align-middle mr-1.5"
-            >
-              Jun Lim
-            </span>
-            <svg
-              className="inline-block"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 320 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"
-              />
-            </svg>
-          </button>
+            Emulator Hub
+          </a>
+          <a
+            className="hidden md:inline-block font-medium text-xl text-primary-500 hover:underline mr-auto"
+            href="/dashboard"
+            onClick={[Function]}
+          >
+            Dashboard
+          </a>
           <div
-            className=" pointer-events-none opacity-0 absolute w-max -right-1 transform translate-y-6 z-10 filter drop-shadow bg-gray-700 transition-opacity duration-75 rounded-2xl cursor-default flex flex-col items-stretch dropdown "
-            tabIndex={1}
+            className="relative dropdown-container hidden md:block"
+          >
+            <button
+              className="select-none h-10 pr-5 rounded-full bg-gray-700 hover:text-green-500"
+            >
+              <img
+                className="inline-block rounded-full mr-2 w-10 h-10 object-cover object-center"
+                src="/image.png"
+              />
+              <span
+                className="text-xl align-middle mr-1.5"
+              >
+                Jun Lim
+              </span>
+              <svg
+                className="inline-block"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                strokeWidth="0"
+                style={
+                  Object {
+                    "color": undefined,
+                  }
+                }
+                viewBox="0 0 320 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"
+                />
+              </svg>
+            </button>
+            <div
+              className=" pointer-events-none opacity-0 absolute w-max -right-1 transform translate-y-6 z-10 filter drop-shadow bg-gray-700 transition-opacity duration-75 rounded-2xl cursor-default flex flex-col items-stretch dropdown "
+              tabIndex={1}
+            >
+              <img
+                className="rounded-full filter drop-shadow my-3 mx-11 object-cover object-center"
+                src="/image.png"
+                style={
+                  Object {
+                    "height": "120px",
+                    "width": "120px",
+                  }
+                }
+              />
+              <div
+                className="border-t border-gray-600 mb-3"
+              />
+              <a
+                className="w-max ml-11 mb-3 text-left hover:text-green-500"
+                href="/dashboard"
+                onClick={[Function]}
+              >
+                <svg
+                  className="inline-block mr-4"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  strokeWidth="0"
+                  style={
+                    Object {
+                      "color": undefined,
+                    }
+                  }
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z"
+                  />
+                </svg>
+                Dashboard
+              </a>
+              <a
+                className="w-max ml-11 mb-3 text-left hover:text-green-500"
+                href="/settings"
+                onClick={[Function]}
+              >
+                <svg
+                  className="inline-block mr-4"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  strokeWidth="0"
+                  style={
+                    Object {
+                      "color": undefined,
+                    }
+                  }
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+                  />
+                </svg>
+                Settings
+              </a>
+              <a
+                className="w-max ml-11 mb-3 text-left hover:text-green-500"
+                href="/"
+                onClick={[Function]}
+              >
+                <svg
+                  className="inline-block mr-4"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  strokeWidth="0"
+                  style={
+                    Object {
+                      "color": undefined,
+                    }
+                  }
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+                  />
+                </svg>
+                Sign Out
+              </a>
+              <a
+                className="w-max ml-11 mb-3 text-left hover:text-green-500"
+                href="/add-roms"
+                onClick={[Function]}
+              >
+                <svg
+                  className="inline-block mr-4"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  strokeWidth="0"
+                  style={
+                    Object {
+                      "color": undefined,
+                    }
+                  }
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                  />
+                </svg>
+                ADD ROMS
+              </a>
+            </div>
+          </div>
+          <button
+            className="select-none md:hidden"
+            onClick={[Function]}
           >
             <img
-              className="rounded-full filter drop-shadow my-3 mx-11 object-cover object-center"
+              className="rounded-full w-10 h-10 object-cover object-center"
               src="/image.png"
-              style={
-                Object {
-                  "height": "120px",
-                  "width": "120px",
-                }
-              }
             />
+          </button>
+        </div>
+        <div
+          className="md:hidden flex-grow w-full bg-gray-900 overflow-hidden transition-max-height max-h-0"
+        >
+          <div
+            className="container flex flex-col"
+          >
             <div
-              className="border-t border-gray-600 mb-3"
-            />
+              className="flex my-6 items-center"
+            >
+              <img
+                className="rounded-full object-cover object-center"
+                src="/image.png"
+                style={
+                  Object {
+                    "height": "100px",
+                    "width": "100px",
+                  }
+                }
+              />
+              <span
+                className="mx-auto text-4xl font-semibold"
+              >
+                Jun Lim
+              </span>
+            </div>
             <a
-              className="w-max ml-11 mb-3 text-left hover:text-green-500"
+              className="text-lg w-max active:text-green-500 mb-4"
               href="/dashboard"
               onClick={[Function]}
             >
@@ -111,7 +255,7 @@ Array [
               Dashboard
             </a>
             <a
-              className="w-max ml-11 mb-3 text-left hover:text-green-500"
+              className="text-lg w-max active:text-green-500 mb-4"
               href="/settings"
               onClick={[Function]}
             >
@@ -137,7 +281,7 @@ Array [
               Settings
             </a>
             <a
-              className="w-max ml-11 mb-3 text-left hover:text-green-500"
+              className="text-lg w-max active:text-green-500 mb-4"
               href="/"
               onClick={[Function]}
             >
@@ -163,7 +307,7 @@ Array [
               Sign Out
             </a>
             <a
-              className="w-max ml-11 mb-3 text-left hover:text-green-500"
+              className="text-lg  tracking-wider w-max active:text-green-500 mb-6"
               href="/add-roms"
               onClick={[Function]}
             >
@@ -190,207 +334,105 @@ Array [
             </a>
           </div>
         </div>
+      </nav>
+      <div
+        className="container flex flex-col pt-2.5 md:pt-0"
+      >
+        <h2
+          className="font-semibold text-xl md:text-3xl"
+        >
+          Add Roms
+        </h2>
+        <div
+          className="add-roms__dropper border-gray-50"
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        >
+          <SvgrComponent
+            className="mb-6 md:transform md:scale-150"
+          />
+          <span
+            className="text-2xl md:hidden"
+          >
+            Add Roms
+          </span>
+          <span
+            className="text-2xl hidden md:inline-block"
+          >
+            Drag & Drop Your Roms
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="container flex flex-col pt-8 md:pt-16"
+    >
+      <div
+        className="flex mb-4 md:mb-8"
+      >
+        <h2
+          className="font-semibold text-xl md:text-3xl mr-auto"
+        >
+          New Roms
+        </h2>
         <button
-          className="select-none md:hidden"
+          className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl disabled"
           onClick={[Function]}
         >
-          <img
-            className="rounded-full w-10 h-10 object-cover object-center"
-            src="/image.png"
-          />
+          Add All
         </button>
       </div>
       <div
-        className="md:hidden flex-grow w-full bg-gray-900 overflow-hidden transition-max-height max-h-0"
+        className="add-roms__forms-container"
+        id="form-container"
       >
-        <div
-          className="container flex flex-col"
+        <p
+          className="font-semibold text-gray-300 text-3xl sm:text-4xl m-auto"
         >
-          <div
-            className="flex my-6 items-center"
-          >
-            <img
-              className="rounded-full object-cover object-center"
-              src="/image.png"
-              style={
-                Object {
-                  "height": "100px",
-                  "width": "100px",
-                }
-              }
-            />
-            <span
-              className="mx-auto text-4xl font-semibold"
-            >
-              Jun Lim
-            </span>
-          </div>
-          <a
-            className="text-lg w-max active:text-green-500 mb-4"
-            href="/dashboard"
-            onClick={[Function]}
-          >
-            <svg
-              className="inline-block mr-4"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 512 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z"
-              />
-            </svg>
-            Dashboard
-          </a>
-          <a
-            className="text-lg w-max active:text-green-500 mb-4"
-            href="/settings"
-            onClick={[Function]}
-          >
-            <svg
-              className="inline-block mr-4"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 512 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
-              />
-            </svg>
-            Settings
-          </a>
-          <a
-            className="text-lg w-max active:text-green-500 mb-4"
-            href="/"
-            onClick={[Function]}
-          >
-            <svg
-              className="inline-block mr-4"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 512 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
-              />
-            </svg>
-            Sign Out
-          </a>
-          <a
-            className="text-lg  tracking-wider w-max active:text-green-500 mb-6"
-            href="/add-roms"
-            onClick={[Function]}
-          >
-            <svg
-              className="inline-block mr-4"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 448 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-              />
-            </svg>
-            ADD ROMS
-          </a>
-        </div>
-      </div>
-    </nav>
-    <div
-      className="container flex flex-col pt-2.5 md:pt-0"
-    >
-      <h2
-        className="font-semibold text-xl md:text-3xl"
-      >
-        Add Roms
-      </h2>
-      <div
-        className="add-roms__dropper border-gray-50"
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-      >
-        <SvgrComponent
-          className="mb-6 md:transform md:scale-150"
-        />
-        <span
-          className="text-2xl md:hidden"
-        >
-          Add Roms
-        </span>
-        <span
-          className="text-2xl hidden md:inline-block"
-        >
-          Drag & Drop Your Roms
-        </span>
+          No Roms Added
+        </p>
       </div>
     </div>
   </div>,
-  <div
-    className="container flex flex-col pt-8 md:pt-16"
+  <footer
+    className="lg:h-32 flex-shrink-0"
+    style={
+      Object {
+        "backgroundImage": "url(test-file-stub)",
+        "backgroundSize": "64px",
+        "imageRendering": "pixelated",
+      }
+    }
   >
     <div
-      className="flex mb-4 md:mb-8"
+      className="container h-full flex lg:items-center flex-col lg:flex-row"
     >
-      <h2
-        className="font-semibold text-xl md:text-3xl mr-auto"
+      <span
+        className="font-bold text-xl my-12 mr-20"
       >
-        New Roms
-      </h2>
-      <button
-        className="btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl disabled"
-        onClick={[Function]}
+        Emulator Hub
+      </span>
+      <a
+        className="text-sm mb-7 lg:mb-0 mr-12"
+        href="https://github.com/junnys6018/Emulator-Hub"
+        rel="noopener noreferrer"
+        target="_blank"
       >
-        Add All
-      </button>
+        Source Code
+      </a>
+      <a
+        className="text-sm mb-7 lg:mb-0 mr-auto"
+      >
+        Contact
+      </a>
+      <span
+        className="text-sm mb-12 lg:mb-0"
+      >
+        Designed & Built by Jun Lim
+      </span>
     </div>
-    <div
-      className="add-roms__forms-container"
-      id="form-container"
-    >
-      <p
-        className="font-semibold text-gray-300 text-3xl sm:text-4xl m-auto"
-      >
-        No Roms Added
-      </p>
-    </div>
-  </div>,
+  </footer>,
 ]
 `;

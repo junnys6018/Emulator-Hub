@@ -4,6 +4,7 @@ import { useUserProfile } from '@/src/storage/user-data';
 import { useQuery } from '@/src/util';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import Footer from '../footer/footer';
 import NotFound from '../not-found/not-found';
 import Navbar from '../util/navbar';
 
@@ -46,25 +47,28 @@ export default function Play() {
 
     return (
         <Fragment>
-            <Navbar userName={userName} profileImage={profileImage} />
-            {gameData !== null && (
-                <Switch>
-                    <Route path={`${path}/CHIP 8`}>
-                        <Chip8Interface gameUuid={uuid} gameMetaDataView={gameMetaDataView} rom={gameData.rom} />
-                    </Route>
-                    <Route path={`${path}/NES`}>
-                        <NesInterface
-                            gameUuid={uuid}
-                            gameMetaDataView={gameMetaDataView}
-                            rom={gameData.rom}
-                            save={gameData.saves[gameMetaDataView.activeSaveIndex].data}
-                        />
-                    </Route>
-                    <Route path="*">
-                        <NotFound />
-                    </Route>
-                </Switch>
-            )}
+            <div className="flex-grow relative">
+                <Navbar userName={userName} profileImage={profileImage} />
+                {gameData !== null && (
+                    <Switch>
+                        <Route path={`${path}/CHIP 8`}>
+                            <Chip8Interface gameUuid={uuid} gameMetaDataView={gameMetaDataView} rom={gameData.rom} />
+                        </Route>
+                        <Route path={`${path}/NES`}>
+                            <NesInterface
+                                gameUuid={uuid}
+                                gameMetaDataView={gameMetaDataView}
+                                rom={gameData.rom}
+                                save={gameData.saves[gameMetaDataView.activeSaveIndex].data}
+                            />
+                        </Route>
+                        <Route path="*">
+                            <NotFound />
+                        </Route>
+                    </Switch>
+                )}
+            </div>
+            <Footer />
         </Fragment>
     );
 }

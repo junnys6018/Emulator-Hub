@@ -5,9 +5,9 @@ import NotFound from './components/not-found/not-found';
 import Index from './components/index/index';
 import AddRoms from './components/add-roms/add-roms';
 import Dashboard from './components/dashboard/dashboard';
-import Footer from './components/footer/footer';
 import Settings from './components/settings/settings';
 import Play from './components/play/play';
+import Login from './components/login/login';
 
 import { BreakpointProvider } from '@/src/use-breakpoint';
 import { UserProfileProvider } from './storage/user-data';
@@ -27,29 +27,26 @@ function App() {
                             <UserProfileProvider>
                                 <GameMetaDataProvider>
                                     <HasGamepadProvider>
-                                        <div className="flex-grow relative">
-                                            <Switch>
-                                                <Route exact path="/">
-                                                    <Index />
-                                                </Route>
-                                                <Route exact path="/dashboard">
-                                                    <Dashboard />
-                                                </Route>
-                                                <Route exact path="/add-roms">
-                                                    <AddRoms />
-                                                </Route>
-                                                <Route exact path="/settings">
-                                                    <Settings />
-                                                </Route>
-                                                <Route path="/play">
-                                                    <Play />
-                                                </Route>
-                                                <Route path="*">
-                                                    <NotFound />
-                                                </Route>
-                                            </Switch>
-                                        </div>
-                                        <Footer />
+                                        <Switch>
+                                            <Route exact path="/">
+                                                <Index />
+                                            </Route>
+                                            <Route exact path="/dashboard">
+                                                <Dashboard />
+                                            </Route>
+                                            <Route exact path="/add-roms">
+                                                <AddRoms />
+                                            </Route>
+                                            <Route exact path="/settings">
+                                                <Settings />
+                                            </Route>
+                                            <Route path="/play">
+                                                <Play />
+                                            </Route>
+                                            <Route path="*">
+                                                <NotFound />
+                                            </Route>
+                                        </Switch>
                                     </HasGamepadProvider>
                                 </GameMetaDataProvider>
                             </UserProfileProvider>

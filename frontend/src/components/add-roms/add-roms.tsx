@@ -9,6 +9,7 @@ import { Console } from '@/src/storage/game-data';
 import { getExtension, isMobile, stripExtension } from '@/src/util';
 import { useAlert } from '../util/alert';
 import classNames from 'classnames';
+import Footer from '../footer/footer';
 
 import './add-roms.css';
 
@@ -147,71 +148,74 @@ export default function AddRoms() {
 
     return (
         <Fragment>
-            <div
-                className="bg-gray-800"
-                style={{
-                    backgroundImage: `url(${TicTacToe})`,
-                    backgroundBlendMode: 'multiply',
-                    backgroundSize: '128px',
-                }}
-            >
-                <Navbar userName={userName} profileImage={profileImage} />
-                <div className="container flex flex-col pt-2.5 md:pt-0">
-                    <h2 className="font-semibold text-xl md:text-3xl">Add Roms</h2>
-                    {mobile ? (
-                        <label htmlFor="dropper-input" className={classNames(dropperClassName, 'cursor-pointer')}>
-                            {dropperChilren}
-                            <input
-                                className="hidden"
-                                type="file"
-                                multiple
-                                id="dropper-input"
-                                name="dropper-input"
-                                onChange={onFileChange}
-                            ></input>
-                        </label>
-                    ) : (
-                        <div
-                            onDragEnter={onDragEnter}
-                            onDragLeave={onDragLeave}
-                            onDragOver={onDragOver}
-                            onDrop={onDrop}
-                            className={dropperClassName}
+            <div className="flex-grow relative">
+                <div
+                    className="bg-gray-800"
+                    style={{
+                        backgroundImage: `url(${TicTacToe})`,
+                        backgroundBlendMode: 'multiply',
+                        backgroundSize: '128px',
+                    }}
+                >
+                    <Navbar userName={userName} profileImage={profileImage} />
+                    <div className="container flex flex-col pt-2.5 md:pt-0">
+                        <h2 className="font-semibold text-xl md:text-3xl">Add Roms</h2>
+                        {mobile ? (
+                            <label htmlFor="dropper-input" className={classNames(dropperClassName, 'cursor-pointer')}>
+                                {dropperChilren}
+                                <input
+                                    className="hidden"
+                                    type="file"
+                                    multiple
+                                    id="dropper-input"
+                                    name="dropper-input"
+                                    onChange={onFileChange}
+                                ></input>
+                            </label>
+                        ) : (
+                            <div
+                                onDragEnter={onDragEnter}
+                                onDragLeave={onDragLeave}
+                                onDragOver={onDragOver}
+                                onDrop={onDrop}
+                                className={dropperClassName}
+                            >
+                                {dropperChilren}
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="container flex flex-col pt-8 md:pt-16">
+                    <div className="flex mb-4 md:mb-8">
+                        <h2 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h2>
+                        <button
+                            onClick={submitAll}
+                            className={`btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ${
+                                forms.length === 0 ? 'disabled' : 'ring-2 md:ring-4 ring-inset ring-green-600'
+                            }`}
                         >
-                            {dropperChilren}
-                        </div>
-                    )}
+                            Add All
+                        </button>
+                    </div>
+                    <div id="form-container" className="add-roms__forms-container">
+                        {forms.map(item => (
+                            <AddRomForm
+                                className="flex-shrink-0 mb-4 md:mb-0 md:mr-8 md:last:mr-0"
+                                id={item.id}
+                                key={item.id}
+                                initialName={item.initialName}
+                                inititalConsole={item.initialConsole}
+                                file={item.file}
+                                onDelete={() => onDelete(item.id)}
+                            />
+                        ))}
+                        {forms.length === 0 && (
+                            <p className="font-semibold text-gray-300 text-3xl sm:text-4xl m-auto">No Roms Added</p>
+                        )}
+                    </div>
                 </div>
             </div>
-            <div className="container flex flex-col pt-8 md:pt-16">
-                <div className="flex mb-4 md:mb-8">
-                    <h2 className="font-semibold text-xl md:text-3xl mr-auto">New Roms</h2>
-                    <button
-                        onClick={submitAll}
-                        className={`btn-primary h-8 md:h-10 px-4 md:px-16 md:text-xl ${
-                            forms.length === 0 ? 'disabled' : 'ring-2 md:ring-4 ring-inset ring-green-600'
-                        }`}
-                    >
-                        Add All
-                    </button>
-                </div>
-                <div id="form-container" className="add-roms__forms-container">
-                    {forms.map(item => (
-                        <AddRomForm
-                            className="flex-shrink-0 mb-4 md:mb-0 md:mr-8 md:last:mr-0"
-                            id={item.id}
-                            key={item.id}
-                            initialName={item.initialName}
-                            inititalConsole={item.initialConsole}
-                            file={item.file}
-                            onDelete={() => onDelete(item.id)}
-                        />
-                    ))}
-                    {forms.length === 0 && (
-                        <p className="font-semibold text-gray-300 text-3xl sm:text-4xl m-auto">No Roms Added</p>
-                    )}
-                </div>
-            </div>
+            <Footer />
         </Fragment>
     );
 }
