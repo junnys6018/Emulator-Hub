@@ -327,29 +327,27 @@ Array [
     </div>
   </nav>,
   <div
-    className="text-center"
-    style={
-      Object {
-        "marginBottom": "20vh",
-        "marginTop": "20vh",
-      }
-    }
+    className="absolute w-full h-full flex flex-col justify-center"
   >
-    <p
-      className="font-semibold text-6xl md:text-7xl mb-8 md:mb-11"
+    <div
+      className="text-center"
     >
-      Oops
-    </p>
-    <p
-      className="font-medium text-gray-300 text-3xl md:text-4xl mb-4 md:mb-5"
-    >
-      Something Went Wrong
-    </p>
-    <p
-      className="font-normal text-gray-300 text-xl md:text-2xl"
-    >
-      Error 404 Page Not Found
-    </p>
+      <p
+        className="font-semibold text-6xl md:text-7xl mb-8 md:mb-11"
+      >
+        Oops
+      </p>
+      <p
+        className="font-medium text-gray-300 text-3xl md:text-4xl mb-4 md:mb-5"
+      >
+        Something Went Wrong
+      </p>
+      <p
+        className="font-normal text-gray-300 text-xl md:text-2xl"
+      >
+        Error 404 Page Not Found
+      </p>
+    </div>
   </div>,
 ]
 `;
