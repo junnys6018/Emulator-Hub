@@ -8,8 +8,10 @@ import { defaultSettings } from '@/src/storage/user-data';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import CHIP8Settings from './chip8-settings';
+import createUser from './common.test';
 
 beforeEach(async () => {
+    await createUser();
     await driver.navigate().to('http://localhost:8000/settings');
 });
 
@@ -17,7 +19,7 @@ afterEach(async () => {
     resetDriver();
 });
 
-jest.setTimeout(15000);
+jest.setTimeout(30000);
 
 jest.mock('@/src/storage/user-data', () => {
     const originalModule = jest.requireActual('@/src/storage/user-data');

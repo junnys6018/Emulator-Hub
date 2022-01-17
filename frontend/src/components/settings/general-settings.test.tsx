@@ -2,9 +2,11 @@ import { driver, resetDriver, elementHasClass } from '@/tests/selenium';
 import { SettingsPage } from './__pageobjects__/settings-page';
 import { GeneralSettingsPanel } from './__pageobjects__/general-settings-panel';
 import { defaultSettings } from '@/src/storage/user-data';
+import createUser from './common.test';
 import _ from 'lodash';
 
 beforeEach(async () => {
+    await createUser();
     await driver.navigate().to('http://localhost:8000/settings');
 });
 
@@ -12,7 +14,7 @@ afterEach(async () => {
     resetDriver();
 });
 
-jest.setTimeout(15000);
+jest.setTimeout(30000);
 jest.mock('../util/message');
 jest.mock('../util/alert');
 
