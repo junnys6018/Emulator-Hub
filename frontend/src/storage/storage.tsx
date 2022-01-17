@@ -3,6 +3,7 @@ import { UserData } from './user-data';
 import React, { useContext, useEffect, useState } from 'react';
 import { useAlert } from '../components/util/alert';
 import { GameData, GameMetaData } from './game-data';
+import getActiveUserUuid from './get-active-user';
 
 export interface Record {
     uuid: string;
@@ -73,7 +74,20 @@ export function DatabaseProvider(props: { children?: React.ReactNode; name?: str
                     action: 'REFRESH',
                 });
             },
-        }).then(db => setDb(db));
+        }).then(async db => {
+            // Health Check
+            const activeUuid = getActiveUserUuid();
+            if (activeUuid !== null) {
+                const user = await db.get('users', activeUuid);
+                if (user === undefined) {
+                    // active-uuid points to non-existent user
+                    console.log('[WARN] active-uuid did not point to a valid user');
+                    localStorage.removeItem('active-uuid');
+                }
+            }
+
+            setDb(db);
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
