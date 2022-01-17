@@ -12,7 +12,9 @@ jest.mock('../util/alert');
 jest.mock('@/src/storage/user-data');
 
 test('<AddRoms /> snapshot', () => {
-    (useActiveUserProfile as jest.Mock<any, any>).mockReturnValue([{ userName: 'Jun Lim', profileImage: '/image.png' }]);
+    (useActiveUserProfile as jest.Mock<any, any>).mockReturnValue([
+        { userName: 'Jun Lim', profileImage: '/image.png' },
+    ]);
     const tree = renderer
         .create(
             <MemoryRouter>
