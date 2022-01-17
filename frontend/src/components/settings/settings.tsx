@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react';
 import ProfilePicture from './profile-picture';
 import Navbar from '../util/navbar';
 import { useBreakpoint } from '../../use-breakpoint';
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 import { Console } from '../../storage/game-data';
 import Footer from '../footer/footer';
 
@@ -20,7 +20,7 @@ type SettingsPanel = Console | 'GENERAL';
 export default function Settings() {
     const breakpoint = useBreakpoint();
     const [currentPanel, setCurrentPanel] = useState<SettingsPanel>('GENERAL');
-    const [{ userName, profileImage }, setUserData] = useUserProfile();
+    const [{ userName, profileImage }, setUserData] = useActiveUserProfile();
 
     let settingsPanel;
     switch (currentPanel) {

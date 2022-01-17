@@ -1,7 +1,6 @@
 import { Record } from './storage';
 import { v4 as uuidv4 } from 'uuid';
-import React, { useContext, useEffect, useState } from 'react';
-import { useAlert } from '../components/util/alert';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDatabase } from './storage';
 import _ from 'lodash';
 import getActiveUserUuid from './get-active-user';
@@ -30,10 +29,11 @@ export interface Settings {
     chip8Controls: string[];
 }
 
-export interface UserProfile {
+export interface UserDataView {
     profileImage: string;
     userName: string;
     settings: Settings;
+    uuid: string;
 }
 
 export interface UserData extends Record {
@@ -128,91 +128,136 @@ export async function generateGuestAccount(): Promise<UserData> {
     };
 }
 
-const whiteImage =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAADUExURf///6fEG8gAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAfSURBVGje7cExAQAAAMKg9U9tCF8gAAAAAAAAAIBLDSCAAAEf1udwAAAAAElFTkSuQmCC';
-
 const UserProfileContext = React.createContext<
-    [UserProfile, (newUserData: RecursivePartial<UserData>) => Promise<string>] | null
->(null);
+    | [UserDataView[], (newUserData: RecursivePartial<UserData>) => Promise<void>]
+    | null // Used to indicate user profiles are still loading
+    | undefined // Default value, used to indicate context is being used without a provider
+>(undefined);
 
 export function UserProfileProvider(props: { children: React.ReactNode }) {
-    const [userProfile, setUserProfile] = useState<UserProfile>({
-        profileImage: whiteImage,
-        userName: 'Loading...',
-        settings: _.cloneDeep(defaultSettings),
-    });
+    const [userDataView, setUserDataView] = useState<UserDataView[] | null>(null);
 
-    const [userData, _setUserData] = useState<UserData>();
     const db = useDatabase();
-    const alert = useAlert();
 
     useEffect(() => {
-        const loadUserDataFromUuid = (uuid: string) => {
-            db.get('users', uuid).then(userData => {
-                if (userData) {
-                    const url = URL.createObjectURL(userData.profileImage);
-                    setUserProfile({
-                        profileImage: url,
-                        userName: userData.userName,
-                        settings: userData.settings,
-                    });
-                    _setUserData(userData);
+        db.getAll('users').then(users => {
+            const userDataView: UserDataView[] = [];
+            for (const user of users) {
+                const profileImage = URL.createObjectURL(user.profileImage);
+                userDataView.push({
+                    profileImage,
+                    userName: user.userName,
+                    settings: _.cloneDeep(user.settings),
+                    uuid: user.uuid,
+                });
+            }
+
+            setUserDataView(userDataView);
+        });
+    }, [db]);
+
+    /**
+     * Puts a `UserData` record in the database
+     *
+     * If the record already exists, the new record is merged with the old one
+     */
+    const putUserData = useCallback(
+        async (newUserData: RecursivePartial<UserData> & { uuid: string }): Promise<void> => {
+            if (userDataView === null) {
+                return;
+            }
+
+            const existingProfileImageUrl = userDataView.find(item => (item.uuid = newUserData.uuid))?.profileImage;
+            const overrideProfileImage =
+                existingProfileImageUrl !== undefined && newUserData.profileImage !== undefined;
+
+            if (overrideProfileImage) {
+                URL.revokeObjectURL(existingProfileImageUrl);
+            }
+
+            const userData = await db.get('users', newUserData.uuid);
+            const isNew = userData === undefined;
+
+            if (!isNew) {
+                // Merge with existing entry
+                newUserData = _.merge(userData, newUserData);
+            }
+
+            // Create the new view
+            const newUserDataView = {
+                profileImage:
+                    overrideProfileImage || isNew
+                        ? URL.createObjectURL(newUserData.profileImage as Blob)
+                        : existingProfileImageUrl,
+                userName: newUserData.userName,
+                settings: newUserData.settings,
+                uuid: newUserData.uuid,
+            } as UserDataView;
+
+            setUserDataView(userDataView => {
+                if (userDataView === null) {
+                    return null;
+                }
+
+                if (isNew) {
+                    return userDataView.concat(newUserDataView);
                 } else {
-                    localStorage.removeItem('guest-uuid');
-                    alert(`UUID ${uuid} does not point to an account`, {
-                        severity: 'ERROR',
-                        action: 'REFRESH',
-                    });
+                    const uuid = newUserDataView.uuid;
+
+                    // Update the existing view, its important that we update the item instead of replacing it
+                    // because code might save a reference to the view, in which case it will be holding onto
+                    // a 'stale' reference of the view.
+                    const existingUserDataView = userDataView.find(item => item.uuid === uuid) as UserDataView;
+                    _.merge(existingUserDataView, newUserDataView);
+
+                    // Create new array to force re-render
+                    return [...userDataView];
                 }
             });
-        };
 
-        const activeUuid = getActiveUserUuid();
-        if (activeUuid) {
-            console.log('[INFO] found UUID, loading from storage');
-            loadUserDataFromUuid(activeUuid);
-        } else {
-            alert('Guest UUID not found', {
-                severity: 'ERROR',
-                action: 'REFRESH',
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const setUserData = (newUserData: RecursivePartial<UserData>): Promise<string> => {
-        if (userData) {
-            console.log('[INFO] setting new user data');
-            const updatedUserData = _.merge(userData, newUserData);
-            // update UserProfile
-            URL.revokeObjectURL(userProfile.profileImage);
-            const url = URL.createObjectURL(updatedUserData.profileImage);
-            setUserProfile({
-                profileImage: url,
-                userName: updatedUserData.userName,
-                settings: updatedUserData.settings,
-            });
-
-            // FIXME: updatedUserData depends on the previous state
-            _setUserData(updatedUserData);
-            // write to db
-            return db.put('users', updatedUserData);
-        }
-        // User data has not been set yet in the effect hook
-        return new Promise((_resolve, reject) =>
-            reject(new Error('User data has not yet been loaded, please try again')),
-        );
-    };
+            await db.put('users', newUserData as UserData);
+        },
+        [db, userDataView],
+    );
 
     return (
-        <UserProfileContext.Provider value={[userProfile, setUserData]}>{props.children}</UserProfileContext.Provider>
+        <UserProfileContext.Provider value={userDataView === null ? null : [userDataView, putUserData]}>
+            {userDataView !== null && props.children}
+        </UserProfileContext.Provider>
     );
 }
 
 export function useUserProfile() {
     const userProfile = useContext(UserProfileContext);
-    if (!userProfile) {
+    if (userProfile === undefined) {
         throw new Error('useUserProfile() must be called with a UserProfileProvider');
+    } else if (userProfile === null) {
+        throw new Error('[BUG] useUserProfile() called before data is loaded');
     }
     return userProfile;
+}
+
+export function useActiveUserProfile(): [UserDataView, (newUserData: RecursivePartial<UserData>) => Promise<void>] {
+    const [userDataView, putUserData] = useUserProfile();
+    const activeUuid = getActiveUserUuid();
+
+    if (activeUuid === null) {
+        throw new Error('[BUG] useActiveUserProfile() called with no active user');
+    }
+
+    const activeUser = userDataView.find(item => item.uuid === activeUuid);
+
+    if (activeUser === undefined) {
+        throw new Error('[BUG] active user does not point to a valid user');
+    }
+
+    const putUserDataWrapper = useCallback(
+        (newUserData: RecursivePartial<UserData>) => {
+            newUserData.uuid = activeUuid;
+            return putUserData(newUserData);
+        },
+        [activeUuid, putUserData],
+    );
+
+    return [activeUser, putUserDataWrapper];
 }

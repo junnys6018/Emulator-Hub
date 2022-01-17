@@ -1,9 +1,9 @@
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 import React, { Fragment } from 'react';
 import Navbar from '../util/navbar';
 
 function NotFound() {
-    const [{ userName, profileImage }] = useUserProfile();
+    const [{ userName, profileImage }] = useActiveUserProfile();
 
     return (
         <Fragment>

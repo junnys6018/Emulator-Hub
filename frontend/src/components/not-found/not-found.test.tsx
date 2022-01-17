@@ -4,8 +4,8 @@ import NotFound from './not-found';
 import { MemoryRouter } from 'react-router';
 
 jest.mock('@/src/storage/user-data', () => {
-    const useUserProfile = jest.fn();
-    useUserProfile.mockReturnValueOnce([
+    const useActiveUserProfile = jest.fn();
+    useActiveUserProfile.mockReturnValueOnce([
         {
             userName: 'Jun Lim',
             profileImage: 'mock image',
@@ -13,7 +13,7 @@ jest.mock('@/src/storage/user-data', () => {
     ]);
     return {
         __esModule: true,
-        useUserProfile,
+        useActiveUserProfile,
     };
 });
 

@@ -69,7 +69,7 @@ function sortGameMetaData(g1: GameMetaDataView, g2: GameMetaDataView): number {
 }
 
 export function GameMetaDataProvider(props: { children: React.ReactNode }) {
-    const [gameMetaDataView, setGameMetaData] = useState<GameMetaDataView[] | null>(null);
+    const [gameMetaDataView, setGameMetaDataView] = useState<GameMetaDataView[] | null>(null);
 
     const db = useDatabase();
 
@@ -80,7 +80,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
         const userIndex = objectStore.index('by-user');
 
         userIndex.getAll(activeUuid).then(gameMetaData => {
-            const gameMetaDataView = [];
+            const gameMetaDataView: GameMetaDataView[] = [];
             for (const game of gameMetaData) {
                 const image = URL.createObjectURL(game.image);
                 gameMetaDataView.push({
@@ -96,7 +96,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
 
             gameMetaDataView.sort(sortGameMetaData);
 
-            setGameMetaData(gameMetaDataView);
+            setGameMetaDataView(gameMetaDataView);
         });
     }, [db]);
 
@@ -119,7 +119,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                 URL.revokeObjectURL(existingImageUrl);
             }
 
-            const gameMetaData = await db.get('gameMetaData', newGameMetaData.uuid as string);
+            const gameMetaData = await db.get('gameMetaData', newGameMetaData.uuid);
             const isNew = gameMetaData === undefined;
             if (!isNew) {
                 const saveNames = newGameMetaData.saveNames;
@@ -143,7 +143,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                 settings: newGameMetaData.settings,
             } as GameMetaDataView;
 
-            setGameMetaData(gameMetaDataView => {
+            setGameMetaDataView(gameMetaDataView => {
                 if (gameMetaDataView === null) {
                     return null;
                 }
@@ -151,7 +151,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                 if (isNew) {
                     return gameMetaDataView.concat(newGameMetaDataView).sort(sortGameMetaData);
                 } else {
-                    const uuid = newGameMetaData.uuid as string;
+                    const uuid = newGameMetaData.uuid;
 
                     // Update the existing view, its important that we update the item instead of replacing it
                     // because code might save a reference to the view, in which case it will be holding onto
@@ -175,7 +175,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
     const deleteGame = useCallback(
         async (uuid: string) => {
             // Delete the metadata
-            setGameMetaData(gameMetaDataView => {
+            setGameMetaDataView(gameMetaDataView => {
                 if (gameMetaDataView === null) {
                     return null;
                 }

@@ -4,7 +4,7 @@ import AddFileIcon from '@/public/assets/add-file.svg?react';
 import TicTacToe from '@/public/assets/tic-tac-toe.svg';
 
 import AddRomForm from './add-rom-form';
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 import { Console } from '@/src/storage/game-data';
 import { getExtension, isMobile, stripExtension } from '@/src/util';
 import { useAlert } from '../util/alert';
@@ -38,7 +38,7 @@ interface FormItem {
 }
 
 export default function AddRoms() {
-    const [{ userName, profileImage }] = useUserProfile();
+    const [{ userName, profileImage }] = useActiveUserProfile();
     const [dragging, setDragging] = useState(false);
     const dragCounter = useRef(0);
     const currentId = useRef(0);

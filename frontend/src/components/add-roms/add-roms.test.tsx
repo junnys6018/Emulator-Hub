@@ -5,14 +5,14 @@ import { MemoryRouter } from 'react-router';
 
 import AddRoms from './add-roms';
 
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 
 jest.mock('../util/message');
 jest.mock('../util/alert');
 jest.mock('@/src/storage/user-data');
 
 test('<AddRoms /> snapshot', () => {
-    (useUserProfile as jest.Mock<any, any>).mockReturnValue([{ userName: 'Jun Lim', profileImage: '/image.png' }]);
+    (useActiveUserProfile as jest.Mock<any, any>).mockReturnValue([{ userName: 'Jun Lim', profileImage: '/image.png' }]);
     const tree = renderer
         .create(
             <MemoryRouter>

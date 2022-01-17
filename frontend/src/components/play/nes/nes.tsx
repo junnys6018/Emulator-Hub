@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { GameMetaDataView } from '@/src/storage/game-data';
 import NES, { validateNesRom } from '@/src/emulators/nes/nes';
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
 import { useMessage } from '../../util/message';
 import useCaptureImageEffect from '@/src/emulators/capture-image';
@@ -16,7 +16,7 @@ interface NESInterfaceProps {
 }
 
 export default function NesInterface(props: NESInterfaceProps) {
-    const [{ settings }] = useUserProfile();
+    const [{ settings }] = useActiveUserProfile();
     const canvasElement = useRef<HTMLCanvasElement>(null);
     const emu = useRef<NES | null>(null);
 

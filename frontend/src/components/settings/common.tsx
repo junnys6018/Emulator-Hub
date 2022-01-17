@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
 
 import { displayKeyCode, displayControllerIndex } from '@/src/util';
-import { defaultGamepadControls, useUserProfile, GamepadControls, defaultSettings } from '@/src/storage/user-data';
+import { defaultGamepadControls, useActiveUserProfile, GamepadControls, defaultSettings } from '@/src/storage/user-data';
 import { FaRedo, FaTimes } from 'react-icons/fa';
 import { useMessage } from '../util/message';
 import { useAlert } from '../util/alert';
@@ -61,7 +61,7 @@ export function installSettingCallbacks<T>(
             setEditingButton(null);
         };
 
-        const [{ settings }, setUserData] = useUserProfile();
+        const [{ settings }, setUserData] = useActiveUserProfile();
 
         const innerSettings = _.get(settings, dottedSettingsPath);
 

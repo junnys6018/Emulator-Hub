@@ -9,7 +9,7 @@ import Footer from '../footer/footer';
 
 import { useBreakpoint } from '@/src/use-breakpoint';
 import { useGameMetaData, Console, GameMetaDataView } from '@/src/storage/game-data';
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 import { FaPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ export default function Dashboard() {
                 general: { showHiddenGames },
             },
         },
-    ] = useUserProfile();
+    ] = useActiveUserProfile();
 
     let [gameMetaData] = useGameMetaData();
     const noGames = gameMetaData.length === 0;

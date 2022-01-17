@@ -24,8 +24,8 @@ jest.mock('../util/alert');
 
 jest.mock('@/src/storage/user-data', () => {
     const originalModule = jest.requireActual('@/src/storage/user-data');
-    const useUserProfile = jest.fn();
-    useUserProfile.mockReturnValue([
+    const useActiveUserProfile = jest.fn();
+    useActiveUserProfile.mockReturnValue([
         {
             profileImage: '/image.png',
             userName: 'Guest',
@@ -47,7 +47,7 @@ jest.mock('@/src/storage/user-data', () => {
     return {
         __esModule: true,
         ...originalModule,
-        useUserProfile,
+        useActiveUserProfile,
     };
 });
 

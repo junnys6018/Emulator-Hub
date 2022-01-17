@@ -1,6 +1,6 @@
 import { GameData, getGameData, useGameMetaData } from '@/src/storage/game-data';
 import { useDatabase } from '@/src/storage/storage';
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 import { useQuery } from '@/src/util';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
@@ -13,7 +13,7 @@ import NesInterface from './nes/nes';
 
 export default function Play() {
     const { path } = useRouteMatch();
-    const [{ userName, profileImage }] = useUserProfile();
+    const [{ userName, profileImage }] = useActiveUserProfile();
 
     const query = useQuery();
     const uuid = query.get('game');

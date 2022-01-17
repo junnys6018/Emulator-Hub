@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { GameMetaDataView } from '@/src/storage/game-data';
 import Chip8, { validateChip8Rom } from '@/src/emulators/chip8/chip8';
-import { useUserProfile } from '@/src/storage/user-data';
+import { useActiveUserProfile } from '@/src/storage/user-data';
 import Canvas from '../canvas';
 import { isMobile } from '@/src/util';
 import './chip8.css';
@@ -15,7 +15,7 @@ interface Chip8InterfaceProps {
 }
 
 export default function Chip8Interface(props: Chip8InterfaceProps) {
-    const [{ settings }] = useUserProfile();
+    const [{ settings }] = useActiveUserProfile();
     const canvasElement = useRef<HTMLCanvasElement>(null);
     const emu = useRef<Chip8 | null>(null);
 
