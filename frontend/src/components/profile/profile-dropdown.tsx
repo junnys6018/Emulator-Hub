@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FaCog, FaPlus, FaSignOutAlt, FaTable } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +9,11 @@ interface ProfileDropdownProps {
 }
 
 export default function ProfileDropdown(props: ProfileDropdownProps) {
+    const signOut = useCallback(() => {
+        localStorage.removeItem('active-uuid');
+        window.location.reload();
+    }, []);
+
     return (
         <div className="container flex flex-col">
             <div className="flex my-6 items-center">
@@ -17,7 +22,7 @@ export default function ProfileDropdown(props: ProfileDropdownProps) {
                     src={props.profileImage}
                     style={{ width: '100px', height: '100px' }}
                 ></img>
-                <span className="mx-auto text-4xl font-semibold">{props.userName}</span>
+                <span className="truncate mx-auto pl-3 text-4xl font-semibold">{props.userName}</span>
             </div>
 
             {props.children}
@@ -29,10 +34,10 @@ export default function ProfileDropdown(props: ProfileDropdownProps) {
                 <FaCog className="inline-block mr-4" />
                 Settings
             </Link>
-            <Link to="#" className="text-lg w-max active:text-green-500 mb-4">
+            <button onClick={signOut} className="text-lg w-max active:text-green-500 mb-4">
                 <FaSignOutAlt className="inline-block mr-4" />
                 Sign Out
-            </Link>
+            </button>
             <Link to="/add-roms" className="text-lg  tracking-wider w-max active:text-green-500 mb-6">
                 <FaPlus className="inline-block mr-4" />
                 ADD ROMS

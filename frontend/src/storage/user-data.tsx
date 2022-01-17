@@ -85,11 +85,9 @@ export const defaultSettings: Settings = Object.freeze({
 });
 
 /**
- * Generate a new guest account with a random color gradient as the profile image
- *
- * May throw
+ * Generate a random color gradient as the profile image
  */
-export async function generateGuestAccount(): Promise<UserData> {
+export async function generateProfilePicture(): Promise<Blob> {
     const canvas = document.createElement('canvas');
     canvas.width = 128;
     canvas.height = 128;
@@ -120,12 +118,19 @@ export async function generateGuestAccount(): Promise<UserData> {
         }, 'image/png');
     });
 
-    return {
-        uuid: uuidv4(),
-        userName: 'Guest',
-        profileImage: profileImage,
-        settings: _.cloneDeep(defaultSettings),
-    };
+    return profileImage;
+}
+
+function sortUserData(u1: UserDataView, u2: UserDataView): number {
+    const name1 = u1.userName.toLowerCase();
+    const name2 = u2.userName.toLowerCase();
+
+    if (name1 === name2) {
+        return 0;
+    } else if (name1 < name2) {
+        return -1;
+    }
+    return 1;
 }
 
 const UserProfileContext = React.createContext<
@@ -152,6 +157,8 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                 });
             }
 
+            userDataView.sort(sortUserData);
+
             setUserDataView(userDataView);
         });
     }, [db]);
@@ -167,7 +174,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                 return;
             }
 
-            const existingProfileImageUrl = userDataView.find(item => (item.uuid = newUserData.uuid))?.profileImage;
+            const existingProfileImageUrl = userDataView.find(item => item.uuid === newUserData.uuid)?.profileImage;
             const overrideProfileImage =
                 existingProfileImageUrl !== undefined && newUserData.profileImage !== undefined;
 
@@ -200,7 +207,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                 }
 
                 if (isNew) {
-                    return userDataView.concat(newUserDataView);
+                    return userDataView.concat(newUserDataView).sort(sortUserData);
                 } else {
                     const uuid = newUserDataView.uuid;
 
@@ -211,7 +218,7 @@ export function UserProfileProvider(props: { children: React.ReactNode }) {
                     _.merge(existingUserDataView, newUserDataView);
 
                     // Create new array to force re-render
-                    return [...userDataView];
+                    return [...userDataView].sort(sortUserData);
                 }
             });
 

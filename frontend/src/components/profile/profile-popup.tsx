@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FaCog, FaPlus, FaSignOutAlt, FaTable } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 export default function ProfilePopup(props: { profileImage: string }) {
+    const signOut = useCallback(() => {
+        localStorage.removeItem('active-uuid');
+        window.location.reload();
+    }, []);
+
     return (
         <div
             className="
@@ -26,10 +31,10 @@ export default function ProfilePopup(props: { profileImage: string }) {
                 <FaCog className="inline-block mr-4" />
                 Settings
             </Link>
-            <Link to="#" className="w-max ml-11 mb-3 text-left hover:text-green-500">
+            <button onClick={signOut} className="w-max ml-11 mb-3 text-left hover:text-green-500">
                 <FaSignOutAlt className="inline-block mr-4" />
                 Sign Out
-            </Link>
+            </button>
             <Link to="/add-roms" className="w-max ml-11 mb-3 text-left hover:text-green-500">
                 <FaPlus className="inline-block mr-4" />
                 ADD ROMS

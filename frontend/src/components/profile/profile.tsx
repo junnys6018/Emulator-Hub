@@ -19,7 +19,12 @@ export default function Profile(props: ProfileProps) {
                     className="inline-block rounded-full mr-2 w-10 h-10 object-cover object-center"
                     src={props.profileImage}
                 ></img>
-                <span className="text-xl align-middle mr-1.5">{props.userName}</span>
+                <span
+                    className="truncate text-xl inline-block align-middle mr-1.5"
+                    style={{ maxWidth: '8rem', minWidth: '4rem' }}
+                >
+                    {props.userName}
+                </span>
                 <FaAngleDown className="inline-block" />
             </button>
             <ProfilePopup profileImage={props.profileImage} />

@@ -182,6 +182,7 @@ export function GameMetaDataProvider(props: { children: React.ReactNode }) {
                 return gameMetaDataView.filter(value => value.uuid !== uuid);
             });
 
+            // TODO: make this a single transaction
             await db.delete('gameMetaData', uuid);
 
             // Delete the game data

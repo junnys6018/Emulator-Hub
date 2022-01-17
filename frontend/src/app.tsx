@@ -8,6 +8,7 @@ import Dashboard from './components/dashboard/dashboard';
 import Settings from './components/settings/settings';
 import Play from './components/play/play';
 import Login from './components/login/login';
+import LoginRequired from './components/util/login-required';
 
 import { BreakpointProvider } from '@/src/use-breakpoint';
 import { UserProfileProvider } from './storage/user-data';
@@ -32,16 +33,27 @@ function App() {
                                                 <Index />
                                             </Route>
                                             <Route exact path="/dashboard">
-                                                <Dashboard />
+                                                <LoginRequired>
+                                                    <Dashboard />
+                                                </LoginRequired>
                                             </Route>
                                             <Route exact path="/add-roms">
-                                                <AddRoms />
+                                                <LoginRequired>
+                                                    <AddRoms />
+                                                </LoginRequired>
                                             </Route>
                                             <Route exact path="/settings">
-                                                <Settings />
+                                                <LoginRequired>
+                                                    <Settings />
+                                                </LoginRequired>
                                             </Route>
                                             <Route path="/play">
-                                                <Play />
+                                                <LoginRequired>
+                                                    <Play />
+                                                </LoginRequired>
+                                            </Route>
+                                            <Route path="/login">
+                                                <Login />
                                             </Route>
                                             <Route path="*">
                                                 <NotFound />

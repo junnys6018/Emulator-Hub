@@ -1,6 +1,5 @@
 import { openDB, DBSchema, IDBPDatabase, OpenDBCallbacks } from 'idb';
-import { generateGuestAccount, UserData } from './user-data';
-import { v4 as uuidv4 } from 'uuid';
+import { UserData } from './user-data';
 import React, { useContext, useEffect, useState } from 'react';
 import { useAlert } from '../components/util/alert';
 import { GameData, GameMetaData } from './game-data';
@@ -24,28 +23,6 @@ export interface EmulatorHubDB extends DBSchema {
         key: string;
         indexes: { 'by-user': string };
     };
-}
-
-export async function createGuestAccount(db: IDBPDatabase<EmulatorHubDB>) {
-    console.log('[INFO] No guest account found, generating one');
-    const guestUser = await generateGuestAccount();
-
-    const addGuestAccount = async () => {
-        try {
-            await db.add('users', guestUser);
-        } catch (error) {
-            if (error.name === 'ConstraintError') {
-                console.warn('[WARN] primary key collision, regenerating uuid');
-                guestUser.uuid = uuidv4();
-                await addGuestAccount();
-            } else {
-                throw error;
-            }
-        }
-    };
-    await addGuestAccount();
-
-    localStorage.setItem('guest-uuid', guestUser.uuid);
 }
 
 const DatabaseContext = React.createContext<IDBPDatabase<EmulatorHubDB> | null>(null);
@@ -73,12 +50,6 @@ export async function initializeDatabase(name: string, options?: OpenDBCallbacks
         },
         terminated: options?.terminated,
     });
-
-    // Check if a guest account exists, if not create one
-    const guestUuid = localStorage.getItem('guest-uuid');
-    if (!guestUuid) {
-        await createGuestAccount(db);
-    }
 
     return db;
 }

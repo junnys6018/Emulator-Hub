@@ -57,7 +57,9 @@ export default function Settings() {
                     <div className="container flex">
                         <div className="flex flex-col flex-shrink-0" style={{ width: '280px' }}>
                             <ProfilePicture size="200px" profileImage={profileImage} className="mb-6" onEdit={onEdit} />
-                            <h2 className="font-bold text-3xl mb-24 truncate">{userName}</h2>
+                            <h2 className="font-bold text-3xl mb-24 truncate" style={{ width: '12.5rem' }}>
+                                {userName}
+                            </h2>
                             <div className={`settings__button mb-6 ${currentPanel === 'GENERAL' ? 'active' : ''}`}>
                                 <button onClick={() => setCurrentPanel('GENERAL')}>General</button>
                             </div>
@@ -90,7 +92,7 @@ export default function Settings() {
                 <Navbar userName={userName} profileImage={profileImage} />
                 <div className="container flex flex-col pt-2.5 md:pt-0">
                     <ProfilePicture size="130px" profileImage={profileImage} className="mb-5" onEdit={onEdit} />
-                    <h2 className="font-semibold text-3xl mb-6">{userName}</h2>
+                    <h2 className="truncate font-semibold text-3xl mb-6">{userName}</h2>
                     <GeneralSettingsPanel />
                 </div>
             </div>

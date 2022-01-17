@@ -1,0 +1,27 @@
+@layer components {
+    .profile-icon {
+        @apply text-center text-gray-300;
+        width: 11.25rem;
+    }
+
+    .profile-icon:hover {
+        @apply cursor-pointer text-gray-50;
+    }
+
+    .profile-icon:hover > .profile-icon__image {
+        @apply ring-4 ring-green-500;
+    }
+
+    .add-profile {
+        @apply text-center text-gray-300;
+        width: 11.25rem;
+    }
+
+    .add-profile:hover {
+        @apply cursor-pointer text-gray-50;
+    }
+
+    .add-profile:hover > div {
+        @apply border-gray-50;
+    }
+}
