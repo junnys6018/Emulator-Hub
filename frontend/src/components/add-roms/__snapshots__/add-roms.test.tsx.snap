@@ -46,7 +46,13 @@ Array [
                 src="/image.png"
               />
               <span
-                className="text-xl align-middle mr-1.5"
+                className="truncate text-xl inline-block align-middle mr-1.5"
+                style={
+                  Object {
+                    "maxWidth": "8rem",
+                    "minWidth": "4rem",
+                  }
+                }
               >
                 Jun Lim
               </span>
@@ -139,9 +145,8 @@ Array [
                 </svg>
                 Settings
               </a>
-              <a
+              <button
                 className="w-max ml-11 mb-3 text-left hover:text-green-500"
-                href="/"
                 onClick={[Function]}
               >
                 <svg
@@ -164,7 +169,7 @@ Array [
                   />
                 </svg>
                 Sign Out
-              </a>
+              </button>
               <a
                 className="w-max ml-11 mb-3 text-left hover:text-green-500"
                 href="/add-roms"
@@ -223,7 +228,7 @@ Array [
                 }
               />
               <span
-                className="mx-auto text-4xl font-semibold"
+                className="truncate mx-auto pl-3 text-4xl font-semibold"
               >
                 Jun Lim
               </span>
@@ -280,9 +285,8 @@ Array [
               </svg>
               Settings
             </a>
-            <a
+            <button
               className="text-lg w-max active:text-green-500 mb-4"
-              href="/"
               onClick={[Function]}
             >
               <svg
@@ -305,7 +309,7 @@ Array [
                 />
               </svg>
               Sign Out
-            </a>
+            </button>
             <a
               className="text-lg  tracking-wider w-max active:text-green-500 mb-6"
               href="/add-roms"
