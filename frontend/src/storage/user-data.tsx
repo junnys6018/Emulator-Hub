@@ -1,5 +1,4 @@
 import { Record } from './storage';
-import { v4 as uuidv4 } from 'uuid';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDatabase } from './storage';
 import _ from 'lodash';

@@ -10,8 +10,6 @@ import getActiveUserUuid from '@/src/storage/get-active-user';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
-// TODO: Button styling
-
 interface EditUserProfileFormProps {
     profileImage: string;
     onSubmit: () => void;
@@ -157,15 +155,18 @@ function EditingLogin(props: EditingLoginProps) {
                     )}
                 </div>
                 {editingUuid === null ? (
-                    <button className="btn-secondary text-xl py-3.5 px-11" onClick={props.done}>
+                    <button className="btn-secondary muted text-xl py-3.5 px-11" onClick={props.done}>
                         Done
                     </button>
                 ) : (
                     <div className="flex gap-12">
-                        <button onClick={onSubmit} className="btn-secondary text-xl py-3.5 w-40">
+                        <button onClick={onSubmit} className="btn-secondary success text-xl py-3.5 w-40">
                             Save
                         </button>
-                        <button onClick={() => setEditingUuid(null)} className="btn-secondary text-xl py-3.5 w-40">
+                        <button
+                            onClick={() => setEditingUuid(null)}
+                            className="btn-secondary danger text-xl py-3.5 w-40"
+                        >
                             Cancel
                         </button>
                     </div>
@@ -289,7 +290,7 @@ export default function Login() {
                         />
                     ))}
                 </div>
-                <button className="btn-secondary text-xl py-3.5 px-11" onClick={toggleEdit}>
+                <button className="btn-secondary muted text-xl py-3.5 px-11" onClick={toggleEdit}>
                     Manage Profiles
                 </button>
             </div>
