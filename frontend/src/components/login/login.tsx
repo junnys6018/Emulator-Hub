@@ -121,8 +121,10 @@ function EditingLogin(props: EditingLoginProps) {
                                 <EditingProfileIcon
                                     key={user.uuid}
                                     onClick={() => {
-                                        setEditingUuid(user.uuid);
-                                        setUserName(user.userName);
+                                        if (editingUuid === null) {
+                                            setEditingUuid(user.uuid);
+                                            setUserName(user.userName);
+                                        }
                                     }}
                                     userName={user.userName}
                                     profileImage={user.profileImage}
@@ -133,14 +135,16 @@ function EditingLogin(props: EditingLoginProps) {
                     {editingUuid !== 'NEW_USER' && (
                         <AddProfile
                             onClick={() => {
-                                generateProfilePicture().then(blob => {
-                                    newProfileBlob.current = blob;
-                                    const url = URL.createObjectURL(blob);
+                                if (editingUuid === null) {
+                                    generateProfilePicture().then(blob => {
+                                        newProfileBlob.current = blob;
+                                        const url = URL.createObjectURL(blob);
 
-                                    setNewProfileUrl(url);
-                                    setEditingUuid('NEW_USER');
-                                    setUserName('New User');
-                                });
+                                        setNewProfileUrl(url);
+                                        setEditingUuid('NEW_USER');
+                                        setUserName('New User');
+                                    });
+                                }
                             }}
                         />
                     )}
