@@ -1,15 +1,8 @@
-import React, { Fragment } from 'react';
-import Footer from '../footer/footer';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 function Index() {
-    return (
-        <Fragment>
-            <div className="flex-grow relative">
-                <div>Index Page</div>
-            </div>
-            <Footer />
-        </Fragment>
-    );
+    return <Redirect to="/dashboard" />;
 }
 
 export default Index;
