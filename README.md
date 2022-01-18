@@ -86,7 +86,7 @@ emulator-hub-production_django   latest        056347224e92   4 days ago     363
 3. Push to Docker Hub
 
 ```
-docker push junnys/emulator-nginx:<version>
+docker push junnys/emulator-hub_nginx:<version>
 docker push junnys/emulator-hub_django:<version>
 ```
 
