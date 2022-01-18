@@ -2,6 +2,7 @@ services:
   django:
     build:
       dockerfile: dev.Dockerfile
+      context: ./backend
     volumes:
     - type: bind
       source: ./backend
@@ -10,6 +11,7 @@ services:
   nginx:
     build:
       dockerfile: dev.Dockerfile
+      context: ./nginx
     volumes:
       - type: bind
         source: ./build/development

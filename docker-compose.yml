@@ -8,8 +8,6 @@ services:
       - POSTGRES_PASSWORD
 
   django:
-    build:
-      context: ./backend
     environment:
       - POSTGRES_DB
       - POSTGRES_USER
@@ -21,7 +19,5 @@ services:
       - postgres
 
   nginx:
-    build:
-      context: ./nginx
     depends_on:
       - django

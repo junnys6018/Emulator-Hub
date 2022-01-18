@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  django:
+    build:
+      context: ./backend
+      dockerfile: prod.Dockerfile
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: prod.Dockerfile

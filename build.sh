@@ -36,6 +36,6 @@ popd
 cp -R build/production nginx/serve
 
 # create images
-docker-compose -f docker-compose.yml -f production.yml -p emulator-hub-production build
+docker-compose -f docker-compose-build.yml -p emulator-hub-production build
 
 popd
