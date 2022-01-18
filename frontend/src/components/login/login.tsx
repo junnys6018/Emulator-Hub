@@ -2,6 +2,7 @@ import { defaultSettings, generateProfilePicture, UserData, useUserProfile } fro
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import ProfileIcon from './profile-icon';
 import AddProfile from './add-profile';
+import EditUserProfileForm from './edit-user-profile-form';
 import { v4 as uuidv4 } from 'uuid';
 
 import './login.css';
@@ -10,40 +11,19 @@ import getActiveUserUuid from '@/src/storage/get-active-user';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
-interface EditUserProfileFormProps {
-    profileImage: string;
-    onSubmit: () => void;
-    inputRef: React.RefObject<HTMLInputElement>;
-    userName: string;
-    setUserName: React.Dispatch<React.SetStateAction<string>>;
+interface LoginTemplateProps {
+    children: React.ReactNode;
 }
 
-function EditUserProfileForm(props: EditUserProfileFormProps) {
+function LoginTemplate(props: LoginTemplateProps) {
     return (
-        <div className="flex flex-col" style={{ width: '11.25rem', height: '224px' }}>
-            <img
-                className="object-cover object-center rounded-full"
-                style={{ width: '11.25rem', height: '11.25rem' }}
-                src={props.profileImage}
-            ></img>
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    props.onSubmit();
-                }}
-                className="self-stretch relative"
-            >
-                <input
-                    ref={props.inputRef}
-                    id="edit-user-name"
-                    name="edit-user-name"
-                    type="text"
-                    value={props.userName}
-                    onChange={e => props.setUserName(e.currentTarget.value)}
-                    className="appearance-none absolute w-full font-medium text-2xl text-center bg-gray-900 rounded-lg h-9 px-3 mt-2.5 focus:outline-none"
-                ></input>
-            </form>
-        </div>
+        <Fragment>
+            <h2 className="font-bold text-2xl xs:text-3xl mt-10 ml-16">Emulator Hub</h2>
+            <div className="my-auto py-10 flex flex-col items-center">
+                <h1 className="font-medium text-3xl sm:text-4xl md:text-6xl mb-16">Who&apos;s Playing?</h1>
+                {props.children}
+            </div>
+        </Fragment>
     );
 }
 
@@ -99,84 +79,77 @@ function EditingLogin(props: EditingLoginProps) {
     }, [editingUuid]);
 
     return (
-        <Fragment>
-            <h2 className="font-bold text-2xl xs:text-3xl mt-10 ml-16">Emulator Hub</h2>
-            <div className="my-auto flex flex-col items-center">
-                <h1 className="font-medium text-6xl mb-16">Who&apos;s Playing?</h1>
-                <div className="flex gap-10 mb-24">
-                    {userProfiles.map(user => {
-                        if (user.uuid === editingUuid) {
-                            return (
-                                <EditUserProfileForm
-                                    key={user.uuid}
-                                    profileImage={user.profileImage}
-                                    onSubmit={onSubmit}
-                                    inputRef={editNameInput}
-                                    userName={userName}
-                                    setUserName={setUserName}
-                                />
-                            );
-                        } else {
-                            return (
-                                <EditingProfileIcon
-                                    key={user.uuid}
-                                    onClick={() => {
-                                        if (editingUuid === null) {
-                                            setEditingUuid(user.uuid);
-                                            setUserName(user.userName);
-                                        }
-                                    }}
-                                    userName={user.userName}
-                                    profileImage={user.profileImage}
-                                />
-                            );
-                        }
-                    })}
-                    {editingUuid !== 'NEW_USER' && (
-                        <AddProfile
-                            onClick={() => {
-                                if (editingUuid === null) {
-                                    generateProfilePicture().then(blob => {
-                                        newProfileBlob.current = blob;
-                                        const url = URL.createObjectURL(blob);
+        <LoginTemplate>
+            <div className="user-profile-container">
+                {userProfiles.map(user => {
+                    if (user.uuid === editingUuid) {
+                        return (
+                            <EditUserProfileForm
+                                key={user.uuid}
+                                profileImage={user.profileImage}
+                                onSubmit={onSubmit}
+                                inputRef={editNameInput}
+                                userName={userName}
+                                setUserName={setUserName}
+                            />
+                        );
+                    } else {
+                        return (
+                            <EditingProfileIcon
+                                key={user.uuid}
+                                onClick={() => {
+                                    if (editingUuid === null) {
+                                        setEditingUuid(user.uuid);
+                                        setUserName(user.userName);
+                                    }
+                                }}
+                                userName={user.userName}
+                                profileImage={user.profileImage}
+                            />
+                        );
+                    }
+                })}
+                {editingUuid !== 'NEW_USER' && (
+                    <AddProfile
+                        onClick={() => {
+                            if (editingUuid === null) {
+                                generateProfilePicture().then(blob => {
+                                    newProfileBlob.current = blob;
+                                    const url = URL.createObjectURL(blob);
 
-                                        setNewProfileUrl(url);
-                                        setEditingUuid('NEW_USER');
-                                        setUserName('New User');
-                                    });
-                                }
-                            }}
-                        />
-                    )}
-                    {editingUuid === 'NEW_USER' && (
-                        <EditUserProfileForm
-                            profileImage={newProfileUrl}
-                            onSubmit={onSubmit}
-                            inputRef={editNameInput}
-                            userName={userName}
-                            setUserName={setUserName}
-                        />
-                    )}
-                </div>
-                {editingUuid === null ? (
-                    <button className="btn-secondary muted text-xl py-3.5 px-11" onClick={props.done}>
-                        Done
-                    </button>
-                ) : (
-                    <div className="flex gap-12">
-                        <button onClick={onSubmit} className="btn-secondary success text-xl py-3.5 w-40">
-                            Save
-                        </button>
-                        <button
-                            onClick={() => setEditingUuid(null)}
-                            className="btn-secondary danger text-xl py-3.5 w-40"
-                        >
-                            Cancel
-                        </button>
-                    </div>
+                                    setNewProfileUrl(url);
+                                    setEditingUuid('NEW_USER');
+                                    setUserName('New User');
+                                });
+                            }
+                        }}
+                    />
+                )}
+                {editingUuid === 'NEW_USER' && (
+                    <EditUserProfileForm
+                        profileImage={newProfileUrl}
+                        onSubmit={onSubmit}
+                        inputRef={editNameInput}
+                        userName={userName}
+                        setUserName={setUserName}
+                    />
                 )}
             </div>
-        </Fragment>
+            {editingUuid === null ? (
+                <button className="btn-secondary muted text-xl py-3.5 px-11" onClick={props.done}>
+                    Done
+                </button>
+            ) : (
+                <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
+                    <button onClick={onSubmit} className="btn-secondary success text-xl py-3.5 w-40">
+                        Save
+                    </button>
+                    <button onClick={() => setEditingUuid(null)} className="btn-secondary danger text-xl py-3.5 w-40">
+                        Cancel
+                    </button>
+                </div>
+            )}
+        </LoginTemplate>
     );
 }
 
@@ -220,41 +193,37 @@ function LoginEmptyState() {
     }, [addProfileClicked]);
 
     return (
-        <Fragment>
-            <h2 className="font-bold text-2xl xs:text-3xl mt-10 ml-16">Emulator Hub</h2>
-            <div className={`my-auto flex flex-col items-center ${!addProfileClicked && 'pb-14'}`}>
-                <h1 className="font-medium text-6xl mb-16">Who&apos;s Playing?</h1>
-                <div className="flex gap-10 mb-24">
-                    {!addProfileClicked && (
-                        <AddProfile
-                            onClick={() => {
-                                generateProfilePicture().then(blob => {
-                                    newProfileBlob.current = blob;
-                                    const url = URL.createObjectURL(blob);
+        <LoginTemplate>
+            <div className={`user-profile-container ${!addProfileClicked && 'pb-14'}`}>
+                {!addProfileClicked && (
+                    <AddProfile
+                        onClick={() => {
+                            generateProfilePicture().then(blob => {
+                                newProfileBlob.current = blob;
+                                const url = URL.createObjectURL(blob);
 
-                                    setNewProfileUrl(url);
-                                    setAddProfileClicked(true);
-                                });
-                            }}
-                        />
-                    )}
-                    {addProfileClicked && (
-                        <EditUserProfileForm
-                            profileImage={newProfileUrl}
-                            onSubmit={onSubmit}
-                            inputRef={editNameInput}
-                            userName={userName}
-                            setUserName={setUserName}
-                        />
-                    )}
-                </div>
+                                setNewProfileUrl(url);
+                                setAddProfileClicked(true);
+                            });
+                        }}
+                    />
+                )}
                 {addProfileClicked && (
-                    <button onClick={onSubmit} className="btn-secondary text-xl py-3.5 w-40">
-                        Save
-                    </button>
+                    <EditUserProfileForm
+                        profileImage={newProfileUrl}
+                        onSubmit={onSubmit}
+                        inputRef={editNameInput}
+                        userName={userName}
+                        setUserName={setUserName}
+                    />
                 )}
             </div>
-        </Fragment>
+            {addProfileClicked && (
+                <button onClick={onSubmit} className="btn-secondary text-xl py-3.5 w-40">
+                    Save
+                </button>
+            )}
+        </LoginTemplate>
     );
 }
 
@@ -280,24 +249,20 @@ export default function Login() {
     }
 
     return (
-        <Fragment>
-            <h2 className="font-bold text-2xl xs:text-3xl mt-10 ml-16">Emulator Hub</h2>
-            <div className="my-auto flex flex-col items-center">
-                <h1 className="font-medium text-6xl mb-16">Who&apos;s Playing?</h1>
-                <div className="flex gap-10 mb-24">
-                    {userProfiles.map(user => (
-                        <ProfileIcon
-                            key={user.uuid}
-                            uuid={user.uuid}
-                            userName={user.userName}
-                            profileImage={user.profileImage}
-                        />
-                    ))}
-                </div>
-                <button className="btn-secondary muted text-xl py-3.5 px-11" onClick={toggleEdit}>
-                    Manage Profiles
-                </button>
+        <LoginTemplate>
+            <div className="user-profile-container">
+                {userProfiles.map(user => (
+                    <ProfileIcon
+                        key={user.uuid}
+                        uuid={user.uuid}
+                        userName={user.userName}
+                        profileImage={user.profileImage}
+                    />
+                ))}
             </div>
-        </Fragment>
+            <button className="btn-secondary muted text-xl py-3.5 px-11" onClick={toggleEdit}>
+                Manage Profiles
+            </button>
+        </LoginTemplate>
     );
 }

@@ -1,7 +1,6 @@
 @layer components {
     .profile-icon {
         @apply text-center text-gray-300;
-        width: 11.25rem;
     }
 
     .profile-icon:hover {
@@ -12,16 +11,19 @@
         @apply ring-4 ring-green-500;
     }
 
-    .add-profile {
-        @apply text-center text-gray-300;
-        width: 11.25rem;
-    }
-
-    .add-profile:hover {
-        @apply cursor-pointer text-gray-50;
-    }
-
     .add-profile:hover > div {
         @apply border-gray-50;
+    }
+
+    .user-profile-container {
+        @apply grid justify-center gap-10 mb-24 self-stretch container;
+        --child-width: 9rem;
+        grid-template-columns: repeat(auto-fit, var(--child-width));
+    }
+
+    @screen md {
+        .user-profile-container {
+            --child-width: 11.25rem;
+        }
     }
 }
