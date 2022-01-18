@@ -40,6 +40,7 @@
     .danger-zone-container {
         @apply border border-red-500 rounded-lg p-5 mb-10;
     }
+
     @screen md {
         .danger-zone-container {
             @apply grid;
@@ -62,5 +63,10 @@
             grid-area: button;
             align-self: center;
         }
+    }
+
+    .user-delete-modal {
+        @apply py-8 px-7 border-t-4 border-red-500;
+        width: min(90vw,  42rem);
     }
 }

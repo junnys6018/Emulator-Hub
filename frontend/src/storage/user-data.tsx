@@ -1,6 +1,7 @@
-import { Record } from './storage';
+import { EmulatorHubDB, Record } from './storage';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDatabase } from './storage';
+import { IDBPDatabase } from 'idb';
 import _ from 'lodash';
 import getActiveUserUuid from './get-active-user';
 
@@ -266,4 +267,37 @@ export function useActiveUserProfile(): [UserDataView, (newUserData: RecursivePa
     );
 
     return [activeUser, putUserDataWrapper];
+}
+
+export async function deleteUser(db: IDBPDatabase<EmulatorHubDB>, uuid: string): Promise<void> {
+    const transaction = db.transaction(['users', 'gameMetaData', 'gameData'], 'readwrite');
+
+    // Delete all gameMetadata
+    const gameMetaData = transaction.objectStore('gameMetaData');
+    const gameMetaDataIndex = gameMetaData.index('by-user');
+
+    let gameMetaDataCursor = await gameMetaDataIndex.openCursor(uuid);
+    if (gameMetaDataCursor !== null) {
+        while (gameMetaDataCursor) {
+            await gameMetaDataCursor.delete();
+            gameMetaDataCursor = await gameMetaDataCursor.continue();
+        }
+    }
+
+    // Delete all gamedata
+    const gameData = transaction.objectStore('gameData');
+    const gameDataIndex = gameData.index('by-user');
+
+    let gameDataCursor = await gameDataIndex.openCursor(uuid);
+    if (gameDataCursor !== null) {
+        while (gameDataCursor) {
+            await gameDataCursor.delete();
+            gameDataCursor = await gameDataCursor.continue();
+        }
+    }
+
+    const users = transaction.objectStore('users');
+    await users.delete(uuid);
+
+    await transaction.done;
 }
