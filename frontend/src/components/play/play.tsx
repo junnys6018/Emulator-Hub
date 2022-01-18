@@ -1,19 +1,16 @@
 import { GameData, getGameData, useGameMetaData } from '@/src/storage/game-data';
 import { useDatabase } from '@/src/storage/storage';
-import { useActiveUserProfile } from '@/src/storage/user-data';
 import { useQuery } from '@/src/util';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Footer from '../footer/footer';
 import NotFound from '../not-found/not-found';
-import Navbar from '../util/navbar';
+import WrapNavAndFooter from '../util/wrap-nav-and-footer';
 
 import Chip8Interface from './chip8/chip8';
 import NesInterface from './nes/nes';
 
 export default function Play() {
     const { path } = useRouteMatch();
-    const [{ userName, profileImage }] = useActiveUserProfile();
 
     const query = useQuery();
     const uuid = query.get('game');
@@ -50,23 +47,19 @@ export default function Play() {
             {gameData !== null && (
                 <Switch>
                     <Route path={`${path}/CHIP 8`}>
-                        <div className="flex-grow relative">
-                            <Navbar userName={userName} profileImage={profileImage} />
+                        <WrapNavAndFooter>
                             <Chip8Interface gameUuid={uuid} gameMetaDataView={gameMetaDataView} rom={gameData.rom} />
-                        </div>
-                        <Footer />
+                        </WrapNavAndFooter>
                     </Route>
                     <Route path={`${path}/NES`}>
-                        <div className="flex-grow relative">
-                            <Navbar userName={userName} profileImage={profileImage} />
+                        <WrapNavAndFooter>
                             <NesInterface
                                 gameUuid={uuid}
                                 gameMetaDataView={gameMetaDataView}
                                 rom={gameData.rom}
                                 save={gameData.saves[gameMetaDataView.activeSaveIndex].data}
                             />
-                        </div>
-                        <Footer />
+                        </WrapNavAndFooter>
                     </Route>
                     <Route path="*">
                         <NotFound />
