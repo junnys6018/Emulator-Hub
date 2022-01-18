@@ -67,6 +67,6 @@
 
     .user-delete-modal {
         @apply py-8 px-7 border-t-4 border-red-500;
-        width: min(90vw,  42rem);
+        width: min(90vw, 42rem);
     }
 }

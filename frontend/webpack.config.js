@@ -64,6 +64,7 @@ module.exports = (env, options) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
+                favicon: 'public/assets/icon.svg',
                 title: 'Emulator Hub',
                 template: 'public/index.html',
             }),
