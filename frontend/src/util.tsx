@@ -32,13 +32,7 @@ export function isMobile() {
 let bodyLockCounter = 0;
 export function lockBodyScrolling() {
     if (bodyLockCounter === 0) {
-        const body = document.body;
         document.body.style.overflow = 'hidden';
-
-        // Add padding to account for scrollbar disappearing on desktop
-        if (body.scrollHeight > window.innerHeight && !isMobile()) {
-            document.body.style.paddingRight = '20px';
-        }
     }
     bodyLockCounter++;
 }
@@ -46,9 +40,7 @@ export function lockBodyScrolling() {
 export function unlockBodyScrolling() {
     bodyLockCounter--;
     if (bodyLockCounter === 0) {
-        const body = document.body;
-        body.style.overflow = '';
-        body.style.paddingRight = '';
+        document.body.style.overflow = '';
     }
 }
 
