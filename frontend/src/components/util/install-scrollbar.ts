@@ -30,5 +30,9 @@ export default function installScrollbar() {
         const style = document.createElement('style');
         style.appendChild(document.createTextNode(css));
         document.getElementsByTagName('head')[0].appendChild(style);
+
+        // Scrollbar padding trick
+        // see https://stackoverflow.com/questions/1417934/how-to-prevent-scrollbar-from-repositioning-web-page
+        document.body.style.paddingRight = 'calc(20px - 100vw + 100%)';
     }
 }
