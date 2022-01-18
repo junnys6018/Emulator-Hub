@@ -47,28 +47,32 @@ export default function Play() {
 
     return (
         <Fragment>
-            <div className="flex-grow relative">
-                <Navbar userName={userName} profileImage={profileImage} />
-                {gameData !== null && (
-                    <Switch>
-                        <Route path={`${path}/CHIP 8`}>
+            {gameData !== null && (
+                <Switch>
+                    <Route path={`${path}/CHIP 8`}>
+                        <div className="flex-grow relative">
+                            <Navbar userName={userName} profileImage={profileImage} />
                             <Chip8Interface gameUuid={uuid} gameMetaDataView={gameMetaDataView} rom={gameData.rom} />
-                        </Route>
-                        <Route path={`${path}/NES`}>
+                        </div>
+                        <Footer />
+                    </Route>
+                    <Route path={`${path}/NES`}>
+                        <div className="flex-grow relative">
+                            <Navbar userName={userName} profileImage={profileImage} />
                             <NesInterface
                                 gameUuid={uuid}
                                 gameMetaDataView={gameMetaDataView}
                                 rom={gameData.rom}
                                 save={gameData.saves[gameMetaDataView.activeSaveIndex].data}
                             />
-                        </Route>
-                        <Route path="*">
-                            <NotFound />
-                        </Route>
-                    </Switch>
-                )}
-            </div>
-            <Footer />
+                        </div>
+                        <Footer />
+                    </Route>
+                    <Route path="*">
+                        <NotFound />
+                    </Route>
+                </Switch>
+            )}
         </Fragment>
     );
 }

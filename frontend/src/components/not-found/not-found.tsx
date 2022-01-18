@@ -18,7 +18,7 @@ function NotFoundLoggedIn() {
     return (
         <Fragment>
             <Navbar userName={userName} profileImage={profileImage} />
-            <div className="absolute w-full h-full flex flex-col justify-center">
+            <div className="absolute w-full h-full flex flex-col justify-center -z-10">
                 <NotFoundContent />
             </div>
         </Fragment>
