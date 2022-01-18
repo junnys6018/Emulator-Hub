@@ -134,20 +134,24 @@ function AlertConfirm(props: AlertConfirmProps) {
 
 interface AlertProps {
     children: (close: () => void) => React.ReactNode;
+    onClose: () => void;
 }
 
-function Alert(props: AlertProps) {
-    const alert = useAlert();
-
+export function Alert(props: AlertProps) {
     const container = useRef<HTMLDivElement>(null);
     const backdrop = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        lockBodyScrolling();
+        return unlockBodyScrolling;
+    }, []);
 
     const close = useCallback(() => {
         (container.current as HTMLDivElement).classList.add('hide');
         (backdrop.current as HTMLDivElement).classList.add('opacity-0');
         (backdrop.current as HTMLDivElement).classList.remove('opacity-50');
-        (container.current as HTMLDivElement).addEventListener('transitionend', () => alert(), { once: true });
-    }, [alert]);
+        (container.current as HTMLDivElement).addEventListener('transitionend', props.onClose, { once: true });
+    }, [props.onClose]);
 
     useEffect(() => {
         (container.current as HTMLDivElement).classList.remove('hide');
@@ -179,16 +183,18 @@ interface AlertOptions {
     callback?: (action: 'YES' | 'NO') => void;
 }
 
-export const AlertContext = React.createContext<((message?: string, options?: Partial<AlertOptions>) => void) | null>(
+export const AlertContext = React.createContext<((message: string, options?: Partial<AlertOptions>) => void) | null>(
     null,
 );
 
 export function AlertProvider(props: AlertProviderProps) {
     const [currentAlert, setCurrentAlert] = useState<JSX.Element | null>(null);
 
+    const closeAlert = useCallback(() => setCurrentAlert(null), []);
+
     // FIXME: if multiple calls are made to `alert`, the body lock count will be out of sync causing the page to be unscrollable
-    const alert = useCallback((message?: string, options?: Partial<AlertOptions>) => {
-        if (message !== undefined) {
+    const alert = useCallback(
+        (message: string, options?: Partial<AlertOptions>) => {
             const defaults: AlertOptions = {
                 title: 'Alert',
                 severity: 'INFO',
@@ -196,12 +202,11 @@ export function AlertProvider(props: AlertProviderProps) {
             };
 
             const resolvedOptions: AlertOptions = { ...defaults, ...options };
-            lockBodyScrolling();
 
             switch (resolvedOptions.action) {
                 case 'CLOSE':
                     setCurrentAlert(
-                        <Alert>
+                        <Alert onClose={closeAlert}>
                             {close => (
                                 <AlertClose
                                     message={message}
@@ -215,7 +220,7 @@ export function AlertProvider(props: AlertProviderProps) {
                     break;
                 case 'CONFIRM':
                     setCurrentAlert(
-                        <Alert>
+                        <Alert onClose={closeAlert}>
                             {close => (
                                 <AlertConfirm
                                     message={message}
@@ -230,7 +235,7 @@ export function AlertProvider(props: AlertProviderProps) {
                     break;
                 case 'REFRESH':
                     setCurrentAlert(
-                        <Alert>
+                        <Alert onClose={closeAlert}>
                             {() => (
                                 <AlertRefresh
                                     message={message}
@@ -242,11 +247,9 @@ export function AlertProvider(props: AlertProviderProps) {
                     );
                     break;
             }
-        } else {
-            unlockBodyScrolling();
-            setCurrentAlert(null);
-        }
-    }, []);
+        },
+        [closeAlert],
+    );
 
     return (
         <AlertContext.Provider value={alert}>
