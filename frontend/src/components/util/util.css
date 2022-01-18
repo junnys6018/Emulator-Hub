@@ -38,11 +38,9 @@
     }
 
     .alert {
-        @apply flex flex-col
-            items-center
-            fixed
+        @apply fixed
             z-50
-          bg-gray-800
+            bg-gray-800
             top-1/2
             left-1/2
             transform 
@@ -51,8 +49,6 @@
             overflow-y-auto
             opacity-100
             transition;
-        width: 280px;
-        max-height: 300px;
     }
 
     .alert.hide {
@@ -60,21 +56,28 @@
         --tw-translate-y: 50vh;
     }
 
+    .alert-builtin {
+        @apply flex flex-col
+            items-center;
+        width: 280px;
+        max-height: 300px;
+    }
+
     @screen xs {
-        .alert {
+        .alert-builtin {
             width: 340px;
             max-height: 300px;
         }
     }
 
     @screen sm {
-        .alert {
+        .alert-builtin {
             width: 500px;
             max-height: 300px;
         }
     }
     @screen md {
-        .alert {
+        .alert-builtin {
             width: 600px;
             max-height: 400px;
         }
