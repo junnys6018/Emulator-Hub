@@ -6,12 +6,10 @@ services:
         target: /var/lib/postgresql/data
 
   django:
-    build:
-      dockerfile: prod.Dockerfile
+    image: junnys/emulator-hub_django:${APPLICATION_VERSION}
 
   nginx:
-    build:
-      dockerfile: prod.Dockerfile
+    image: junnys/emulator-hub_nginx:${APPLICATION_VERSION}
     volumes:
       - type: bind
         source: ${SSL_CERT_PATH}
