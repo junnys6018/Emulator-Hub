@@ -36,4 +36,31 @@
         grid-template-rows: 112px 112px 112px 112px;
         grid-template-columns: 112px 112px 112px 112px;
     }
+
+    .danger-zone-container {
+        @apply border border-red-500 rounded-lg p-5 mb-10;
+    }
+    @screen md {
+        .danger-zone-container {
+            @apply grid;
+            grid-template-columns: auto 12.5rem;
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                'header button'
+                'text button';
+
+            gap: 0.5rem;
+        }
+
+        .danger-zone-container > h3 {
+            grid-area: header;
+        }
+        .danger-zone-container > p {
+            grid-area: text;
+        }
+        .danger-zone-container > button {
+            grid-area: button;
+            align-self: center;
+        }
+    }
 }

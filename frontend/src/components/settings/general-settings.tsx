@@ -8,7 +8,7 @@ function GeneralSettingsComponent(props: SettingsComponentProps<GeneralSettings>
     return (
         <Fragment>
             <SettingsTitle title="General" />
-            <div className="flex items-center pb-48 lg:pb-0">
+            <div className="flex items-center pb-7 md:pb-12">
                 <label htmlFor="show-hidden-games" className="mr-auto">
                     Show Hidden Games
                 </label>
@@ -20,6 +20,14 @@ function GeneralSettingsComponent(props: SettingsComponentProps<GeneralSettings>
                         props.onChange('showHiddenGames', e.currentTarget.checked);
                     }}
                 />
+            </div>
+            <h2 className="font-medium text-2xl mb-5 md:mb-3">Danger Zone</h2>
+            <div className="danger-zone-container">
+                <h3 className="font-medium text-lg mb-3 md:mb-0">Delete This User</h3>
+                <p className="mb-6 md:mb-0">Once you delete this user, there is no going back. Please be certain</p>
+                <button className="font-medium text-lg btn-primary danger py-1.5 md:h-10 w-full">
+                    Delete This User
+                </button>
             </div>
             <div className="flex mt-auto mb-12 lg:mb-24">
                 <button

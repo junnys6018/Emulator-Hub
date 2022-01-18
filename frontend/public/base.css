@@ -52,6 +52,12 @@
             active:bg-green-400;
     }
 
+    .btn-primary.danger {
+        @apply bg-red-500
+            md:hover:bg-red-400
+            active:bg-red-400;
+    }
+
     .btn-secondary {
         @apply flex
             items-center
