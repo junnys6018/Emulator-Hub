@@ -43,7 +43,7 @@ export default function ContactModal(props: ContactModalProps) {
                             </Fragment>
                         ) : (
                             <Fragment>
-                                <div className="flex flex-row items-center mb-7">
+                                <div className="flex flex-row items-center mb-7 xl:mb-8">
                                     <h2 className="font-semibold text-xl mr-auto">Send me a message</h2>
                                     <button className="md:hover:text-green-500 active:text-green-500" onClick={close}>
                                         <FaTimes size="1.5rem" />
@@ -82,7 +82,7 @@ export default function ContactModal(props: ContactModalProps) {
                                         name="message"
                                         id="message"
                                     ></textarea>
-                                    <button className="btn-primary py-2 w-full font-medium text-xl">
+                                    <button className="btn-primary py-2 w-full xl:w-auto xl:px-10 xl:self-end font-medium text-xl">
                                         Send Message
                                     </button>
                                 </form>
@@ -90,7 +90,7 @@ export default function ContactModal(props: ContactModalProps) {
                         )}
                     </div>
                     <div className="contact-modal__contact-information">
-                        <h2 className="font-semibold text-xl mb-7">Contact information</h2>
+                        <h2 className="font-semibold text-xl mb-7 xl:mb-8">Contact information</h2>
                         <a className="contact-modal__contact-link" href="mailto:junkang2001.lim@gmail.com">
                             <FaEnvelope size="1.5rem" />
                             <span>junkang2001.lim@gmail.com</span>

@@ -419,18 +419,19 @@ Array [
         Emulator Hub
       </span>
       <a
-        className="text-sm mb-7 lg:mb-0 mr-12"
+        className="text-sm mb-7 lg:mb-0 mr-12 md:hover:text-green-500 active:text-green-500"
         href="https://github.com/junnys6018/Emulator-Hub"
         rel="noopener noreferrer"
         target="_blank"
       >
         Source Code
       </a>
-      <a
-        className="text-sm mb-7 lg:mb-0 mr-auto"
+      <button
+        className="text-sm mb-7 lg:mb-0 mr-auto md:hover:text-green-500 active:text-green-500"
+        onClick={[Function]}
       >
         Contact
-      </a>
+      </button>
       <span
         className="text-sm mb-12 lg:mb-0"
       >

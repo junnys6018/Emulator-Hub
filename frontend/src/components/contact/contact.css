@@ -13,20 +13,55 @@
 
     .contact-modal__send-message {
         @apply px-5 py-6 flex flex-col items-stretch;
-        grid-area: 'send-message';
+        grid-area: send-message;
         min-height: 35rem;
     }
 
     .contact-modal__contact-information {
         @apply px-5 py-6 bg-gray-900;
-        grid-area: 'contact-information';
+        grid-area: contact-information;
     }
 
     .contact-modal__contact-link {
         @apply flex flex-row items-center gap-6 md:hover:text-green-500 active:text-green-500;
+        width: max-content;
+    }
+
+    .contact-modal__contact-link > span {
+        background-image: linear-gradient(90deg, theme('colors.green.300'), theme('colors.green.600'));
+        background-size: 0% 3px;
+        background-repeat: no-repeat;
+        background-position: left bottom;
+
+        transition: background-size 300ms ease;
+    }
+
+    .contact-modal__contact-link:hover > span {
+        background-size: 100% 3px;
     }
 
     .contact-modal__contact-link:not(:last-child) {
         @apply mb-8;
+    }
+
+    @screen xl {
+        .contact-modal {
+            grid-template-columns: 360px 700px;
+            grid-template-rows: auto;
+            grid-template-areas: 'contact-information send-message';
+
+            width: auto;
+        }
+
+        .contact-modal__contact-information {
+            @apply p-8;
+            background-image: url('/public/assets/circle-background.svg');
+            background-repeat: no-repeat;
+            background-position: -130px 350px;
+        }
+
+        .contact-modal__send-message {
+            @apply px-8 pt-8 pb-5;
+        }
     }
 }
