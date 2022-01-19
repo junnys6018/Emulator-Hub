@@ -280,19 +280,25 @@ Array [
     </div>
   </div>,
   <div
-    className="flex mt-auto mb-24"
+    className="flex mt-auto mb-12 lg:mb-24"
   >
     <button
-      className="btn-primary h-10 w-52 mr-20 disabled"
+      className="btn-primary h-10 w-40 lg:w-52 mr-auto lg:mr-20 disabled"
       onClick={[Function]}
     >
       Save
     </button>
     <button
-      className="btn-secondary h-10 w-52"
+      className="btn-secondary h-10 w-40 lg:w-52 mr-20"
       onClick={[Function]}
     >
       Reset All
+    </button>
+    <button
+      className="btn-secondary h-10 w-40 lg:w-52"
+      onClick={[Function]}
+    >
+      Revert
     </button>
   </div>,
 ]
