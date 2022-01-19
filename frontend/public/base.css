@@ -24,6 +24,13 @@
         background-repeat: no-repeat;
     }
 
+    /* Style the resizer thumb of textarea*/
+    textarea::-webkit-resizer {
+        background-image: url('assets/resize-thumb.svg');
+        background-size: cover;
+        background-position: center;
+    }
+
     input:disabled,
     input:disabled + label {
         @apply cursor-not-allowed text-gray-400;
@@ -100,6 +107,10 @@
 
     .btn-primary.disabled {
         @apply cursor-not-allowed bg-gray-700 text-gray-400;
+    }
+
+    .text-input {
+        @apply px-2 appearance-none bg-gray-900 focus:outline-none;
     }
 }
 

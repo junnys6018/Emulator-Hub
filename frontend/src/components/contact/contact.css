@@ -1,0 +1,32 @@
+@layer components {
+    .contact-modal {
+        @apply grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            'send-message'
+            'contact-information';
+
+        width: 90vw;
+        max-height: 80vh;
+    }
+
+    .contact-modal__send-message {
+        @apply px-5 py-6 flex flex-col items-stretch;
+        grid-area: 'send-message';
+        min-height: 35rem;
+    }
+
+    .contact-modal__contact-information {
+        @apply px-5 py-6 bg-gray-900;
+        grid-area: 'contact-information';
+    }
+
+    .contact-modal__contact-link {
+        @apply flex flex-row items-center gap-6 md:hover:text-green-500 active:text-green-500;
+    }
+
+    .contact-modal__contact-link:not(:last-child) {
+        @apply mb-8;
+    }
+}
