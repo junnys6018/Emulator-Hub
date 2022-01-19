@@ -11,6 +11,7 @@ import {
 import { FaRedo, FaTimes } from 'react-icons/fa';
 import { useMessage } from '../util/message';
 import { useAlert } from '../util/alert';
+import SettingsButtons from '../util/buttons';
 import { controllerIndex, useHasGamepad } from '@/src/gamepad';
 
 interface SettingsTitleProps {
@@ -38,6 +39,7 @@ export interface SettingsComponentProps<T> {
     onChange: (key: string | number, value: string | number | boolean | null) => void;
     settingsChanged: () => boolean;
     resetAll: () => void;
+    revert?: () => void;
     currentSettings: T;
 }
 
@@ -84,6 +86,10 @@ export function installSettingCallbacks<T>(
         const resetAll = () => {
             // Create a deep copy here, so that the defaults dont get modified
             setCurrentSettings(_.cloneDeep(_.get(defaultSettings, dottedSettingsPath)));
+        };
+
+        const revert = () => {
+            setCurrentSettings(_.cloneDeep(innerSettings));
         };
 
         const message = useMessage();
@@ -170,6 +176,7 @@ export function installSettingCallbacks<T>(
                 onChange={onChangeWrapper}
                 settingsChanged={settingsChanged}
                 resetAll={resetAll}
+                revert={revert}
                 currentSettings={currentSettings}
             />
         );
@@ -261,17 +268,12 @@ function ControllerSettingsComponent(props: SettingsComponentProps<GamepadContro
                 <h3 className="tracking-wider text-gray-400 ml-5">CONTROLLER</h3>
                 {gridItems}
             </div>
-            <div className="flex mt-auto mb-24">
-                <button
-                    className={`btn-primary h-10 w-52 mr-20 ${props.settingsChanged() ? '' : 'disabled'}`}
-                    onClick={props.onSave}
-                >
-                    Save
-                </button>
-                <button className="btn-secondary h-10 w-52" onClick={props.resetAll}>
-                    Reset All
-                </button>
-            </div>
+            <SettingsButtons
+                settingsChanged={props.settingsChanged}
+                onSave={props.onSave}
+                resetAll={props.resetAll}
+                revert={props.revert}
+            />
         </Fragment>
     );
 }

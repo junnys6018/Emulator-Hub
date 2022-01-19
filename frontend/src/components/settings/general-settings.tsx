@@ -4,6 +4,7 @@ import { deleteUser, GeneralSettings, useActiveUserProfile } from '@/src/storage
 import { installSettingCallbacks, SettingsComponentProps, SettingsTitle } from './common';
 import Switch from '../util/switch';
 import { Alert } from '../util/alert';
+import SettingsButtons from '../util/buttons';
 import { FaTimes } from 'react-icons/fa';
 import { useDatabase } from '@/src/storage/storage';
 
@@ -41,19 +42,7 @@ function GeneralSettingsComponent(props: SettingsComponentProps<GeneralSettings>
                     Delete This User
                 </button>
             </div>
-            <div className="flex mt-auto mb-12 lg:mb-24">
-                <button
-                    className={`btn-primary h-10 w-40 lg:w-52 mr-auto lg:mr-20 ${
-                        props.settingsChanged() ? '' : 'disabled'
-                    }`}
-                    onClick={props.onSave}
-                >
-                    Save
-                </button>
-                <button className="btn-secondary h-10 w-40 lg:w-52" onClick={props.resetAll}>
-                    Reset All
-                </button>
-            </div>
+            <SettingsButtons settingsChanged={props.settingsChanged} onSave={props.onSave} resetAll={props.resetAll} />
             {showUserDeleteModal && (
                 <Alert
                     onClose={() => {
