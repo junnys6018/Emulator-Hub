@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  django:
+  node:
     build:
       context: ./backend
       dockerfile: prod.Dockerfile

@@ -7,17 +7,16 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
 
-  django:
+  node:
     environment:
       - POSTGRES_DB
       - POSTGRES_USER
       - POSTGRES_PASSWORD
-      - SECRET_KEY
-      - ENVIRONMENT
       - POSTGRES_HOST
+      - NODE_ENV
     depends_on:
       - postgres
 
   nginx:
     depends_on:
-      - django
+      - node

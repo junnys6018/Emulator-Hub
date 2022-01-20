@@ -1,5 +1,5 @@
 services:
-  django:
+  node:
     build:
       dockerfile: dev.Dockerfile
       context: ./backend
@@ -7,6 +7,9 @@ services:
     - type: bind
       source: ./backend
       target: /code/backend
+
+    # Create a data volume to prevent node_modules from being overwritten
+    - backend_node_modules:/code/backend/node_modules
 
   nginx:
     build:
@@ -31,11 +34,12 @@ services:
         target: /code/frontend
 
       # Create a data volume to prevent node_modules from being overwritten
-      - node_modules:/code/frontend/node_modules
+      - frontend_node_modules:/code/frontend/node_modules
 
       - type: bind
         source: ./build/development
         target: /code/build/development
 
 volumes:
-  node_modules:
+  frontend_node_modules:
+  backend_node_modules:
