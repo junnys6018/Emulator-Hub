@@ -14,23 +14,19 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          python-version: '3.x'
-          architecture: 'x64'
+          node-version: '14.x'
 
-      - name: Install
-        run: pip install -r requirements.txt && pip install pycodestyle
+      - name: Install node_modules
+        run: npm install
 
-      - name: Run Test
-        run: python manage.py test
-        env:
-          ENVIRONMENT: test
-          SECRET_KEY: test-secret-key
+      - name: Build
+        run: npm run build
 
       - name: Run Lint
-        run: python -m pycodestyle .
+        run: npm run lint
 
   frontend:
     name: Frontend Test
