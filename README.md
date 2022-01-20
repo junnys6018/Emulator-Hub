@@ -86,6 +86,8 @@ APPLICATION_VERSION=<version> # Same as container tag
 POSTGRES_PASSWORD=<password>
 SSL_CERT_PATH=</path/to/ssl.cert>
 SSL_KEY_PATH=</path/to/ssl.key>
+EMAIL_USER=<user>
+EMAIL_PASS=<password>
 ```
 
 3. Run `docker-compose -f docker-compose.yml -f production.yml --env-file .env.prod up -d`
