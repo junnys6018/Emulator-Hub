@@ -9,6 +9,7 @@ COPY package-lock.json ./
 RUN npm install
 
 COPY ./ ./
+COPY tsconfig-base.json ../tsconfig.json
 
 RUN npm run build
 

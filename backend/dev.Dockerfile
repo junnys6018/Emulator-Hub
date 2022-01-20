@@ -7,6 +7,7 @@ COPY package-lock.json ./
 RUN npm install
 
 COPY ./ ./
+COPY tsconfig-base.json ../tsconfig.json
 
 EXPOSE 8000
 

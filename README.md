@@ -17,7 +17,7 @@ alias docker-dev="docker-compose -f docker-compose.yml -f development.yml --env-
 1. Build images with
 
 ```bash
-docker-dev build
+./build-development-images.sh
 ```
 
 2. Bring up the application stack with
@@ -45,7 +45,7 @@ docker-dev up
 
 ## Building and Pushing to Docker Hub
 
-1. Build images with `./build.sh`, two images will be created
+1. Build images with `./build-production-images.sh`, two images will be created
 
 ```bash
 $ docker image ls

@@ -16,5 +16,4 @@ module.exports = {
         'plugin:prettier/recommended',
     ],
     plugins: ['@typescript-eslint'],
-    rules: {},
 };

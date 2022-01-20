@@ -4,11 +4,11 @@
     "description": "",
     "main": "build/index.js",
     "scripts": {
-        "build": "tsc --outDir build",
+        "build": "tsc",
         "lint": "eslint . --max-warnings 0 --ext .ts",
         "start": "node .",
         "pretty": "prettier --write .",
-        "dev": "tsc --outDir build -w & nodemon ."
+        "dev": "tsc -w & nodemon ."
     },
     "author": "Jun Lim",
     "license": "ISC",
