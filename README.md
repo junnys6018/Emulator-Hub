@@ -4,7 +4,6 @@ A fullstack web application for playing NES and CHIP 8 roms.
 
 ## Prerequisites
 - docker
-- python
 - nodejs 14
 
 ## Running in development
@@ -43,11 +42,10 @@ docker-dev exec django python manage.py createsuperuser --username admin --email
 
 ### Backend
 
-| Action     | Command                                                    |
-|------------|------------------------------------------------------------|
-| Testing    | `ENVIRONMENT=test SECRET_KEY=secret python manage.py test` |
-| Linting    | `python -m pycodestyle .`                                  |
-| Formatting | `python -m autopep8 --in-place --recursive .`              |
+| Action     | Command          |
+|------------|------------------|
+| Linting    | `npm run lint`   |
+| Formatting | `npm run pretty` |
 
 ### Frontend
 
@@ -65,7 +63,7 @@ docker-dev exec django python manage.py createsuperuser --username admin --email
 $ docker image ls
 REPOSITORY                         TAG       IMAGE ID       CREATED        SIZE
 emulator-hub-production_nginx      latest    891695c5edf1   2 hours ago    135MB
-emulator-hub-production_django     latest    056347224e92   4 days ago     363MB
+emulator-hub-production_node       latest    056347224e92   4 days ago     363MB
 ```
 
 2. Tag your images
@@ -73,21 +71,21 @@ emulator-hub-production_django     latest    056347224e92   4 days ago     363MB
 ```
 $ docker tag emulator-hub-production_nginx junnys/emulator-hub_nginx:<version>
 
-$ docker tag emulator-hub-production_django junnys/emulator-hub_django:<version>
+$ docker tag emulator-hub-production_node junnys/emulator-hub_node:<version>
 
 $ docker image ls
 REPOSITORY                       TAG           IMAGE ID       CREATED        SIZE
 junnys/emulator-hub_nginx        <version>     891695c5edf1   2 hours ago    135MB
+junnys/emulator-hub_node         <version>     056347224e92   4 days ago     363MB
 emulator-hub-production_nginx    latest        891695c5edf1   2 hours ago    135MB
-junnys/emulator-hub_django       <version>     056347224e92   4 days ago     363MB
-emulator-hub-production_django   latest        056347224e92   4 days ago     363MB
+emulator-hub-production_node     latest        056347224e92   4 days ago     363MB
 ```
 
 3. Push to Docker Hub
 
 ```
 docker push junnys/emulator-hub_nginx:<version>
-docker push junnys/emulator-hub_django:<version>
+docker push junnys/emulator-hub_node:<version>
 ```
 
 ## Deployment
@@ -97,7 +95,6 @@ docker push junnys/emulator-hub_django:<version>
 2. Open `.env.prod` and set the following values. (You may optionally change `POSTGRES_DB` and `POSTGRES_USER`)
 ```env
 APPLICATION_VERSION=<version> # Same as container tag
-SECRET_KEY=<key>
 POSTGRES_PASSWORD=<password>
 SSL_CERT_PATH=</path/to/ssl.cert>
 SSL_KEY_PATH=</path/to/ssl.key>

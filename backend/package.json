@@ -2,12 +2,13 @@
     "name": "backend",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
+    "main": "build/index.js",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc --outDir build",
         "lint": "eslint . --max-warnings 0 --ext .ts",
+        "start": "node .",
         "pretty": "prettier --write .",
-        "dev": "tsc -w & nodemon ."
+        "dev": "tsc --outDir build -w & nodemon ."
     },
     "author": "Jun Lim",
     "license": "ISC",

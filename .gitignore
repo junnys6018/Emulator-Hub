@@ -4,14 +4,11 @@ backend/node_modules/
 
 # build outputs
 build/
-nginx/serve/
-backend/dist/
+nginx/static/
+backend/build/
 
 # jest
 frontend/coverage/
-
-# django
-**/__pycache__
 
 # misc
 .DS_Store

@@ -2,12 +2,16 @@ FROM node:14
 
 WORKDIR /code/backend
 
+RUN npm install pm2 -g
+
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 
 COPY ./ ./
 
+RUN npm run build
+
 EXPOSE 8000
 
-CMD ["npm", "run", "dev"]
+CMD ["pm2-runtime", "npm", "--", "start"]
