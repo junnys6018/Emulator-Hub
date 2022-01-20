@@ -26,18 +26,6 @@ docker-dev build
 docker-dev up
 ```
 
-3. Make migrations with
-
-```bash
-docker-dev exec django python manage.py migrate
-```
-
-4. If setting up a dev environment for the first time, create a superuser
-
-```bash
-docker-dev exec django python manage.py createsuperuser --username admin --email test@test.com
-```
-
 ## Testing, Linting and Formatting
 
 ### Backend
