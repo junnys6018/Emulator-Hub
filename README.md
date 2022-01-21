@@ -1,4 +1,5 @@
 # Emulator Hub
+![ci badge](https://github.com/junnys6018/Emulator-Hub/actions/workflows/test.yml/badge.svg)
 
 A fullstack web application for playing NES and CHIP 8 roms.
 
