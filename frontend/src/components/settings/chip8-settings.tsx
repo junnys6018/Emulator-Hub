@@ -87,7 +87,7 @@ function CHIP8SettingsComponent(props: SettingsComponentProps<string[]>) {
                 settingsChanged={props.settingsChanged}
                 onSave={props.onSave}
                 resetAll={props.resetAll}
-                revert={props.revert}
+                cancel={props.cancel}
             />
         </Fragment>
     );

@@ -39,7 +39,7 @@ export interface SettingsComponentProps<T> {
     onChange: (key: string | number, value: string | number | boolean | null) => void;
     settingsChanged: () => boolean;
     resetAll: () => void;
-    revert?: () => void;
+    cancel?: () => void;
     currentSettings: T;
 }
 
@@ -88,7 +88,7 @@ export function installSettingCallbacks<T>(
             setCurrentSettings(_.cloneDeep(_.get(defaultSettings, dottedSettingsPath)));
         };
 
-        const revert = () => {
+        const cancel = () => {
             setCurrentSettings(_.cloneDeep(innerSettings));
         };
 
@@ -176,7 +176,7 @@ export function installSettingCallbacks<T>(
                 onChange={onChangeWrapper}
                 settingsChanged={settingsChanged}
                 resetAll={resetAll}
-                revert={revert}
+                cancel={cancel}
                 currentSettings={currentSettings}
             />
         );
@@ -272,7 +272,7 @@ function ControllerSettingsComponent(props: SettingsComponentProps<GamepadContro
                 settingsChanged={props.settingsChanged}
                 onSave={props.onSave}
                 resetAll={props.resetAll}
-                revert={props.revert}
+                cancel={props.cancel}
             />
         </Fragment>
     );
