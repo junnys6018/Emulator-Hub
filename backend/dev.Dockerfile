@@ -1,16 +1,14 @@
-FROM python:3.8-slim
-ENV PYTHONUNBUFFERED=1
-
-RUN apt-get update && apt-get install -y libpq-dev gcc
-RUN pip install --upgrade pip
+FROM node:14
 
 WORKDIR /code/backend
 
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
 
 COPY ./ ./
+COPY tsconfig-base.json ../tsconfig.json
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["npm", "run", "dev"]

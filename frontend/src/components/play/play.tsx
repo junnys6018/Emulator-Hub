@@ -4,6 +4,7 @@ import { useQuery } from '@/src/util';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import NotFound from '../not-found/not-found';
+import UnderConstruction from '../under-construction/under-construction';
 import WrapNavAndFooter from '../util/wrap-nav-and-footer';
 
 import Chip8Interface from './chip8/chip8';
@@ -60,6 +61,12 @@ export default function Play() {
                                 save={gameData.saves[gameMetaDataView.activeSaveIndex].data}
                             />
                         </WrapNavAndFooter>
+                    </Route>
+                    <Route path={`${path}/GB`}>
+                        <UnderConstruction />
+                    </Route>
+                    <Route path={`${path}/GBC`}>
+                        <UnderConstruction />
                     </Route>
                     <Route path="*">
                         <NotFound />

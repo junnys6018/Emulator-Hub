@@ -1,18 +1,18 @@
-FROM python:3.8-slim
-ENV PYTHONUNBUFFERED=1
-
-RUN apt-get update && apt-get install -y libpq-dev gcc
-RUN pip install --upgrade pip
-
-RUN pip install gunicorn
+FROM node:14
 
 WORKDIR /code/backend
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN npm install pm2 -g
 
-COPY . .
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
+
+COPY ./ ./
+COPY tsconfig-base.json ../tsconfig.json
+
+RUN npm run build
 
 EXPOSE 8000
 
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["pm2-runtime", "npm", "--", "start"]

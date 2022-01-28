@@ -5,8 +5,8 @@ services:
         source: dbdata
         target: /var/lib/postgresql/data
 
-  django:
-    image: junnys/emulator-hub_django:${APPLICATION_VERSION}
+  node:
+    image: junnys/emulator-hub_node:${APPLICATION_VERSION}
 
   nginx:
     image: junnys/emulator-hub_nginx:${APPLICATION_VERSION}

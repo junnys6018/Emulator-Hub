@@ -23,14 +23,14 @@
             bg-gray-500;
         content: '';
         left: 0px;
-        top: -1px;
-        width: 18px;
-        height: 18px;
+        top: -0.0625rem;
+        width: 1.125rem;
+        height: 1.125rem;
         transform: translateX(var(--x, 0));
     }
 
     .switch:checked {
-        --x: 20px;
+        --x: 1.25rem;
     }
 
     .switch:not(:disabled):checked::after {

@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "allowSyntheticDefaultImports": true,
+        "preserveConstEnums": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "sourceMap": true
+    },
+}

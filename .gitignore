@@ -1,15 +1,14 @@
 # dependencies
 frontend/node_modules/
+backend/node_modules/
 
 # build outputs
 build/
-nginx/serve/
+nginx/static/
+backend/build/
 
 # jest
 frontend/coverage/
-
-# django
-**/__pycache__
 
 # misc
 .DS_Store

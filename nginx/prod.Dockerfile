@@ -1,6 +1,6 @@
 FROM nginx:stable
 
 # static files
-COPY ./serve /usr/share/nginx/webapp
+COPY ./static /usr/share/nginx/webapp/static
 
 COPY nginx.prod.conf /etc/nginx/conf.d/default.conf
