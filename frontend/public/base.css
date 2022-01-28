@@ -80,6 +80,15 @@
             active:ring-green-500;
     }
 
+    .btn-tertiary {
+        @apply flex
+            items-center
+            justify-center
+            rounded-full
+            ring-inset
+            ring-2;
+    }
+
     .btn-secondary.muted {
         @apply ring-gray-300
             text-gray-300

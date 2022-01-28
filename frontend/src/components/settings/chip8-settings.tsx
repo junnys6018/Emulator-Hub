@@ -4,6 +4,7 @@ import { defaultChip8Controls } from '@/src/storage/user-data';
 import { displayKeyCode } from '@/src/util';
 import { FaRedo, FaTimes } from 'react-icons/fa';
 import { installSettingCallbacks, SettingsComponentProps, SettingsTitle } from './common';
+import SettingsButtons from '../util/buttons';
 
 /**
  * Takes a `KeyboardEvent.code` and returns a tailwind font size class so that the
@@ -82,17 +83,12 @@ function CHIP8SettingsComponent(props: SettingsComponentProps<string[]>) {
                     </div>
                 ))}
             </div>
-            <div className="flex mt-auto mb-24">
-                <button
-                    className={`btn-primary h-10 w-52 mr-20 ${props.settingsChanged() ? '' : 'disabled'}`}
-                    onClick={props.onSave}
-                >
-                    Save
-                </button>
-                <button className="btn-secondary h-10 w-52" onClick={props.resetAll}>
-                    Reset All
-                </button>
-            </div>
+            <SettingsButtons
+                settingsChanged={props.settingsChanged}
+                onSave={props.onSave}
+                resetAll={props.resetAll}
+                cancel={props.cancel}
+            />
         </Fragment>
     );
 }
