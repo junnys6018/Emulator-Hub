@@ -81,12 +81,12 @@
     }
 
     .btn-tertiary {
-        @apply
+        @apply flex
             items-center
             justify-center
             rounded-full
             ring-inset
-            ring-2
+            ring-2;
     }
 
     .btn-secondary.muted {
