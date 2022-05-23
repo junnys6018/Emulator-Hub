@@ -10,16 +10,8 @@ services:
 
   nginx:
     image: junnys/emulator-hub_nginx:${APPLICATION_VERSION}
-    volumes:
-      - type: bind
-        source: ${SSL_CERT_PATH}
-        target: /etc/ssl/certs/webapp.crt
-      - type: bind
-        source: ${SSL_KEY_PATH}
-        target: /etc/ssl/private/webapp.key
     ports:
-      - 80:80
-      - 443:443
+      - ${PORT}:8080
 
 volumes:
   dbdata:
